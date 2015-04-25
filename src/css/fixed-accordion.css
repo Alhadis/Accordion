@@ -9,6 +9,10 @@
 		left:	0;
 		right:	0;
 
+		/** Transitions */
+		transition: .3s ease all;
+
+		/** Transforms */
 		-webkit-backface-visibility:	hidden;
 		-moz-backface-visibility:		hidden;
 		backface-visibility:			hidden;
@@ -18,7 +22,7 @@
 		-ms-transform:		translateX(0);
 		-o-transform:		translateX(0);
 		transform:			translateX(0);
-		
+
 		/** Use 3D-powered accleration when possible. */
 		-webkit-transform:	translateZ(0);
 		-moz-transform:		translateZ(0);
