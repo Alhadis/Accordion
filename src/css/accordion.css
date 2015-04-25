@@ -10,7 +10,10 @@
 		right:	0;
 
 		/** Transitions */
-		transition: .3s ease all;
+		-webkit-transition:	.3s ease height, .3s ease top;
+		-moz-transition:	.3s ease height, .3s ease top;
+		-o-transition:		.3s ease height, .3s ease top;
+		transition:			.3s ease height, .3s ease top;
 
 		/** Transforms */
 		-webkit-backface-visibility:	hidden;

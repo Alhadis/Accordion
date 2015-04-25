@@ -4,6 +4,7 @@
 
 	var each	=	Array.prototype.forEach,
 
+
 		/**
 		 * Class that represents a single segment in an Accordion object's content.
 		 *
@@ -61,7 +62,11 @@
 		},
 
 
-
+		/**
+		 * Accordion class.
+		 *
+		 * @param {HTMLElement} el - Container holding each togglable fold of content.
+		 */
 		Accordion	=	function(el){
 			var	folds		=	[],
 				children	=	el.children,
