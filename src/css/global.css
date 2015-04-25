@@ -1,0 +1,203 @@
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none!important}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:0}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 2.5em}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{height:auto}input[type="search"]{-webkit-appearance:textfield}input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+*{
+	-webkit-box-sizing:	border;
+	-webkit-box-sizing:	border-box;
+	-moz-box-sizing:	border;
+	-moz-box-sizing:	border-box;
+	box-sizing:			border-box;
+}
+	:focus{outline: none}
+
+
+
+
+/*=============================================================================*
+	1. ELEMENTS
+===============================================================================*/
+
+html{
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	-webkit-font-feature-settings:	"liga" 1, "calt" 1, "swsh" 1;
+	-moz-font-feature-settings:		"liga=1, calt=1, swsh=1";
+	-moz-font-feature-settings:		"liga" 1, "calt" 1, "swsh" 1;
+	-o-font-feature-settings:		"liga" 1, "calt" 1, "swsh" 1;
+	font-feature-settings:			"liga" 1, "calt" 1, "swsh" 1;
+}
+
+a:link,
+a:visited{
+	color: inherit;
+	text-decoration: none;
+}
+	a:hover{
+		text-decoration: underline;
+	}
+
+label{
+	cursor: pointer;
+}
+
+abbr[title]{
+	border: none;
+}
+
+/** Headings */
+h1, h2, h3, h4, h5, h6{
+	margin: 0;
+}
+
+
+hr{
+	margin: .5em 0;
+	padding: 0;
+	border: 1px solid #555;
+	border-width: 1px 0 0;
+	clear: both;
+}
+
+
+/** Form elements */
+fieldset{
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+button, .btn, a.btn{
+	
+}
+
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="tel"],
+input[type="url"],
+input[type="email"],
+textarea{
+
+}
+
+
+/*=============================================================================*
+	2. PROJECT-SPECIFIC
+===============================================================================*/
+
+
+/*=============================================================================*
+	3. COMPONENTS & WIDGETS
+===============================================================================*/
+
+.control{
+	display: none;
+}
+	.control[type="checkbox"]:checked ~ .fold,
+	.control[type="radio"]:not(:checked) ~ .fold{
+		max-height: 0 !important;
+	}
+
+.disclosure{
+	cursor: pointer;
+	-webkit-user-select:	none;
+	-moz-user-select:		none;
+	-ms-user-select:		none;
+	user-select:			none;
+}
+
+.fold{
+	overflow: hidden;
+	-webkit-transition:	.3s ease max-height;
+	-moz-transition:	.3s ease max-height;
+	-o-transition:		.3s ease max-height;
+	transition:			.3s ease max-height;
+}
+
+
+
+
+/*=============================================================================*
+	4. CLASSES
+===============================================================================*
+
+/** Structural classes */
+.centre{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 70em;
+}
+
+.nonvisual{
+	clip: rect(0 0 0 0);
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	position: absolute;
+	border: 0;
+	padding: 0;
+}
+
+.r/*eplaced elements (logos/text banners/etc) */{
+	background-repeat: no-repeat;
+	display: inline-block;
+	vertical-align: top;
+	text-align: left !important;
+	text-indent: -99999px;
+	height: 1em;
+	
+	-webkit-background-size:	auto 100%;
+	-khtml-background-size:		auto 100%;
+	-moz-background-size:		auto 100%;
+	-ms-background-size:		auto 100%;
+	-o-background-size:			auto 100%;
+	background-size:			auto 100%;
+}
+
+.i/*con replacement (social links, etc) */{
+	display: inline-block;
+	vertical-align: top;
+	position: relative;
+	text-align: left;
+	text-indent: -999em;
+	font-style: normal;
+	font-size: 2em;
+	width:	1em;
+	height:	1em;
+}
+	.i::before{
+		font-family: AppIcons;
+		display: block;
+		position: absolute;
+		top:	0;
+		left:	0;
+		bottom:	0;
+		right:	0;
+		text-align: center;
+		text-indent: 0;
+	}
+
+
+
+
+/** List styles */
+ul.plain,
+ol.plain,
+.plain > li{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+
+/** Forcefully hidden element */
+.hidden{
+	display: none !important;
+}

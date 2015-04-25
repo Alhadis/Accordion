@@ -1,0 +1,36 @@
+.fixed-accordion{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+	.fixed-accordion > li{
+		position: absolute;
+		top:	0;
+		left:	0;
+		right:	0;
+		overflow: hidden;
+	}
+		.fixed-accordion > li > h3{
+			background: #2c4d2b;
+			color: #fff;
+			padding: .5em;
+			cursor: pointer;
+
+			-webkit-user-select:	none;
+			-moz-user-select:		none;
+			user-select:			none;
+		}
+
+		.fixed-accordion > li > .fold{
+			padding: 1em;
+		}
+
+		/** Align fruit graphics/demo content */
+		.fixed-accordion img{
+			max-width: 20em;
+			margin-right: 1.5em;
+			float: left;
+		}
+			.fixed-accordion img + p{
+				margin-top: 0;
+			}
