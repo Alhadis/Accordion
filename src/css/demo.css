@@ -1,14 +1,11 @@
+/** Demo styling, not necessary for the accordion's final effect. */
 .fixed-accordion{
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 	.fixed-accordion > li{
-		position: absolute;
-		top:	0;
-		left:	0;
-		right:	0;
-		overflow: hidden;
+
 	}
 		.fixed-accordion > li > h3{
 			background: #2c4d2b;

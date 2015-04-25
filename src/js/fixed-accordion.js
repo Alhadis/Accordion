@@ -1,59 +1,106 @@
-var	each			=	Array.prototype.forEach;
+(function(){
+	"use strict";
+
+
+	var each	=	Array.prototype.forEach,
+
+		/**
+		 * Class that represents a single segment in an Accordion object's content.
+		 *
+		 * @param {HTMLElement} el - Outermost element containing both heading and collapsible content.
+		 * @param {Object} options - Auxiliary hash of options.
+		 * @param {String} options.openClass - Name of CSS class controlling each fold's visible "open" state 
+		 * @param {String} options.heading - Selector string for the fold's heading element.
+		 * @param {String} options.content - Selector string for fold's child element holding togglable content.
+		 */
+		Fold	=	function(el, options){
+			var options		=	options || {},
+				openClass	=	options.openClass || "open",
+				onToggle	=	options.onToggle,
+
+				open		=	el.classList.contains(openClass),
+				heading		=	options.heading ? el.querySelector(options.heading) : el.firstElementChild,
+				content		=	options.content ? el.querySelector(options.content) : el.lastElementChild,
+				
+
+				/**
+				 * Updates the heights of the fold's heading/body and returns the total of each.
+				 *
+				 * @param {Number} y - Offset to apply to the fold's node, supplied by the containing accordion.
+				 * @return {Number}
+				 */
+				update	=	function(offset){
+					var headingHeight		=	heading.scrollHeight,
+						headingHeightPx		=	headingHeight + "px",
+
+						contentHeight		=	content.scrollHeight,
+						totalHeight			=	contentHeight + headingHeight;
+
+					heading.style.height	=	headingHeightPx;
+					el.style.top			=	offset ? offset+"px" : "";
+
+					/** If opened, set the fold's height to fit both heading *and* content. */
+					if(open){
+						el.style.height	=	totalHeight + "px";
+						return el.scrollHeight;
+					}
+
+					/** Otherwise, just cut it off at the heading. */
+					else{
+						el.style.height	=	headingHeightPx;
+						return headingHeight;
+					}
+				};
+
+				heading.addEventListener("click", function(){
+					open	=	el.classList.toggle(openClass);
+					if(onToggle) onToggle();
+				});
+
+				this.update	=	update;
+		},
 
 
 
-var FixedAccordion	=	function(el){
-	var folds		=	[],
-		children	=	el.children,
+		Accordion	=	function(el){
+			var	folds		=	[],
+				children	=	el.children,
+				
+				/** Method for updating the accordion's heights on resize */
+				update	=	function(){
+					for(var totalHeight = 0, i = 0, l = folds.length; i < l; ++i)
+						totalHeight += folds[i].update(totalHeight);
 
-		/** Method that gets triggered on page resize to update heights. */
-		update		=	function(){
-			var fold, totalHeight, y = 0;
+					el.style.height	=	totalHeight + "px";
+					return totalHeight;
+				},
 
-			for(var i = 0, l = folds.length; i < l; ++i){
-				fold		=	folds[i];
-				totalHeight	=	fold.open ? fold.node.scrollHeight : fold.heading.scrollHeight;
-				fold.node.style.top	=	y+"px";
-				y	+= totalHeight;
-			}
+				/** Iterator variables */
+				i	=	0,
+				l	=	children.length;
+
+
+			/** Loop through the accordion's immediate descendants and initialise a new fold for each one */
+			for(; i < l; ++i) folds.push(new Fold(children[i], {
+				onToggle:	update
+			}));
+
+
+			/** Update the accordion's heights if any images have loaded. */
+			each.call(el.querySelectorAll("img"), function(img){
+				img.addEventListener("load", update);
+			});
+
+
+			/** Expose some methods/properties for external use. */
+			this.update	=	update;
+			this.folds	=	folds;
+
+			/** Get this happening. */
+			update();
 		};
 
-	/** Create a new fold from each immediate descendant of the accordion element. */
-	for(var c, h, i = 0, l = children.length; i < l; ++i){
-		c	=	children[i];
-		h	=	c.querySelector("h3");
-		h.addEventListener("click", function(e){
-			e.target.parentNode.classList.toggle("open");
-		});
 
-		folds.push({
-			node:			c,
-			open:			c.classList.contains("open"),
-			heading:		h,
-			content:		c.querySelector(".fold"),
-			y:				0
-		});
-	}
-
-	/** Update heights when images have finished loading. */
-	each.call(el.querySelectorAll("img"), function(e){
-		e.addEventListener("load", update);
-	});
-
-	/** Make the accordion's update method externally accessible. */
-	this.update	=	update;
-	update();
-};
-
-
-var accordions	=	[];
-each.call(document.querySelectorAll(".fixed-accordion"), function(el){
-	accordions.push(new FixedAccordion(el));
-});
-
-window.addEventListener("resize", function(e){
-	for(var i = 0, l = accordions.length; i < l; ++i){
-		accordions[i].update();
-	}
-	console.log("Update")
-}.debounce(100, true));
+	/** Export */
+	window.Accordion	=	Accordion;
+}());

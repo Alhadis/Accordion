@@ -1,0 +1,28 @@
+.fixed-accordion{
+	position: relative;
+	overflow: hidden;
+}
+	.fixed-accordion > li{
+		position: absolute;
+		overflow: hidden;
+		top:	0;
+		left:	0;
+		right:	0;
+
+		-webkit-backface-visibility:	hidden;
+		-moz-backface-visibility:		hidden;
+		backface-visibility:			hidden;
+		
+		-webkit-transform:	translateX(0);
+		-moz-transform:		translateX(0);
+		-ms-transform:		translateX(0);
+		-o-transform:		translateX(0);
+		transform:			translateX(0);
+		
+		/** Use 3D-powered accleration when possible. */
+		-webkit-transform:	translateZ(0);
+		-moz-transform:		translateZ(0);
+		-ms-transform:		translateZ(0);
+		-o-transform:		translateZ(0);
+		transform:			translateZ(0);
+	}
