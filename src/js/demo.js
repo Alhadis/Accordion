@@ -1,7 +1,7 @@
 var each	=	Array.prototype.forEach;
 
 var accordions	=	[];
-each.call(document.querySelectorAll(".fixed-accordion"), function(el){
+each.call(document.querySelectorAll(".accordion"), function(el){
 	accordions.push(new Accordion(el));
 });
 

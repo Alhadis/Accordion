@@ -1,8 +1,8 @@
-.fixed-accordion{
+.accordion{
 	position: relative;
 	overflow: hidden;
 }
-	.fixed-accordion > li{
+	.accordion > li{
 		position: absolute;
 		overflow: hidden;
 		top:	0;

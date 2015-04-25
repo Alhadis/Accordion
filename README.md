@@ -1,4 +1,4 @@
-FixedAccordion
+Accordion
 ==============
 
 An attempt to create the smoothest-possible accordion widgets using CSS3 transforms. For this reason, images of considerable size were chosen to stress-test the performance of expanding/collapsing sections.
