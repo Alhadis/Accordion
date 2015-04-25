@@ -2,18 +2,21 @@
 	position: relative;
 	overflow: hidden;
 }
+	/** Transitions */
+	.accordion,
+	.accordion > li{
+		-webkit-transition:	.3s ease height, .3s ease top;
+		-moz-transition:	.3s ease height, .3s ease top;
+		-o-transition:		.3s ease height, .3s ease top;
+		transition:			.3s ease height, .3s ease top;
+	}
+
 	.accordion > li{
 		position: absolute;
 		overflow: hidden;
 		top:	0;
 		left:	0;
 		right:	0;
-
-		/** Transitions */
-		-webkit-transition:	.3s ease height, .3s ease top;
-		-moz-transition:	.3s ease height, .3s ease top;
-		-o-transition:		.3s ease height, .3s ease top;
-		transition:			.3s ease height, .3s ease top;
 
 		/** Transforms */
 		-webkit-backface-visibility:	hidden;
