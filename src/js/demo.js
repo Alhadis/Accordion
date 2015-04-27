@@ -6,7 +6,9 @@ var each	=	Array.prototype.forEach;
 
 var accordions	=	[];
 each.call(document.querySelectorAll(".accordion"), function(el){
-	accordions.push(new Accordion(el));
+	accordions.push(new Accordion(el, {
+		animHeight: false
+	}));
 });
 
 window.addEventListener("resize", function(e){

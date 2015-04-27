@@ -1,9 +1,22 @@
 .accordion{
 	position: relative;
 	overflow: hidden;
+
+	-webkit-transition:	.3s step-start height;
+	-moz-transition:	.3s step-start height;
+	-o-transition:		.3s step-start height;
+	transition:			.3s step-start height;
 }
+	.accordion.shrinking{
+		-webkit-transition-timing-function:	step-end;
+		-moz-transition-timing-function:	step-end;
+		-o-transition-timing-function:		step-end;
+		transition-timing-function:			step-end;
+	}
+
+
 	/** Transitions */
-	.accordion,
+	.accordion.anim-height,
 	.accordion > li{
 		-webkit-transition:	.3s ease height, .3s ease top;
 		-moz-transition:	.3s ease height, .3s ease top;
