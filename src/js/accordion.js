@@ -70,8 +70,13 @@
 		}
 		
 		heading.addEventListener(touchEnabled ? "touchend" : "click", function(e){
-			toggle();
-			e.preventDefault();
+			
+			/** Prevent TouchEvents triggering a change if the user's still scrolling */
+			if(e.type !== "touchend" || e.cancelable){
+				toggle();
+				e.preventDefault();
+			}
+			
 			return false;
 		});
 		
