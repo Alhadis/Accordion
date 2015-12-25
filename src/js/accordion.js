@@ -35,7 +35,7 @@
 		 */
 		function update(offset){
 			var headingBoundingBox  = heading.getBoundingClientRect();
-			var headingHeight       = headingBoundingBox.bottom - headingBoundingBox.top;
+			var headingHeight       = Math.round(headingBoundingBox.bottom - headingBoundingBox.top);
 			var headingHeightPx     = headingHeight + "px";
 			var contentHeight       = content.scrollHeight;
 			var totalHeight         = contentHeight + headingHeight;
