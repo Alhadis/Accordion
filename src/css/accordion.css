@@ -17,14 +17,14 @@
 
 	/** Transitions */
 	.accordion.anim-height,
-	.accordion > li{
+	.accordion > *{
 		-webkit-transition: .3s ease height, .3s ease top;
 		-moz-transition:    .3s ease height, .3s ease top;
 		-o-transition:      .3s ease height, .3s ease top;
 		transition:         .3s ease height, .3s ease top;
 	}
 
-	.accordion > li{
+	.accordion > *{
 		position: absolute;
 		overflow: hidden;
 		top:    0;
