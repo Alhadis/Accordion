@@ -46,6 +46,7 @@
 			heading.setAttribute("aria-selected", open);
 			heading.setAttribute("aria-expanded", open);
 			content.setAttribute("aria-hidden",  !open);
+			content.setAttribute("tabindex",      open? 0 : -1)
 			
 			
 			/** If opened, set the fold's height to fit both heading *and* content. */
@@ -61,11 +62,72 @@
 			}
 		};
 		
-		heading.addEventListener(touchEnabled ? "touchend" : "click", function(e){
+		
+		/** Toggle the fold's opened state */
+		function toggle(){
 			open = el.classList.toggle(openClass);
 			if(onToggle) onToggle();
+		}
+		
+		heading.addEventListener(touchEnabled ? "touchend" : "click", function(e){
+			toggle();
 			e.preventDefault();
 			return false;
+		});
+		
+		
+		/** Keystroke handlers */
+		var THIS = this;
+		heading.addEventListener("keydown", function(e){
+			var fold, key;
+			switch(key = e.keyCode){
+				
+				/** Enter */
+				case 13:{
+					toggle();
+					break;
+				}
+				
+				/** Up/down arrows: Move between sections */
+				case 38:
+				case 40:{
+					if(fold = (38 === key ? THIS.previousFold : THIS.nextFold)){
+						fold.heading.focus();
+						e.preventDefault();
+						return false;
+					}
+					break;
+				}
+				
+				/** Left arrow: Close section */
+				case 37:{
+					
+					/** Section must be open first */
+					if(open){
+						el.classList.remove(openClass);
+						open = false;
+						if(onToggle) onToggle();
+					}
+					
+					break;
+				}
+				
+				/** Right arrow: Open section */
+				case 39:{
+					if(!open){
+						el.classList.add(openClass);
+						open = true;
+						if(onToggle) onToggle();
+					}
+					break;
+				}
+				
+				/** Escape */
+				case 27:{
+					this.blur();
+					break;
+				}
+			}
 		});
 		
 		
@@ -79,13 +141,17 @@
 		else if(!heading.id) heading.id = content.id + "-heading";
 		else if(!content.id) content.id = heading.id + "-content";
 		
-		/** Set ARIA roles */
+		/** Set ARIA roles/tabindex */
 		heading.setAttribute("role", "tab");
 		content.setAttribute("role", "tabpanel");
 		heading.setAttribute("aria-controls",   content.id);
 		content.setAttribute("aria-labelledby", heading.id);
+		heading.setAttribute("tabindex", 0)
 
-		this.update = update;
+		/** Expose some properties/methods for external use */
+		this.update  = update;
+		this.heading = heading;
+		this.content = content;
 	};
 
 
@@ -126,6 +192,20 @@
 			prevHeight      = totalHeight;
 			return totalHeight;
 		}
+		
+		
+		/**
+		 * Store on each fold a link to its adjacent siblings.
+		 *
+		 * If the Accordion's contents have been modified, this function should be called
+		 * to maintain correct tabbing order.
+		 */
+		function reindex(){
+			for(var i = 0, l = folds.length; i < l; ++i){
+				folds[i].previousFold = folds[i - 1] || null;
+				folds[i].nextFold     = folds[i + 1] || null;
+			}
+		}
 
 
 		/** Iterator variables */
@@ -153,10 +233,12 @@
 
 
 		/** Expose some methods/properties for external use. */
-		this.update = update;
-		this.folds  = folds;
+		this.update  = update;
+		this.reindex = reindex;
+		this.folds   = folds;
 
 		/** Get this happening. */
+		reindex();
 		update();
 	};
 
