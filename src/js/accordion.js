@@ -4,17 +4,17 @@
 
 	var each          = Array.prototype.forEach,
 		touchEnabled  = "ontouchstart" in document.documentElement,
-		undef,
+		UNDEF,
 
 
 		/**
 		 * Class that represents a single segment in an Accordion object's content.
 		 *
-		 * @param {HTMLElement} el - Outermost element containing both heading and collapsible content.
-		 * @param {Object} options - Auxiliary hash of options.
-		 * @param {String} options.openClass - Name of CSS class controlling each fold's visible "open" state 
-		 * @param {String} options.heading - Selector string for the fold's heading element.
-		 * @param {String} options.content - Selector string for fold's child element holding togglable content.
+		 * @param {HTMLElement} el                 - Outermost element containing both heading and collapsible content.
+		 * @param {Object}      options            - Auxiliary hash of options.
+		 * @param {String}      options.openClass  - Name of CSS class controlling each fold's visible "open" state 
+		 * @param {String}      options.heading    - Selector string for the fold's heading element.
+		 * @param {String}      options.content    - Selector string for fold's child element holding togglable content.
 		 */
 		Fold = function(el, options){
 			var options     = options || {},
@@ -70,10 +70,10 @@
 		/**
 		 * Accordion class.
 		 *
-		 * @param {HTMLElement} el - Container holding each togglable fold of content.
-		 * @param {Object} options - Auxiliary hash of options.
-		 * @param {Boolean} options.animHeight - Animate container height during transition. Potentially jolty.
-		 * @param {String} options.animClass - Name of CSS class determining animated height. Default: "anim-height"
+		 * @param {HTMLElement} el                 - Container holding each togglable fold of content.
+		 * @param {Object}      options            - Auxiliary hash of options.
+		 * @param {Boolean}     options.animHeight - Animate container height during transition. Potentially jolty.
+		 * @param {String}      options.animClass  - Name of CSS class determining animated height. Default: "anim-height"
 		 */
 		Accordion = function(el, options){
 			var folds       = [],
@@ -82,7 +82,7 @@
 
 				/** If animHeight's not been explicitly passed, derive it from the presence/absence of el's .anim-height class */
 				animHeight  = options.animHeight,
-				animHeight  = undef === animHeight ? el.classList.contains(animClass) : animHeight,
+				animHeight  = UNDEF === animHeight ? el.classList.contains(animClass) : animHeight,
 
 
 				/** Internal use */
