@@ -2,50 +2,50 @@
 	position: relative;
 	overflow: hidden;
 
-	-webkit-transition:	.3s step-start height;
-	-moz-transition:	.3s step-start height;
-	-o-transition:		.3s step-start height;
-	transition:			.3s step-start height;
+	-webkit-transition: .3s step-start height;
+	-moz-transition:    .3s step-start height;
+	-o-transition:      .3s step-start height;
+	transition:         .3s step-start height;
 }
 	.accordion.shrinking{
-		-webkit-transition-timing-function:	step-end;
-		-moz-transition-timing-function:	step-end;
-		-o-transition-timing-function:		step-end;
-		transition-timing-function:			step-end;
+		-webkit-transition-timing-function: step-end;
+		-moz-transition-timing-function:    step-end;
+		-o-transition-timing-function:      step-end;
+		transition-timing-function:         step-end;
 	}
 
 
 	/** Transitions */
 	.accordion.anim-height,
 	.accordion > li{
-		-webkit-transition:	.3s ease height, .3s ease top;
-		-moz-transition:	.3s ease height, .3s ease top;
-		-o-transition:		.3s ease height, .3s ease top;
-		transition:			.3s ease height, .3s ease top;
+		-webkit-transition: .3s ease height, .3s ease top;
+		-moz-transition:    .3s ease height, .3s ease top;
+		-o-transition:      .3s ease height, .3s ease top;
+		transition:         .3s ease height, .3s ease top;
 	}
 
 	.accordion > li{
 		position: absolute;
 		overflow: hidden;
-		top:	0;
-		left:	0;
-		right:	0;
+		top:    0;
+		left:   0;
+		right:  0;
 
 		/** Transforms */
-		-webkit-backface-visibility:	hidden;
-		-moz-backface-visibility:		hidden;
-		backface-visibility:			hidden;
+		-webkit-backface-visibility: hidden;
+		-moz-backface-visibility:    hidden;
+		backface-visibility:         hidden;
 		
-		-webkit-transform:	translateX(0);
-		-moz-transform:		translateX(0);
-		-ms-transform:		translateX(0);
-		-o-transform:		translateX(0);
-		transform:			translateX(0);
+		-webkit-transform:  translateX(0);
+		-moz-transform:     translateX(0);
+		-ms-transform:      translateX(0);
+		-o-transform:       translateX(0);
+		transform:          translateX(0);
 
 		/** Use 3D-powered accleration when possible. */
-		-webkit-transform:	translateZ(0);
-		-moz-transform:		translateZ(0);
-		-ms-transform:		translateZ(0);
-		-o-transform:		translateZ(0);
-		transform:			translateZ(0);
+		-webkit-transform:  translateZ(0);
+		-moz-transform:     translateZ(0);
+		-ms-transform:      translateZ(0);
+		-o-transform:       translateZ(0);
+		transform:          translateZ(0);
 	}

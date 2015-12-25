@@ -2,9 +2,9 @@ Function.prototype.debounce=function(limit,soon){var fn=this,limit=limit<0?0:lim
 
 
 
-var each	=	Array.prototype.forEach;
+var each        = Array.prototype.forEach;
+var accordions  = [];
 
-var accordions	=	[];
 each.call(document.querySelectorAll(".accordion"), function(el){
 	accordions.push(new Accordion(el, {
 		animHeight: false
