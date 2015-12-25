@@ -10,16 +10,20 @@
 	/**
 	 * Class that represents a single segment in an Accordion object's content.
 	 *
-	 * @param {HTMLElement} el                 - Outermost element containing both heading and collapsible content.
-	 * @param {Object}      options            - Auxiliary hash of options.
-	 * @param {String}      options.openClass  - Name of CSS class controlling each fold's visible "open" state 
-	 * @param {String}      options.heading    - Selector string for the fold's heading element.
-	 * @param {String}      options.content    - Selector string for fold's child element holding togglable content.
+	 * @param {HTMLElement} el                   - Outermost element containing both heading and collapsible content.
+	 * @param {Object}      options              - Auxiliary hash of options.
+	 * @param {String}      options.openClass    - Name of CSS class controlling each fold's visible "open" state 
+	 * @param {String}      options.heading      - Selector string for the fold's heading element.
+	 * @param {String}      options.content      - Selector string for fold's child element holding togglable content.
+	 * @param {Boolean}     options.disableAria  - Disable the addition and management of ARIA attributes.
+	 * @param {Boolean}     options.disableKeys  - Disable keyboard navigation
 	 */
 	function Fold(el, options){
 		var options     = options || {};
 		var openClass   = options.openClass || "open";
 		var onToggle    = options.onToggle;
+		var aria        = !options.disableAria;
+		var useKeyNav   = !options.disableKeys;
 
 		var open        = el.classList.contains(openClass);
 		var heading     = options.heading ? el.querySelector(options.heading) : el.firstElementChild;
@@ -44,11 +48,14 @@
 			el.style.top            = offset ? offset+"px" : "";
 			
 			/** Update ARIA states */
-			heading.setAttribute("aria-selected", open);
-			heading.setAttribute("aria-expanded", open);
-			content.setAttribute("aria-hidden",  !open);
-			content.setAttribute("tabindex",      open? 0 : -1)
+			if(aria){
+				heading.setAttribute("aria-selected", open);
+				heading.setAttribute("aria-expanded", open);
+				content.setAttribute("aria-hidden",  !open);
+			}
 			
+			/** Update tabindex */
+			useKeyNav && content.setAttribute("tabindex", open? 0 : -1);
 			
 			/** If opened, set the fold's height to fit both heading *and* content. */
 			if(open){
@@ -83,77 +90,86 @@
 		
 		
 		/** Keystroke handlers */
-		var THIS = this;
-		heading.addEventListener("keydown", function(e){
-			var fold, key;
-			switch(key = e.keyCode){
-				
-				/** Enter */
-				case 13:{
-					toggle();
-					break;
-				}
-				
-				/** Up/down arrows: Move between sections */
-				case 38:
-				case 40:{
-					if(fold = (38 === key ? THIS.previousFold : THIS.nextFold)){
-						fold.heading.focus();
-						e.preventDefault();
-						return false;
-					}
-					break;
-				}
-				
-				/** Left arrow: Close section */
-				case 37:{
+		if(useKeyNav){
+			var THIS = this;
+			heading.addEventListener("keydown", function(e){
+				var fold, key;
+				switch(key = e.keyCode){
 					
-					/** Section must be open first */
-					if(open){
-						el.classList.remove(openClass);
-						open = false;
-						if(onToggle) onToggle();
+					/** Enter */
+					case 13:{
+						toggle();
+						break;
 					}
 					
-					break;
-				}
-				
-				/** Right arrow: Open section */
-				case 39:{
-					if(!open){
-						el.classList.add(openClass);
-						open = true;
-						if(onToggle) onToggle();
+					/** Up/down arrows: Move between sections */
+					case 38:
+					case 40:{
+						if(fold = (38 === key ? THIS.previousFold : THIS.nextFold)){
+							fold.heading.focus();
+							e.preventDefault();
+							return false;
+						}
+						break;
 					}
-					break;
+					
+					/** Left arrow: Close section */
+					case 37:{
+						
+						/** Section must be open first */
+						if(open){
+							el.classList.remove(openClass);
+							open = false;
+							if(onToggle) onToggle();
+						}
+						
+						break;
+					}
+					
+					/** Right arrow: Open section */
+					case 39:{
+						if(!open){
+							el.classList.add(openClass);
+							open = true;
+							if(onToggle) onToggle();
+						}
+						break;
+					}
+					
+					/** Escape */
+					case 27:{
+						this.blur();
+						break;
+					}
 				}
-				
-				/** Escape */
-				case 27:{
-					this.blur();
-					break;
-				}
-			}
-		});
-		
-		
-		/** Set the IDs of the heading/content elements if they're blank */
-		if(!heading.id && !content.id){
-			randomID   = uniqueID("a");
-			heading.id = randomID + "-heading";
-			content.id = randomID + "-content";
+			});
 		}
 		
-		else if(!heading.id) heading.id = content.id + "-heading";
-		else if(!content.id) content.id = heading.id + "-content";
 		
-		/** Set ARIA roles/tabindex */
-		heading.setAttribute("role", "tab");
-		content.setAttribute("role", "tabpanel");
-		heading.setAttribute("aria-controls",   content.id);
-		content.setAttribute("aria-labelledby", heading.id);
-		heading.setAttribute("tabindex", 0)
-
+		/** Configure ARIA attributes */
+		if(aria){
+			
+			/** Set the IDs of the heading/content elements if they're blank */
+			if(!heading.id && !content.id){
+				randomID   = uniqueID("a");
+				heading.id = randomID + "-heading";
+				content.id = randomID + "-content";
+			}
+			
+			else if(!heading.id) heading.id = content.id + "-heading";
+			else if(!content.id) content.id = heading.id + "-content";
+			
+			/** Set ARIA roles */
+			heading.setAttribute("role", "tab");
+			content.setAttribute("role", "tabpanel");
+			heading.setAttribute("aria-controls",   content.id);
+			content.setAttribute("aria-labelledby", heading.id);
+		}
+		
+		/** Set heading's tabindex unless keyboard navigation's disabled */
+		useKeyNav && heading.setAttribute("tabindex", 0);
+		
+		
 		/** Expose some properties/methods for external use */
 		this.update  = update;
 		this.heading = heading;
@@ -165,10 +181,13 @@
 	/**
 	 * Accordion class.
 	 *
-	 * @param {HTMLElement} el                 - Container holding each togglable fold of content.
-	 * @param {Object}      options            - Auxiliary hash of options.
-	 * @param {Boolean}     options.animHeight - Animate container height during transition. Potentially jolty.
-	 * @param {String}      options.animClass  - Name of CSS class determining animated height. Default: "anim-height"
+	 * @param {HTMLElement} el                   - Container holding each togglable fold of content.
+	 * @param {Object}      options              - Auxiliary hash of options.
+	 * @param {Boolean}     options.animHeight   - Animate container height during transition. Potentially jolty.
+	 * @param {String}      options.animClass    - Name of CSS class determining animated height. Default: "anim-height"
+	 * @param {Boolean}     options.disableAria  - Disable the addition and management of ARIA attributes.
+	 * @param {Boolean}     options.disableKeys  - Disable keyboard navigation
+	 * @param {Function}    options.onToggle     - Callback triggered when a fold is toggled
 	 */
 	function Accordion(el, options){
 		var folds       = [];
@@ -182,6 +201,25 @@
 		/** Internal use */
 		var children    = el.children;
 		var prevHeight  = 0;
+		
+		
+		/** Clone a copy of the objects hash to pass to Fold instances */
+		var foldOptions = (function(source){
+			var result = {};
+			
+			for(var i in source)
+				result[i] = source[i];
+			
+			/** Callback triggered when folds are opened/closed */
+			var onToggle    = source.onToggle;
+			result.onToggle = onToggle ? function(){
+				update();
+				onToggle();
+			} : update;
+		
+			return result;
+		}(options));
+
 
 
 		/** Method to update the accordion's heights on resize */
@@ -204,7 +242,7 @@
 		 * Store on each fold a link to its adjacent siblings.
 		 *
 		 * If the Accordion's contents have been modified, this function should be called
-		 * to maintain correct tabbing order.
+		 * to maintain correct tabbing order for keyboard navigation.
 		 */
 		function reindex(){
 			for(var i = 0, l = folds.length; i < l; ++i){
@@ -219,13 +257,11 @@
 		var l = children.length;
 		
 		/** Set the container's ARIA role */
-		el.setAttribute("role", "tablist");
+		options.disableAria || el.setAttribute("role", "tablist");
 		
 		
 		/** Loop through the accordion's immediate descendants and initialise a new fold for each one */
-		for(; i < l; ++i) folds.push(new Fold(children[i], {
-			onToggle: update
-		}));
+		for(; i < l; ++i) folds.push(new Fold(children[i], foldOptions));
 
 
 		/** Update the accordion's heights if any images have loaded. */
