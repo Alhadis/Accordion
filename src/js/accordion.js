@@ -185,6 +185,7 @@
 	 * @param {Object}      options              - Auxiliary hash of options.
 	 * @param {Boolean}     options.animHeight   - Animate container height during transition. Potentially jolty.
 	 * @param {String}      options.animClass    - Name of CSS class determining animated height. Default: "anim-height"
+	 * @param {Boolean}     options.autoResize   - Automatically resize folds when viewport dimensions change. Default: true
 	 * @param {Boolean}     options.disableAria  - Disable the addition and management of ARIA attributes.
 	 * @param {Boolean}     options.disableKeys  - Disable keyboard navigation
 	 * @param {Function}    options.onToggle     - Callback triggered when a fold is toggled
@@ -196,7 +197,11 @@
 
 		/** If animHeight's not been explicitly passed, derive it from the presence/absence of el's .anim-height class */
 		var animHeight  = options.animHeight;
-		var animHeight  = UNDEF === animHeight ? el.classList.contains(animClass) : animHeight;
+		animHeight      = UNDEF === animHeight ? el.classList.contains(animClass) : animHeight;
+		
+		/** Check if autoResize hasn't been explicitly disabled (it's on by default) */
+		var autoResize  = options.autoResize;
+		autoResize      = UNDEF === autoResize ? true : autoResize;
 
 		/** Internal use */
 		var children    = el.children;
@@ -229,7 +234,7 @@
 
 			/** If we're not animating heights, add a CSS class to keep items visible during transitions. */
 			if(!animHeight && el.classList.toggle("shrinking", totalHeight < prevHeight)){
-				console.log("Height difference: " + (prevHeight - totalHeight));
+				console.info("Height difference: " + (prevHeight - totalHeight));
 			}
 			
 			el.style.height = totalHeight + "px";
@@ -272,6 +277,7 @@
 
 		/** Configure any options passed in. */
 		el.classList.toggle(animClass, animHeight);
+		autoResize && window.addEventListener("resize", update);
 
 
 		/** Expose some methods/properties for external use. */

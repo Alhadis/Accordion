@@ -7,6 +7,7 @@ var accordions  = [];
 
 each.call(document.querySelectorAll(".accordion"), function(el){
 	accordions.push(new Accordion(el, {
+		autoResize: false,
 		animHeight: false
 	}));
 });
