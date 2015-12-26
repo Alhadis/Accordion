@@ -19,6 +19,7 @@
 	 * @param {Boolean}     options.disableKeys  - Disable keyboard navigation
 	 */
 	function Fold(el, options){
+		var THIS        = this;
 		var options     = options || {};
 		var openClass   = options.openClass || "open";
 		var onToggle    = options.onToggle;
@@ -74,7 +75,7 @@
 		/** Toggle the fold's opened state */
 		function toggle(){
 			open = el.classList.toggle(openClass);
-			if(onToggle) onToggle();
+			if(onToggle) onToggle(THIS);
 		}
 		
 		heading.addEventListener(touchEnabled ? "touchend" : "click", function(e){
@@ -90,60 +91,57 @@
 		
 		
 		/** Keystroke handlers */
-		if(useKeyNav){
-			var THIS = this;
-			heading.addEventListener("keydown", function(e){
-				var fold, key;
-				switch(key = e.keyCode){
-					
-					/** Enter */
-					case 13:{
-						toggle();
-						break;
-					}
-					
-					/** Up/down arrows: Move between sections */
-					case 38:
-					case 40:{
-						if(fold = (38 === key ? THIS.previousFold : THIS.nextFold)){
-							fold.heading.focus();
-							e.preventDefault();
-							return false;
-						}
-						break;
-					}
-					
-					/** Left arrow: Close section */
-					case 37:{
-						
-						/** Section must be open first */
-						if(open){
-							el.classList.remove(openClass);
-							open = false;
-							if(onToggle) onToggle();
-						}
-						
-						break;
-					}
-					
-					/** Right arrow: Open section */
-					case 39:{
-						if(!open){
-							el.classList.add(openClass);
-							open = true;
-							if(onToggle) onToggle();
-						}
-						break;
-					}
-					
-					/** Escape */
-					case 27:{
-						this.blur();
-						break;
-					}
+		useKeyNav && heading.addEventListener("keydown", function(e){
+			var fold, key;
+			switch(key = e.keyCode){
+				
+				/** Enter */
+				case 13:{
+					toggle();
+					break;
 				}
-			});
-		}
+				
+				/** Up/down arrows: Move between sections */
+				case 38:
+				case 40:{
+					if(fold = (38 === key ? THIS.previousFold : THIS.nextFold)){
+						fold.heading.focus();
+						e.preventDefault();
+						return false;
+					}
+					break;
+				}
+				
+				/** Left arrow: Close section */
+				case 37:{
+					
+					/** Section must be open first */
+					if(open){
+						el.classList.remove(openClass);
+						open = false;
+						if(onToggle) onToggle(THIS);
+					}
+					
+					break;
+				}
+				
+				/** Right arrow: Open section */
+				case 39:{
+					if(!open){
+						el.classList.add(openClass);
+						open = true;
+						if(onToggle) onToggle(THIS);
+					}
+					break;
+				}
+				
+				/** Escape */
+				case 27:{
+					this.blur();
+					break;
+				}
+			}
+		});
 		
 		
 		/** Configure ARIA attributes */
@@ -209,21 +207,21 @@
 		
 		
 		/** Clone a copy of the objects hash to pass to Fold instances */
-		var foldOptions = (function(source){
-			var result = {};
+		var foldOptions = (function(source, accordion){
+			var result    = {};
 			
 			for(var i in source)
 				result[i] = source[i];
 			
 			/** Callback triggered when folds are opened/closed */
 			var onToggle    = source.onToggle;
-			result.onToggle = onToggle ? function(){
+			result.onToggle = onToggle ? function(fold){
 				update();
-				onToggle();
+				onToggle(fold, accordion);
 			} : update;
 		
 			return result;
-		}(options));
+		}(options, this));
 
 
 
