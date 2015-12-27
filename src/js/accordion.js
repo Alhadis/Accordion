@@ -71,18 +71,25 @@
 			}
 		};
 		
+
+		/** Define the getter/setter functions for the fold's .open property */
+		Object.defineProperty(this, "open", {
+			get: function(){ return open },
+			set: function(i){
+				if((i = !!i) !== open){
+					open = i;
+					el.classList.toggle(openClass, i);
+					if(onToggle) onToggle(THIS);
+				}
+			}
+		})
 		
-		/** Toggle the fold's opened state */
-		function toggle(){
-			open = el.classList.toggle(openClass);
-			if(onToggle) onToggle(THIS);
-		}
 		
 		heading.addEventListener(touchEnabled ? "touchend" : "click", function(e){
 			
 			/** Prevent TouchEvents triggering a change if the user's still scrolling */
 			if(e.type !== "touchend" || e.cancelable){
-				toggle();
+				THIS.open = !THIS.open;
 				e.preventDefault();
 			}
 			
@@ -97,7 +104,7 @@
 				
 				/** Enter */
 				case 13:{
-					toggle();
+					THIS.open = !THIS.open;
 					break;
 				}
 				
@@ -118,8 +125,7 @@
 					/** Section must be open first */
 					if(open){
 						el.classList.remove(openClass);
-						open = false;
-						if(onToggle) onToggle(THIS);
+						THIS.open = false;
 					}
 					
 					break;
@@ -129,8 +135,7 @@
 				case 39:{
 					if(!open){
 						el.classList.add(openClass);
-						open = true;
-						if(onToggle) onToggle(THIS);
+						THIS.open = true;
 					}
 					break;
 				}
