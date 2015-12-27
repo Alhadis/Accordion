@@ -346,6 +346,10 @@
 	}
 
 
+	/** If IE8PP exists, it means the author wants/needs IE8 support. See also: tinyurl.com/fixIE8-9 */
+	if("function" === typeof IE8PP)
+		Fold = IE8PP(Fold);
+
 
 	/** Export */
 	window.Accordion = Accordion;
