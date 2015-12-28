@@ -25,8 +25,9 @@
 		var onToggle    = options.onToggle;
 		var aria        = !options.disableAria;
 		var useKeyNav   = !options.disableKeys;
-
-		var open        = el.classList.contains(openClass);
+		var classList   = el.classList;
+		
+		var open        = classList.contains(openClass);
 		var heading     = options.heading ? el.querySelector(options.heading) : el.firstElementChild;
 		var content     = options.content ? el.querySelector(options.content) : el.lastElementChild;
 		var randomID;
@@ -78,7 +79,7 @@
 			set: function(i){
 				if((i = !!i) !== open){
 					open = i;
-					el.classList.toggle(openClass, i);
+					classList.toggle(openClass, i);
 					if(onToggle) onToggle(THIS);
 				}
 			}
@@ -124,7 +125,7 @@
 					
 					/** Section must be open first */
 					if(open){
-						el.classList.remove(openClass);
+						classList.remove(openClass);
 						THIS.open = false;
 					}
 					
@@ -134,7 +135,7 @@
 				/** Right arrow: Open section */
 				case 39:{
 					if(!open){
-						el.classList.add(openClass);
+						classList.add(openClass);
 						THIS.open = true;
 					}
 					break;
@@ -194,14 +195,34 @@
 	 * @param {Function}    options.onToggle     - Callback triggered when a fold is toggled
 	 */
 	function Accordion(el, options){
+		var THIS        = this;
 		var folds       = [];
+		var classList   = el.classList;
 		var options     = options || {};
 		var animClass   = options.animClass || "anim-height";
+		var initialised;
 
 		/** If animHeight's not been explicitly passed, derive it from the presence/absence of el's .anim-height class */
 		var animHeight  = options.animHeight;
-		animHeight      = UNDEF === animHeight ? el.classList.contains(animClass) : animHeight;
+		animHeight      = UNDEF === animHeight ? classList.contains(animClass) : animHeight;
 		
+		
+		/** Check if we're dynamically setting animHeight based on whether adjacent elements are being shoved into/out of sight */
+		if("auto" === animHeight){
+			var shouldRemoveAnim;
+			var autoAnimate = true;
+			animHeight      = true;
+			
+			/** Listener to remove animClass once accordion's bottom edge is out-of-sight */
+			el.addEventListener(transitionEnd, function(e){
+				if(shouldRemoveAnim && "height" === e.propertyName && e.target === el){
+					classList.remove(animClass);
+					shouldRemoveAnim = false;
+				}
+			});
+		}
+		
+
 		/** Check if autoResize hasn't been explicitly disabled (it's on by default) */
 		var autoResize  = options.autoResize;
 		autoResize      = UNDEF === autoResize ? true : autoResize;
@@ -226,7 +247,7 @@
 			} : update;
 		
 			return result;
-		}(options, this));
+		}(options, THIS));
 
 
 
@@ -234,9 +255,15 @@
 		function update(){
 			for(var totalHeight = 0, i = 0, l = folds.length; i < l; ++i)
 				totalHeight += folds[i].update(totalHeight);
+			
+			/** Check if the visibility of surrounding content will be affected by the accordion's new state */
+			if(autoAnimate && initialised){
+				var boundingBox = el.getBoundingClientRect();
+				THIS.animHeight = boundingBox.bottom + (totalHeight - (boundingBox.bottom - boundingBox.top)) < window.innerHeight;
+			}
 
 			/** If we're not animating heights, add a CSS class to keep items visible during transitions. */
-			if(!animHeight && el.classList.toggle("shrinking", totalHeight < prevHeight)){
+			if(!animHeight && classList.toggle("shrinking", totalHeight < prevHeight)){
 				console.info("Height difference: " + (prevHeight - totalHeight));
 			}
 			
@@ -279,18 +306,44 @@
 
 
 		/** Configure any options passed in. */
-		el.classList.toggle(animClass, animHeight);
+		classList.toggle(animClass, animHeight);
 		autoResize && window.addEventListener("resize", update);
 
 
 		/** Expose some methods/properties for external use. */
-		this.update  = update;
-		this.reindex = reindex;
-		this.folds   = folds;
-
+		Object.defineProperties(THIS, {
+			
+			/** Methods */
+			update:  {value: update},
+			redinex: {value: reindex},
+			
+			
+			/** Read-only references to DOM elements */
+			folds:   {value: folds},
+			el:      {value: el},
+			
+			
+			/** Get/set whether animated heights are enabled */
+			animHeight: {
+				get: function(){ return animHeight },
+				set: function(i){
+					if((i = !!i) !== animHeight){
+						animHeight = i;
+						
+						if(i) classList.add(animClass);
+						
+						/** Wait until the transition's finished before disabling animated height */
+						else shouldRemoveAnim = true;
+					}
+				}
+			}
+		});
+		
+		
 		/** Get this happening. */
 		reindex();
 		update();
+		initialised = true;
 	};
 
 
@@ -346,9 +399,18 @@
 	}
 
 
+	/** Name of the onTransitionEnd event supported by this browser. */
+	var transitionEnd = (function(o){
+		for(var names = "transitionend webkitTransitionEnd oTransitionEnd otransitionend".split(" "), i = 0; i < 4; ++i)
+			if("on"+names[i].toLowerCase() in window) return names[i];
+		return names[0];
+	}());
+	
+	
 	/** If IE8PP exists, it means the author wants/needs IE8 support. See also: tinyurl.com/fixIE8-9 */
 	if("function" === typeof IE8PP)
-		Fold = IE8PP(Fold);
+		Accordion = IE8PP(Accordion),
+		Fold      = IE8PP(Fold);
 
 
 	/** Export */
