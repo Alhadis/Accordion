@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<!--[if lte IE 9]><script src="assets/ie.lteIE9.js"></script><![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="initial-scale=1, minimum-scale=1" />
+<title>Animated Height Switching</title>
+
+<link rel="stylesheet" type="text/css" href="assets/reset.css" />
+<link rel="stylesheet" type="text/css" href="../accordion.css" />
+<style>
+html{
+	background: #000;
+}
+aside{
+	color: #aaa;
+	max-width: 30em;
+	margin: 0 auto;
+}
+	aside > img{
+		max-height: 10em;
+		margin-right: 1em;
+		float: left;
+	}
+
+/** Demo styling, not necessary for the accordion's final effect. */
+.accordion{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	max-width: 30em;
+	margin: 1em auto;
+}
+	.accordion > li{
+	}
+		.accordion > li > h3{
+			background: #2c4d2b;
+			color: #fff;
+			padding: .5em;
+			cursor: pointer;
+			border-top: 5px solid #000;
+			text-shadow: 0 1px 1px #000;
+
+			-webkit-user-select:  none;
+			-moz-user-select:     none;
+			user-select:          none;
+		}
+			.accordion > li > h3:focus{
+				background: #52964f;
+			}
+
+		.accordion > li > .fold{
+			background: #fff;
+			padding: 1em;
+		}
+
+		/** Align fruit graphics/demo content */
+		.accordion img{
+			max-width: 20em;
+			margin: 0 1.5em 1em 0;
+			float: left;
+		}
+			.accordion img + p{
+				margin-top: 0;
+			}
+</style>
+</head>
+
+
+<body>
+	
+	<h2>Trees</h2>
+	<ul class="accordion">
+		<li>
+			<h3>Ash</h3>
+			<div class="fold">
+				<img src="assets/img/ash.jpg" alt="Ash" />
+				<p><b>Fraxinus</b>, /&#x02C8;fr&aelig;ks&#616;n&#601;s/, English name <b>Ash</b>, is a genus of flowering plants in the olive and lilac family, Oleaceae. It contains 45-65 species of usually medium to large trees, mostly deciduous though a few subtropical species are evergreen. The genus is widespread across much of Europe, Asia and North America.</p>
+				<p>The tree's common English name, "ash", goes back to the Old English æsc, while the generic name originated in Latin. Both words also mean "spear" in their respective languages. The leaves are opposite (rarely in whorls of three), and mostly pinnately compound, simple in a few species. The seeds, popularly known as "keys" or "helicopter seeds", are a type of fruit known as a samara. Most Fraxinus species are dioecious, having male and female flowers on separate plants; if grown as an ornamental and both sexes are present, ashes can cause a considerable litter problem with their seeds. Rowans or mountain ashes have leaves and buds superficially similar to those of true ashes but belong to the unrelated genus Sorbus in the rose family.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Birch</h3>
+			<div class="fold">
+				<img src="assets/img/birch.jpg" alt="Birch" />
+				<p><b>Birch</b> is a thinleaved deciduous hardwood tree of the genus Betula (/&#x02C8;b&#603;tj&#650;l&#601;/), in the family Betulaceae, which also includes alders, hazels, and hornbeams, and is closely related to the beech/oak family, Fagaceae. The genus Betula contains 30 to 60 known taxa of which 11 are on the IUCN 2011 Green List of Threatened Species. They are typically rather short-lived pioneer species widespread in the Northern Hemisphere, particularly in northern temperate and boreal climates.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Cypress</h3>
+			<div class="fold">
+				<img src="assets/img/cypress.jpg" alt="Cypress" />
+				<p><b>Cypress</b> is the name applied to many plants in the cypress family Cupressaceae, which is a conifer of northern temperate regions. Most cypress species are trees, while a few are shrubs. Cupressus sempervirens is famous for its longevity, and has been a popular garden plant for thousands of years. The word cypress is derived from Old French cipres, which was imported from Latin cypressus the latinisation of the Greek &kappa;&upsilon;&pi;&#940;&rho;&iota;&sigma;&sigma;&omicron;&sigma; (kyparissos).</p>
+				<p>The Cupressaceae family also contains 13-16 other genera (not listed above) that do not bear cypress in their common names. The word cypress is also used as a descriptor for the angiosperm vine in the bindweed family Convolvulaceae, known as the cypress vine (Ipomoea quamoclit). The plant called "summer cypress" is Bassia scoparia (Amaranthaceae).</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Date Palm</h3>
+			<div class="fold">
+				<img src="assets/img/date.jpg" alt="Date Palm" />
+				<p>Phoenix dactylifera (date or <b>date palm</b>) is a flowering plant species in the palm family Arecaceae, cultivated for its edible sweet fruit. Although its place of origin is unknown because of long cultivation, it probably originated from lands around Iraq. The species is widely cultivated and is naturalised in many tropical and subtropical regions worldwide.</p>
+				<p>Phoenix dactylifera grows 70-75 feet (21-23 m) in height, growing singly or forming a clump with several stems from a single root system. The leaves are 4-6 metres (13-20 ft) long, with spines on the petiole, and pinnate, with about 150 leaflets; the leaflets are 30 cm (12 in) long and 2 cm (0.79 in) wide. The full span of the crown ranges from 6-10 m (20-33 ft).</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Elm</h3>
+			<div class="fold">
+				<img src="assets/img/elm.jpg" alt="Elm" />
+				<p><b>Elms</b> are deciduous and semi-deciduous trees comprising the genus Ulmus in the plant family Ulmaceae. The genus first appeared in the Miocene geological period about 20 million years ago, originating in what is now central Asia. These trees flourished and spread over most of the Northern Hemisphere, inhabiting the temperate and tropical-montane regions of North America and Eurasia, presently ranging southward across the Equator into Indonesia.</p>
+				<p>Elms are components of many kinds of natural forests. Moreover, during the 19th and early 20th centuries many species and cultivars were also planted as ornamental street, garden, and park trees in Europe, North America, and parts of the Southern Hemisphere, notably Australasia. Some individual elms reached great size and age. However, in recent decades, most mature elms of European or North American origin have died from Dutch elm disease, caused by a microfungus dispersed by bark beetles. In response, disease-resistant cultivars have been developed, capable of restoring the elm to forestry and landscaping.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Fir</h3>
+			<div class="fold">
+				<img src="assets/img/fir.jpg" alt="Fir" />
+				<p><b>Firs</b> (Abies) are a genus of 48-56 species of evergreen coniferous trees in the family Pinaceae. They are found through much of North and Central America, Europe, Asia, and North Africa, occurring in mountains over most of the range. Firs are most closely related to the genus Cedrus (cedar). Douglas firs are not true firs, being of the genus Pseudotsuga.</p>
+				<p>They are large trees, reaching heights of 10-80 m (33-262 ft) tall and trunk diameters of 0.5-4 m (1 ft 8 in-13 ft 1 in) when mature. Firs can be distinguished from other members of the pine family by the unique attachment of their needle-like leaves and by their different cones.</p>
+				<p>Identification of the different species is based on the size and arrangement of the leaves, the size and shape of the cones, and whether the bract scales of the cones are long and exserted, or short and hidden inside the cone.</p>
+				<p>Firs can be distinguished from other members of the pine family by the unique attachment of their needle-like leaves to the twig by a base that resembles a small suction cup.</p>
+				<p>The leaves are significantly flattened, sometimes even looking like they are pressed, as in A. sibirica.</p>
+				<p>The leaves have two whitish strips on the bottom, each of which is formed by wax-covered stomatal bands. The upper surface of the leaves usually is uniformly green and shiny, without stomata or only with few at their tips, visible as whitish spots. Some of the species however have the upper surface of leaves dull, grey-green, bluish-grey to silvery, coated by wax with variable number of stomatal bands, and not always continuous. An example species with shiny green leaves is A. alba, and an example species with dull waxy leaves is A. concolor.</p>
+				<p>The tips of leaves are usually more or less notched (as in A. firma), but sometimes rounded or dull (as in A. concolor, A. magnifica) or sharp and prickly (as in A. bracteata, A. cephalonica, A. holophylla). The leaves of young plants are usually sharper.</p>
+				<p>The way they spread from the shoot is very diverse, only in some species comb-shaped, with the leaves arranged on two sides, flat (A. alba)</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Gumtree</h3>
+			<div class="fold">
+				<img src="assets/img/gumtree.jpg" alt="Gumtree" />
+				<p><b>Eucalyptus</b> /&#716;ju&#720;k&#601;&#712;l&#618;pt&#601;s/ L'Heritier 1789 is a diverse genus of flowering trees and shrubs (including a distinct group with a multiple-stem mallee growth habit) in the myrtle family, Myrtaceae. Members of the genus dominate the tree flora of Australia. The more than 700 species of eucalyptus are mostly native to Australia, and a very small number are found in adjacent areas of New Guinea and Indonesia. One species, Eucalyptus deglupta, ranges as far north as the Philippines. Only 15 species occur outside Australia, with just nine of these not occurring in Australia. Species of eucalyptus are cultivated widely in the tropical and temperate world, including the Americas, Europe, Africa, the Mediterranean Basin, the Middle East, China, and the Indian subcontinent, though most species do not tolerate frost.</p>
+				<p>Eucalyptus is one of three similar genera that are commonly referred to as "eucalypts", the others being Corymbia and Angophora. Many species, but far from all, are known as gum trees because they exude copious kino from any break in the bark (e.g., scribbly gum). The generic name is derived from the Greek words &epsilon;&upsilon; (eu) "well" and &kappa;&alpha;&lambda;&#973;&pi;&tau;&omega; (kalýpto) "to cover", referring to the operculum on the calyx that initially conceals the flower.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Hemlock</h3>
+			<div class="fold">
+				<img src="assets/img/hemlock.jpg" alt="Hemlock" />
+				<p>Tsuga (/&#x02C8;su&#720;&#609;&#601;/, from Japanese: &#x6802; (&#x30C4;&#x30AC;), the name of Tsuga sieboldii) is a genus of conifers in the pine family Pinaceae. The common name <b>hemlock</b> is derived from a perceived similarity in the smell of its crushed foliage to that of the unrelated plant poison hemlock. Unlike the latter, Tsuga species are not poisonous.</p>
+				<p>Eight to ten species are within the genus (depending on the authority), with four species occurring in North America and four to six in eastern Asia.</p>
+				<p>They are medium-sized to large evergreen trees, ranging from 10-60 m (33-197 ft) tall, with a conical to irregular crown, the latter occurring especially in some of the Asian species. The leading shoots generally droop. The bark is scaly and commonly deeply furrowed, with the colour ranging from grey to brown. The branches stem horizontally from the trunk and are usually arranged in flattened sprays that bend downward towards their tips. Short spur shoots, which are present in many gymnosperms, are weakly to moderately developed. The young twigs, as well as the distal portions of stem, are flexible and often pendent. The stems are rough due to pulvini that persist after the leaves fall. The winter buds are ovoid or globose, usually rounded at the apex and not resinous. The leaves are flattened to slightly angular and range from 5-35 mm long and 1-3 mm broad. They are borne singly and are arranged spirally on the stem; the leaf bases are twisted so the leaves lie flat either side of the stem or more rarely radially. Towards the base, the leaves narrow abruptly to a petiole set on a forward-angled pulvinus. The petiole is twisted at the base so it is almost parallel with the stem. The leaf apex is either notched, rounded, or acute. The undersides have two white stomatal bands (in T. mertensiana they are inconspicuous) separated by an elevated midvein. The upper surface of the leaves lack stomata, except in T. mertensiana. They have one resin canal that is present beneath the single vascular bundle.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Ironbark</h3>
+			<div class="fold">
+				<img src="assets/img/ironbark.jpg" alt="Ironbark" />
+				<p><b>Ironbark</b> is a common name of a number of species in three taxonomic groups within the genus Eucalyptus that have dark, deeply furrowed bark.</p>
+				<p>Instead of being shed annually as in many of the other species of Eucalyptus, the dead bark accumulates on the trees, forming the fissures. It becomes rough after drying out and becomes impregnated with kino, a dark red tree sap exuded by the tree. The bark is resistant to fire and heat and protects the living tissue within the trunk and branches from fire. In cases of extreme fire, where leaves and shoots are removed, the protective bark aids in protecting epicormic buds which allow the tree to reshoot.</p>
+				<p>The bug shoe is a length of ironbark on the bottom of a ship that goes on the bottom of the skeg to protect it from shipworms.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Juniper</h3>
+			<div class="fold">
+				<img src="assets/img/juniper.jpg" alt="Juniper" />
+				<p>Junipers are coniferous plants in the genus Juniperus /d&#658;u&#720;&#712;n&#618;p&#601;r&#601;s/ of the cypress family Cupressaceae. Depending on taxonomic viewpoint, between 50 and 67 species of juniper are widely distributed throughout the Northern Hemisphere, from the Arctic, south to tropical Africa in the Old World, and to the mountains of Central America and Ziarat Pakistan. The highest-known Juniper forest occurs at altitude of 4,900 metres in south-eastern Tibet and the northern Himalayas, creating one of the highest tree-lines on earth.</p>
+				<p>Junipers vary in size and shape from tall trees, 20-40 m (66-131 ft) tall, to columnar or low spreading shrubs with long trailing branches. They are evergreen with needle-like and/or scale-like leaves. They can be either monoecious or dioecious. The female seed cones are very distinctive, with fleshy, fruit-like coalescing scales which fuse together to form a "berry"-like structure, 4-27 mm (0.16-1.06 in) long, with 1-12 unwinged, hard-shelled seeds. In some species these "berries" are red-brown or orange but in most they are blue; they are often aromatic and can be used as a spice. The seed maturation time varies between species from 6-18 months after pollination. The male cones are similar to those of other Cupressaceae, with 6-20 scales.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>K&#333;whai</h3>
+			<div class="fold">
+				<img src="assets/img/kowhai.jpg" alt="K&#333;whai" />
+				<p><b>K&#333;whai</b> are small, woody legume trees in the genus Sophora native to New Zealand. There are eight species, Sophora microphylla and S. tetraptera being the most recognised as large trees. Their natural habitat is beside streams and on the edges of forest, in lowland or mountain open areas. K&#333;whai trees grow throughout the country and are a common feature in New Zealand gardens. Outside of New Zealand, k&#333;whai tend to be restricted to mild temperate maritime climates.</p>
+				<p>The word k&#333;whai is also used in the M&#257;ori language as a colour term, because of the yellow colour of the flowers.</p>
+				<p>Despite having no official status as such, the blooms of the k&#333;whai are widely regarded as being New Zealand's national flower.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Larch</h3>
+			<div class="fold">
+				<img src="assets/img/larch.jpg" alt="Larch" />
+				<p>Larches are conifers in the genus Larix, in the family Pinaceae. Growing from 20 to 45 m tall (65 to 147 ft), they are native to much of the cooler temperate northern hemisphere, on lowlands in the north and high on mountains further south. Larches are among the dominant plants in the immense boreal forests of Russia, Canada, and Scandinavia.</p>
+				<p>Although a conifer, the larch is a deciduous tree and loses its leaves in the autumn. The shoots are dimorphic, with growth divided into long shoots typically 10-50 centimetres long and bearing several buds, and short shoots only 1-2 mm long with only a single bud. The leaves are needle-like, 2-5 centimetres long, slender (under 1 cm wide). They are borne singly, spirally arranged on the long shoots, and in dense clusters of 20-50 needles on the short shoots. The needles turn yellow and fall in the late autumn, leaving the trees leafless through the winter.</p>
+				<p>Larch cones are erect, small, 1-9 cm long, green or purple, ripening brown 5-8 months after pollination; in about half the species the bract scales are long and visible, and in the others, short and hidden between the seed scales. Those native to northern regions have small cones (1-3 cm) with short bracts, with more southerly species tending to have longer cones (3-9 cm), often with exserted bracts, with the longest cones and bracts produced by the southernmost species, in the Himalayas.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Maple</h3>
+			<div class="fold">
+				<img src="assets/img/maple.jpg" alt="Maple" />
+				<p>Acer /&#712;e&#618;s&#601;r/ is a genus of trees or shrubs commonly known as <b>maple</b>. There are approximately 128 species, most of which are native to Asia, with a number also appearing in Europe, northern Africa, and North America. Only one species, Acer laurinum, extends to the Southern Hemisphere. The type species of the genus is the sycamore maple, Acer pseudoplatanus, the most common maple species in Europe.</p>
+				<p>Most maples are trees growing to 10-45 m (33-148 ft) height. Others are shrubs less than 10 metres tall with a number of small trunks originating at ground level. Most species are deciduous, and many are renowned for their autumn leaf colour, but a few in southern Asia and the Mediterranean region are evergreen. Most are shade-tolerant when young and are often riparian, understory, or pioneer species rather than climax overstory trees with a few exceptions such as Sugar Maple. Many of the root systems are typically dense and fibrous, inhibiting the growth of other vegetation underneath them. A few species, notably Acer cappadocicum, frequently produce root sprouts, which can develop into clonal colonies.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Nutmeg Yew</h3>
+			<div class="fold">
+				<img src="assets/img/nutmeg-yew.jpg" alt="Nutmeg Yew" />
+				<p>Torreya nucifera is a slow-growing, coniferous tree native to southern Japan and to South Korea's Jeju Island. It is also called kaya (&#x69A7;) Japanese torreya or Japanese nutmeg-yew.</p>
+				<p>It grows to 15-25 m tall with a trunk up to 1.5 m diameter. The leaves are evergreen, needle-like, 2-3 cm long and 3 mm broad, with a sharply spined tip and two whitish stomatal bands on the underside; they are spirally arranged, but twisted at the base to lie horizontally either side of the stem. It is subdioecious, with individual trees producing either mostly male or mostly female cones, but usually with at least some cones of the other sex present. The male cones are globular, 5-6 mm diameter, in a double row along the underside of a shoot. The female cones are borne in clusters of three to eight together, maturing in 18-20 months to a single seed surrounded by a fleshy layer, 2 cm long and 1.5 cm broad.</p>
+				<p>Its wood is prized for the construction of Go boards and Shogi boards because of its beautiful yellow-gold colour, fine and uniform ring texture, and the sonic quality of the click of a stone on its surface. The tree is protected in Japan because of its scarcity due to past overcutting. Ancient kaya trees have to die before they can be harvested to make thick Go boards, which makes them extremely expensive; the finest ones can cost over $19,000. Shin-kaya ("new kaya" in Japanese), imitation kaya, is usually Alaskan, Tibetan or Siberian white spruce, which has become somewhat popular for cheaper equipment due to the scarcity of kaya trees. Go bowls can also be made of kaya.</p>
+				<p>In Japanese esoteric buddhism like Shingon, the leaves of the tree as well as the oil extracted have ritual uses. The leaves of the tree represent flowers and the oil from the tree is burnt as a lamp during a long meditation practice known as Morning Star meditation.</p>
+				<p>The seeds are edible, and also pressed for their vegetable oil content.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Oak</h3>
+			<div class="fold">
+				<img src="assets/img/oak.jpg" alt="Oak" />
+				<p>An oak is a tree or shrub in the genus Quercus (/&#712;kw&#604;rk&#601;s/; Latin "oak tree") of the beech family, Fagaceae. There are approximately 600 extant species of oaks. The common name "oak" may also appear in the names of species in related genera, notably Lithocarpus. The genus is native to the Northern Hemisphere, and includes deciduous and evergreen species extending from cool temperate to tropical latitudes in the Americas, Asia, Europe, and North Africa. North America contains the largest number of oak species, with approximately 90 occurring in the United States. Mexico has 160 species, of which 109 are endemic. The second greatest centre of oak diversity is China, which contains approximately 100 species.</p>
+				<p>Oaks have spirally arranged leaves, with lobate margins in many species; some have serrated leaves or entire leaves with smooth margins. Many deciduous species are marcescent, not dropping dead leaves until spring. In spring, a single oak tree produces both male flowers (in the form of catkins) and small female flowers. The fruit is a nut called an acorn, borne in a cup-like structure known as a cupule; each acorn contains one seed (rarely two or three) and takes 6-18 months to mature, depending on species. The live oaks are distinguished for being evergreen, but are not actually a distinct group and instead are dispersed across the genus.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Pine</h3>
+			<div class="fold">
+				<img src="assets/img/pine.jpg" alt="Pine" />
+				<p>Pines are conifer trees in the genus Pinus /&#712;pi&#720;nu&#720;s/, in the family Pinaceae. They are the only genus in the subfamily Pinoideae. The Plant List compiled by the Royal Botanic Gardens, Kew and Missouri Botanical Garden accepts 126 species names of pines as current, together with 35 unresolved species and many more synonyms.</p>
+				<p>The modern English name pine derives from Latin pinus which some have traced to the Indo-European base *p&#299;t- &lsquo;resin&rsquo; (source of English pituitary). In the past (pre-19th century) they were often known as fir, from Old Norse fura, by way of Middle English firre. The Old Norse name is still used for pines in some modern north European languages, in Danish fyr, in Norwegian fura/fure/furu, Swedish fura/furu, Dutch vuren, and Föhre in German, but in modern English, fir is now restricted to fir (Abies) and Douglas-fir (Pseudotsuga).</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Quiver Tree</h3>
+			<div class="fold">
+				<img src="assets/img/quiver-tree.jpg" alt="Quiver Tree" />
+				<p>Aloe dichotoma (the quiver tree or kokerboom) is a tall, branching species of aloe, indigenous to Southern Africa, specifically in the Northern Cape region of South Africa, and parts of Southern Namibia.</p>
+				<p>Known as Choje to the indigenous San people, the quiver tree gets its English common name from the San people practice of hollowing out the tubular branches of Aloe dichotoma to form quivers for their arrows. The species name "dichotoma" refers to how the stems repeatedly branch into two ("dichotomous" branching) as the plant grows.</p>
+				<p>The World Checklist of Selected Plant Families currently recognises three subspecies, A. dichotoma subsp. dichotoma, A. dichotoma subsp. pillansii and A. dichotoma subsp. ramosissima.</p>
+				<p>These are also treated as three separate species, A. dichotoma, A. pillansii and A. ramosissima, which are then grouped within the Dracoaloe subsection of the genus Aloe. All inhabit the same arid areas of the Richtersveld and the Namib Desert around the South African-Namibian border. Treated as separate species, the three have been given different ratings on the IUCN Red List of Threatened Species: 'vulnerable' for A. dichotoma, 'critically endangered' for A. pillansii and 'endangered' for A. ramossisima.</p>
+				<p>The three subspecies can be distinguished. In A. dichotoma subsp. pillansii, the inflorescences hang from below the lowest leaves, rather than growing erect. A. dichotoma subsp. ramosissima is considerably smaller - rarely reaching more than 2 m in height - and assumes a more shrub-like shape. While there is a gradation between tree-like dichotoma and the shrubby ramosissima, the relatively unique pillansii population is separated by a different flowering time and therefore does not interbreed with the other two subspecies.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Redwood</h3>
+			<div class="fold">
+				<img src="assets/img/redwood.jpg" alt="Redwood" />
+				<p>Sequoia sempervirens /s&#616;&#712;k&#596;&#618;.&#601; s&#603;mp&#601;r&#712;va&#618;&#601;r&#601;nz/ is the sole living species of the genus Sequoia in the cypress family Cupressaceae (formerly treated in Taxodiaceae). Common names include coast redwood, coastal redwood and California redwood. It is an evergreen, long-lived, monoecious tree living 1,200-1,800 years or more. This species includes the tallest living trees on Earth, reaching up to 379 feet (115.5 m) in height (without the roots) and up to 29.2 feet (8.9 m) in diameter at breast height / dbh. These trees are also among the oldest living things on Earth. Before commercial logging and clearing began by the 1850s, this massive tree occurred naturally in an estimated 2,100,000 acres (8,500 km2) along much of coastal California (excluding southern California where rainfall is not sufficient) and the southwestern corner of coastal Oregon within the United States. An estimated 70% or more of ancient old-growth redwood trees have been displaced by environmental changes or cut down.</p>
+				<p>The name sequoia sometimes refers to the subfamily Sequoioideae, which includes S. sempervirens along with Sequoiadendron (giant sequoia) and Metasequoia (dawn redwood). On its own, the term redwood usually refers to the coast redwood, which is covered in this article, and not to the other two species.</p>
+				<p>Scottish botanist David Don described the redwood as the evergreen taxodium (Taxodium sempervirens) in his colleague Aylmer Bourke Lambert's 1824 work A description of the genus Pinus. Austrian botanist Stephan Endlicher erected the genus Sequoia in his 1847 work Synopsis coniferarum, giving the redwood its current binomial name of Sequoia sempervirens. The redwood is one of three living species, each in its own genus, in the subfamily Sequoioideae. Molecular studies have shown the three to be each other's closest relatives, generally with the redwood and giant sequoia (Sequoiadendron giganteum) as each other's closest relatives. However, Yang and colleagues in 2010 queried the polyploid state of the redwood and speculate that it may have arisen as an ancient hybrid between ancestors of the giant sequoia and dawn redwood (Metasequoia). Using two different single copy nuclear genes, LFY and NLY, to generate phylogenetic trees, they found that Sequoia was clustered with Metasequoia in the tree generated using the LFY gene, but with Sequoiadendron in the tree generated with the NLY gene. Further analysis strongly supported the hypothesis that Sequoia was the result of a hybridisation event involving Metasequoia and Sequoiadendron. Thus, Yang and colleagues hypothesise that the inconsistent relationships among Metasequoia, Sequoia, and Sequoiadendron could be a sign of reticulate evolution (in which two species hybridise and give rise to a third) among the three genera. However, the long evolutionary history of the three genera (the earliest fossil remains being from the Jurassic) make resolving the specifics of when and how Sequoia originated once and for all a difficult matter-especially since it in part depends on an incomplete fossil record.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Sycamore</h3>
+			<div class="fold">
+				<img src="assets/img/sycamore.jpg" alt="Sycamore" />
+				<p>Ficus sycomorus, called the sycamore fig or the fig-mulberry (because the leaves resemble those of the mulberry), <b>sycamore</b>, or sycomore, is a fig species that has been cultivated since ancient times. (The term sycamore spelled with an A has been used for a variety of plants and is widely used in England to refer to the Great Maple, Acer pseudoplatanus. For clarity, this species of fig is usually exclusively referred to as "sycomore", with an O rather than an A as the second vowel.)</p>
+				<p>Ficus sycomorus is native to Africa south of the Sahel and north of the Tropic of Capricorn, also excluding the central-west rainforest areas. It also grows naturally in Lebanon, whose famous Gemmayzeh Street is derived from the tree's Arabic name, Gemmayz; in the southern Arabian Peninsula; in Cyprus; in very localised areas in Madagascar; and as a naturalised species in Israel and Egypt. In its native habitat, the tree is usually found in rich soils along rivers and in mixed woodlands.</p>
+				<p>Ficus sycomorus grows to 20 m tall and has a considerable spread as can be seen from the photograph below right, with a dense round crown of spreading branches[clarification needed]. The leaves are heart-shaped with a round apex, 14 cm long by 10 cm wide, and arranged spirally around the twig. They are dark green above and lighter with prominent yellow veins below, and both surfaces are rough to the touch. The petiole is 0.5-3 cm long and pubescent. The fruit is a large edible fig, 2-3 cm in diameter, ripening from buff-green to yellow or red. They are borne in thick clusters on long branchlets or the leaf axil. Flowering and fruiting occurs year-round, peaking from July to December. The bark is green-yellow to orange and exfoliates in papery strips to reveal the yellow inner bark. Like all other figs, it contains a latex.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Teak</h3>
+			<div class="fold">
+				<img src="assets/img/teak.jpg" alt="Teak" />
+				<p><b>Teak</b> (/tik/) (Tectona grandis) is a tropical hardwood species placed in the family Lamiaceae. Tectona grandis is a large, deciduous tree that occurs in mixed hardwood forests. It has small, fragrant white flowers and papery leaves that are often hairy on the lower surface. It is sometimes known as the "Burmese Teak ( &#4121;&#4156;&#4116;&#4154;&#4121;&#4140;&#4151;&#4096;&#4155;&#4157;&#4116;&#4154;&#4152; )". Teak wood has a leather-like smell when it is freshly milled. Teak timber is particularly valued for its durability and water resistance, and is used for boat building, exterior construction, veneer, furniture, carving, turnings, and other small wood projects. Tectona grandis is native to south and southeast Asia, mainly India, Sri Lanka, Indonesia, Malaysia, Thailand, Myanmar and Bangladesh but is naturalised and cultivated in many countries in Africa and the Caribbean. Myanmar's teak forests account for nearly half of the world naturally occurring teak. Molecular studies show that there are two centres of genetic origin of teak; one in India and the other in Myanmar and Laos. "CP Teak" ("Central Province" Teak) is a description of teak from central states of India. "Nagpur Teak" is another regional Indian teak.</p>
+				<p>The word teak comes from Tamil "tekku" (&#2980;&#3015;&#2965;&#3021;&#2965;&#3009;), Malayalam word thekku (&#3364;&#3399;&#3349;&#3405;&#3349;&#3393;&#3405;) via the Portuguese teca. The plant is known as Thekka (&#3501;&#3546;&#3482;&#3530;&#3482;) in Sinhala by Sri Lankan people.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Upas</h3>
+			<div class="fold">
+				<img src="assets/img/upas.jpg" alt="Upas" />
+				<p>Antiaris toxicaria is a tree in the mulberry and fig family, Moraceae. It is the only species currently recognised in the genus Antiaris. It has a remarkably wide distribution in tropical regions, occurring in Australia, tropical Asia, tropical Africa, Indonesia, Philippines, Tonga, and various other tropical islands. Its seeds are spread by various birds and bats and it is not clear how many of the populations are essentially invasive. The species is of interest as a source of wood, bark cloth, and pharmacological or toxic substances.</p>
+				<p>The name antiaris is derived directly from the Javanese language name for it: ancar (obsolete Dutch-era spelling: antjar). There are several other botanical names (synonyms): Antiaris africana Engl., the Antiaris macrophylla R.Br. and the Antiaris welwitschii Engl..</p>
+				<p>Commonly used local names include: In English it may be called bark cloth tree, antiaris, false iroko, false mvule or upas tree. In the Javanese language it is known as the upas or ancar, in the Indonesian language as bemu. In the related languages of the Philippines Filipino upas, and Malaysia Malaysian as Ipoh or ancar. In Thai it is the &#3618;&#3634;&#3591;&#3609;&#3656;&#3629;&#3591; (yangnong). In Mandinka, it is the jafo and in Wolof the kan or man.</p>
+				<p>The Chinese of Hainan Island, refer to the tree as the "Poison Arrow Tree" (Chinese: &#31661;&#27602;&#26408;; pinyin: Jiàndú Mù) because its latex was smeared on arrowheads in ancient times by the Li people for use in hunting and warfare.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Viburnum</h3>
+			<div class="fold">
+				<img src="assets/img/viburnum.jpg" alt="Viburnum" />
+				<p><b>Viburnum</b> is a genus of about 150-175 species of shrubs or (in a few species) small trees in the moschatel family, Adoxaceae. Its current classification is based on molecular phylogeny. It was previously included in the family Caprifoliaceae.</p>
+				<p>The member species are native throughout the temperate Northern Hemisphere, with a few species extending into tropical montane regions in South America, Russia, and southeast Asia. In Africa, the genus is confined to the Atlas Mountains. In Ukraine, it is seen as a national symbol.</p>
+				<p>The generic name originated in Latin, where it referred to V. lantana.</p>
+				<p>The leaves are opposite, simple, and entire, toothed or lobed; cool temperate species are deciduous, while most of the warm temperate species are evergreen. Some species are densely hairy on the shoots and leaves, with star-shaped hairs.</p>
+				<p>The flowers are produced in corymbs 5-15 cm across, each flower white to cream or pink, small, 3-5 mm across, with five petals, strongly fragrant in some species. The gynoecium has three connate carpels with the nectary on top of the gynoecium. Some species also have a fringe of large, showy sterile flowers round the perimeter of the corymb to act as a pollinator target.</p>
+				<p>The fruit is a spherical, oval, or somewhat flattened drupe, red to purple, blue, or black, and containing a single seed; some are edible for humans, but many others are mildly poisonous. The leaves are eaten by the larvae of many Lepidoptera species.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Willow</h3>
+			<div class="fold">
+				<img src="assets/img/willow.jpg" alt="Willow" />
+				<p><b>Willows</b>, also called sallows, and osiers, form the genus Salix, around 400 species of deciduous trees and shrubs, found primarily on moist soils in cold and temperate regions of the Northern Hemisphere. Most species are known as willow, but some narrow-leaved shrub species are called osier, and some broader-leaved species are referred to as sallow (from Old English sealh, related to the Latin word salix, willow). Some willows (particularly arctic and alpine species) are low-growing or creeping shrubs; for example, the dwarf willow (Salix herbacea) rarely exceeds 6 cm (2.4 in) in height, though it spreads widely across the ground.</p>
+				<p>Willows all have abundant watery bark sap, which is heavily charged with salicylic acid, soft, usually pliant, tough wood, slender branches, and large, fibrous, often stoloniferous roots. The roots are remarkable for their toughness, size, and tenacity to life, and roots readily grow from aerial parts of the plant.</p>
+				<p>The leaves are typically elongated, but may also be round to oval, frequently with serrated edges. Most species are deciduous; semievergreen willows; coriaceous leaves are rare, e.g. Salix micans and S. australior in the eastern Mediterranean. All the buds are lateral; no absolutely terminal bud is ever formed. The buds are covered by a single scale. Usually, the bud scale is fused into a cap-like shape, but in some species it wraps around and the edges overlap. The leaves are simple, feather-veined, and typically linear-lanceolate. Usually they are serrate, rounded at base, acute or acuminate. The leaf petioles are short, the stipules often very conspicuous, resembling tiny, round leaves, and sometimes remaining for half the summer. On some species, however, they are small, inconspicuous, and caducous (soon falling). In colour, the leaves show a great variety of greens, ranging from yellowish to bluish.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Xylosma</h3>
+			<div class="fold">
+				<img src="assets/img/xylosma.jpg" alt="Xylosma" />
+				<p><b>Xylosma</b> /za&#618;&#712;l&#594;zm&#601;/ is a genus of flowering plants in the willow family, Salicaceae. It contains around 100 species of spiny evergreen shrubs and trees commonly known as brushhollies, xylosmas, or, more ambiguously, "logwoods". The generic name is derived from the Greek words &xi;&#973;&lambda;&omicron;&nu; (xylon), meaning "wood," and &#8000;&sigma;&mu;&#942; (osmé), meaning "smell," referring to the fragrant wood of some of the species. The Takhtajan system places it in the family Flacourtiaceae, which is considered defunct by the Angiosperm Phylogeny Group.</p>
+				<p>The leaves are alternate, simple, entire or finely toothed, 2-10 cm (0.79-3.94 in) long. The flowers are small, yellowish, produced on racemes 1-3 cm (0.39-1.18 in) long, usually dioecious, and have a strong scent. The fruit is a small purple-black berry 5-10 mm (0.20-0.39 in) in diameter that contains 2 to 8 seeds.</p>
+				<p>The genus is predominantly native to the tropics and subtropics, from the Caribbean, Central America, northern South America, the Pacific Islands, southern Asia and northern Australasia. Two species, X. congestum and X. japonicum, are found in warm-temperate eastern Asia (China, Korea and Japan).</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Yew</h3>
+			<div class="fold">
+				<img src="assets/img/yew.jpg" alt="Yew" />
+				<p>Taxus baccata is a conifer native to western, central and southern Europe, northwest Africa, northern Iran and southwest Asia. It is the tree originally known as <b>yew</b>, though with other related trees becoming known, it may now be known as English yew, or European yew.</p>
+				<p>The word yew is from Proto-Germanic *&#299;wa-, possibly originally a loanword from Gaulish *ivos, compare Irish &#275;o, Welsh ywen, French if (see Eihwaz for a discussion). Baccata is Latin for bearing red berries. The word yew as it was originally used seems to refer to the colour brown. The yew (&mu;&#943;&lambda;&omicron;&sigma;) was known to Theophrastus, who noted its preference for mountain coolness and shade, its evergreen character and its slow growth.</p>
+				<p>Most romance languages, with the notable exception of French, kept a version of the Latin word taxus (Italian tasso, Corsican tassu, Occitan teis, Catalan teix, Gasconic tech, Spanish tejo, Portuguese teixo, Galician teixo and Romanian tis&#259;) from the same root as toxic. In Slavic languages, the same root is preserved: Russian tiss (&#1090;&#1080;&#1089;), Slovakian tis, Slovenian tisa, Bosnian tisa (&#1090;&#1080;&#1089;&#1072;). In Albanian it is named tis.</p>
+				<p>The common yew was one of the many species first described by Linnaeus. It is one of around 30 other conifer species in seven genera in the family Taxaceae, which is placed in the order Pinales.</p>
+				<p>It is a small to medium-sized evergreen tree, growing 10-20 metres (33-66 ft) (exceptionally up to 28 metres (92 ft)) tall, with a trunk up to 2 metres (6 ft 7 in) (exceptionally 4 metres (13 ft)) diameter. The bark is thin, scaly brown, coming off in small flakes aligned with the stem. The leaves are flat, dark green, 1-4 centimetres (0.39-1.57 in) long and 2-3 millimetres (0.079-0.118 in) broad, arranged spirally on the stem, but with the leaf bases twisted to align the leaves in two flat rows either side of the stem, except on erect leading shoots where the spiral arrangement is more obvious. The leaves are poisonous.</p>
+				<p>The seed cones are modified, each cone containing a single seed 4-7 millimetres (0.16-0.28 in) long partly surrounded by a modified scale which develops into a soft, bright red berry-like structure called an aril, 8-15 millimetres (0.31-0.59 in) long and wide and open at the end. The arils mature 6 to 9 months after pollination, and with the seed contained are eaten by thrushes, waxwings and other birds, which disperse the hard seeds undamaged in their droppings; maturation of the arils is spread over 2 to 3 months, increasing the chances of successful seed dispersal. The seeds themselves are poisonous and bitter, but are opened and eaten by some bird species including Hawfinches, Greenfinches and Great Tits. The aril is not poisonous, gelatinous and very sweet tasting. The male cones are globose, 3-6 millimetres (0.12-0.24 in) diameter, and shed their pollen in early spring. It is mostly dioecious, but occasional individuals can be variably monoecious, or change sex with time.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h3>Zelkova</h3>
+			<div class="fold">
+				<img src="assets/img/zelkova.jpg" alt="Zelkova" />
+				<p><b>Zelkova</b> is a genus of six species of deciduous trees in the elm family Ulmaceae, native to southern Europe, and southwest and eastern Asia. They vary in size from shrubs (Z. sicula) to large trees up to 35 m (115 ft) tall (Z. carpinifolia). The leaves are alternate, with serrated margins, and (unlike the related elms) a symmetrical base to the leaf blade. The fruit is a dry, nut-like drupe, produced singly in the leaf axils.</p>
+				<p>The genus Zelkova was common throughout northern Europe and North America as late as the Pliocene. However, extensive Pleistocene glaciation has confined the genus to its present range to the eastern Mediterranean islands and the Caucasus, and in eastern Asia where only local glaciation occurred.</p>
+				<p>The Sicilian Zelkova Z. sicula, only discovered in 1991, is listed as an endangered species. The only known population comprises a small number of low shrubs suffering from severe overgrazing; the natural mature size of undamaged specimens is unknown.</p>
+				<p>Whilst all the known Zelkova taxa are currently in cultivation and in botanic gardens or arboreta, relatively few collections are known to be from wild sourced material or known in the countries of their natural distribution. Z. sicula and Z. abelicea are the two taxa considered to be at most risk of extinction (Critically Endangered and Vulnerable). These two Zelkova species are the two with the most restricted natural distribution- both are small island endemics. The Zelkova with the widest natural distribution, Z. serrata, is also the most common Zelkova in botanic garden collections </p>
+			</div>
+		</li>
+		
+		<li>
+			<h3>Short section</h3>
+			<div class="fold">
+				<p>Anim ullamco aliqua nisi commodo.</p>
+			</div>
+		</li>
+		
+		<li>
+			<h3>Another short section</h3>
+			<div class="fold">
+				<p>Aliquip pariatur occaecat ex esse cupidatat.</p>
+			</div>
+		</li>
+	</ul>
+	
+	<aside>
+		<h2>Footer</h2>
+		<img src="assets/img/redwood2.jpg" alt="" />
+		<p>Pariatur anim ullamco aliqua nisi commodo Lorem elit aute est labore. Id irure est incididunt incididunt excepteur est dolore. Fugiat ea in adipisicing proident eu ex et. Occaecat incididunt commodo elit deserunt id ad cillum incididunt amet mollit cillum aliquip. Ea do veniam nisi laborum esse. Veniam sit in eiusmod aliquip Lorem commodo deserunt incididunt quis ea dolore id. Eu anim sint sunt excepteur.</p>
+		<p>Dolor reprehenderit aliqua anim consectetur aliquip velit nostrud do et. Nulla sunt est aliquip duis Lorem sit in enim commodo enim id ad amet. Aliquip anim aliqua dolore reprehenderit sit fugiat.</p>
+		<p>Aliquip pariatur occaecat ex esse cupidatat sit consectetur. Tempor elit consectetur eiusmod sunt eu quis mollit pariatur nisi eu ipsum sint veniam laboris. Amet exercitation consequat deserunt eu in laborum amet ad est deserunt voluptate eiusmod. Culpa ipsum do velit laboris aliqua ipsum dolore irure qui eiusmod consectetur occaecat. Incididunt velit irure in aute ut elit in qui officia cupidatat cupidatat proident do.</p>
+		<p>Fugiat ullamco tempor ipsum eiusmod adipisicing ut commodo commodo esse non proident. Sunt aliqua cupidatat duis dolore eu aliquip voluptate minim irure non voluptate in in. Cupidatat quis velit excepteur quis est aliqua in occaecat. Id esse occaecat anim non nulla.</p>
+		<p>Anim officia ut Lorem irure labore quis fugiat occaecat aliqua nulla consectetur. Labore magna consequat et et in elit ad aliquip irure cupidatat deserunt. Quis exercitation duis mollit dolore non veniam tempor non occaecat anim. Aliquip amet officia qui minim irure velit sint adipisicing nisi occaecat. Nisi fugiat in ea ad consequat anim velit ut ea adipisicing occaecat pariatur anim. Reprehenderit culpa elit deserunt occaecat non ea.</p>
+		<p>Laborum mollit irure dolore aliquip dolor est reprehenderit veniam tempor exercitation nulla culpa proident id. Non nostrud ea tempor voluptate culpa. Id Lorem labore amet ipsum commodo consequat incididunt sit. Reprehenderit consectetur officia officia labore proident nostrud. In esse proident ipsum incididunt incididunt sunt adipisicing dolore reprehenderit excepteur occaecat. Veniam deserunt qui Lorem proident cillum anim est.</p>
+		<p>Pariatur elit dolore ad deserunt reprehenderit nisi et id fugiat ad. Deserunt nostrud sunt laboris officia id consequat commodo consectetur esse cillum non dolore. Anim irure laboris qui commodo aliqua adipisicing do do exercitation. Minim voluptate commodo consectetur reprehenderit do tempor id pariatur nisi mollit consectetur consectetur consequat laborum.</p>
+		<p>Occaecat anim consectetur culpa exercitation mollit voluptate excepteur dolor laborum officia velit laborum ullamco. Lorem mollit magna officia velit do quis. Sunt pariatur nulla proident eu deserunt cupidatat et voluptate eu consectetur exercitation amet fugiat. Officia cupidatat pariatur nulla cillum duis non aliqua. Consequat fugiat est laborum labore. Magna consequat amet velit non.</p>
+		<p>Officia et velit non ipsum reprehenderit laboris quis dolore deserunt aliqua mollit ea. Deserunt aliquip dolore tempor qui eiusmod eiusmod nisi. Lorem non cupidatat quis veniam qui aliquip sint. Nisi ipsum aliqua minim id duis consequat irure quis dolore anim proident pariatur. Labore duis ullamco non fugiat aliqua laboris quis amet sunt eu ullamco proident. Ad quis magna sunt nisi culpa.</p>
+		<p>Eu incididunt anim do cupidatat nisi. Do eiusmod occaecat pariatur aliquip minim laborum. Culpa ut eiusmod voluptate qui commodo dolor occaecat in cupidatat. Nostrud ea tempor exercitation est exercitation pariatur laborum sint duis do excepteur ex in.</p>
+	</aside>
+
+
+	<script src="../accordion.js"></script>
+	<script src="assets/shared.js"></script>	
+</body>
+</html>
