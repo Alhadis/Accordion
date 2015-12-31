@@ -26,11 +26,27 @@ html{
 		padding: .25em;
 		color: #fff;
 		background: #0a0;
+		position: relative;
 		text-shadow: 1px 1px 1px #030;
 		-webkit-user-select: none;
 		user-select: none;
 		cursor: pointer;
+		z-index: 2;
 	}
+		h2:focus::before,
+		h3:focus::before,
+		h4:focus::before,
+		h5:focus::before{
+			content: "";
+			position: absolute;
+			top:	0;
+			left:	0;
+			right:	0;
+			bottom:	0;
+			background: #0f0;
+			opacity: .5;
+			z-index: -1;
+		}
 		h3{
 			background-color: #080;
 		}
@@ -2303,7 +2319,7 @@ html{
 						<h3>Birch</h3>
 						<div class="fold">
 							<img src="assets/img/birch.jpg" alt="Birch" />
-							<p><b>Birch</b> is a thinleaved deciduous hardwood tree of the genus Betula (/&#x02C8;b&#603;tj&#650;l&#601;/), in the family Betulaceae, which also includes alders, hazels, and hornbeams, and is closely related to the beech/oak family, Fagaceae. The genus Betula contains 30 to 60 known taxa of which 11 are on the IUCN 2011 Green List of Threatened Species. They are typically rather short-lived pioneer species widespread in the Northern Hemisphere, particularly in northern temperate and boreal climates.</p>
+							<p><b>Birch</b> is a thinleaved deciduous hardwood tree of the genus Betula (/&#x02C8;b&#603;tj&#650;l&#601;/), in the family Betulaceae, which also includes alders, hazels, and hornbeams, and is closely related to the beech/oak family, Fagaceae. The genus Betula contains 30 to 60 known taxa of which 11 are on the IUCN 2011 Green List of Threatened Species. They are a typically rather short-lived pioneer species widespread in the Northern Hemisphere, particularly in northern temperate and boreal climates.</p>
 						</div>
 					</li>
 

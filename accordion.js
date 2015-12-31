@@ -2,7 +2,8 @@
 	"use strict";
 
 
-	var each          = Array.prototype.forEach;
+	var accordions    = [];
+	var each          = [].forEach;
 	var touchEnabled  = "ontouchstart" in document.documentElement;
 	var UNDEF;
 
@@ -232,7 +233,7 @@
 		var prevHeight  = 0;
 		
 		
-		/** Clone a copy of the objects hash to pass to Fold instances */
+		/** Clone a copy of the options hash to pass to Fold instances */
 		var foldOptions = (function(source, accordion){
 			var result    = {};
 			
@@ -253,7 +254,7 @@
 
 		/** Method to update the accordion's heights on resize */
 		function update(){
-			for(var totalHeight = 0, i = 0, l = folds.length; i < l; ++i)
+			for(var totalHeight = 0, parent, i = 0, l = folds.length; i < l; ++i)
 				totalHeight += folds[i].update(totalHeight);
 			
 			/** Check if the visibility of surrounding content will be affected by the accordion's new state */
@@ -269,7 +270,47 @@
 			
 			el.style.height = totalHeight + "px";
 			prevHeight      = totalHeight;
+			
+			if(parent = THIS.parent)
+				parent.update();
+			
 			return totalHeight;
+		}
+		
+		
+		/**
+		 * Identify the instance's containing accordion, if one exists.
+		 *
+		 * @return {Accordion}
+		 */
+		function findParent(){
+			var parent = el, i, f, a, l = accordions.length;
+			
+			/** Run through the element's ancestry */
+			while(parent && (parent = parent.parentNode)){
+
+				/** Loop through all existing accordions, and check if their elements match */
+				for(i = 0; i < l; ++i){
+					a = accordions[i];
+					if(parent === a.el){
+						a.childAccordions.push(THIS);
+						
+						/** Figure out which of the parent's folds contains this accordion */
+						for(i = 0, l = a.folds.length; i < l; ++i){
+							f = a.folds[i];
+							if(f === el || f.content.contains(el)){
+								THIS.parentFold = f;
+								break;
+							}
+						}
+						
+						THIS.parent = a;
+						return a;
+					}
+				}
+			}
+			
+			return null;
 		}
 		
 		
@@ -290,6 +331,12 @@
 		/** Iterator variables */
 		var i = 0;
 		var l = children.length;
+		
+		
+		/** Connect the accordion with any containing accordions, if any */
+		var childAccordions = [];
+		findParent();
+		
 		
 		/** Set the container's ARIA role */
 		options.disableAria || el.setAttribute("role", "tablist");
@@ -314,13 +361,14 @@
 		Object.defineProperties(THIS, {
 			
 			/** Methods */
-			update:  {value: update},
-			redinex: {value: reindex},
+			update:           {value: update},
+			redinex:          {value: reindex},
+			findParent:       {value: findParent},
 			
-			
-			/** Read-only references to DOM elements */
-			folds:   {value: folds},
-			el:      {value: el},
+			/** Read-only properties */
+			folds:            {value: folds},
+			el:               {value: el},
+			childAccordions:  {value: childAccordions},
 			
 			
 			/** Get/set whether animated heights are enabled */
@@ -340,10 +388,27 @@
 		});
 		
 		
+		
 		/** Get this happening. */
+		accordions.push(THIS);
 		reindex();
 		update();
 		initialised = true;
+	};
+	
+	
+	/**
+	 * Force all Accordion instances to recalculate their parent accordions.
+	 *
+	 * This method should ONLY be called if an instance has been moved from one
+	 * accordion's descendants and into another.
+	 */
+	Accordion.resetRelationships = function(){
+		for(var a, i = 0, l = accordions.length; i < l; ++i){
+			a = accordions[i];
+			a.childAccordions.length = 0;
+			a.parent = a.findParent();
+		}
 	};
 
 
@@ -415,4 +480,8 @@
 
 	/** Export */
 	window.Accordion = Accordion;
+	
+	Object.defineProperty(window, "Accordions", {
+		get: function(){ return accordions }
+	})
 }());
