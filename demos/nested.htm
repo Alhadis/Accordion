@@ -11,6 +11,7 @@
 <style>
 html{
 	padding: 1em;
+	background: #030;
 }
 
 /** Demo styling, not necessary for the accordion's final effect. */
@@ -71,6 +72,9 @@ html{
 	.fold .fold{
 		padding: .5em 0;
 	}
+		li{
+			background: #fff;
+		}
 	
 	img{
 		float: left;
@@ -2604,6 +2608,8 @@ html{
 	<script src="assets/shared.js"></script>
 	<script>
 		runDemo();
+		var a = accordions[0];
+		var f = a.folds[1];
 	</script>
 </body>
 </html>

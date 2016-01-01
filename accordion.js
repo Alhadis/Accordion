@@ -31,6 +31,7 @@
 		var open        = classList.contains(openClass);
 		var heading     = options.heading ? el.querySelector(options.heading) : el.firstElementChild;
 		var content     = options.content ? el.querySelector(options.content) : el.lastElementChild;
+		var prevHeight;
 		var randomID;
 
 		
@@ -63,28 +64,55 @@
 			/** If opened, set the fold's height to fit both heading *and* content. */
 			if(open){
 				el.style.height = totalHeight + "px";
+				prevHeight      = totalHeight;
 				return el.scrollHeight;
 			}
 
 			/** Otherwise, just cut it off at the heading. */
 			else{
 				el.style.height = headingHeightPx;
+				prevHeight      = headingHeight;
 				return headingHeight;
 			}
 		};
 		
 
-		/** Define the getter/setter functions for the fold's .open property */
-		Object.defineProperty(this, "open", {
-			get: function(){ return open },
-			set: function(i){
-				if((i = !!i) !== open){
-					open = i;
-					classList.toggle(openClass, i);
-					if(onToggle) onToggle(THIS);
+		/** Define getter/setter pairs */
+		Object.defineProperties(THIS, {
+			
+			/** Whether the fold's currently opened */
+			open: {
+				get: function(){ return open },
+				set: function(i){
+					if((i = !!i) !== open){
+						open = i;
+						classList.toggle(openClass, i);
+						if(onToggle) onToggle(THIS);
+					}
+				}
+			},
+			
+			
+			/** Height of the fold's container (which encloses both heading and content) */
+			height: {
+				get: function(){
+					
+					/** If we haven't calculated the height yet, do so now */
+					if(undefined === prevHeight){
+						console.info(heading.textContent + ": Calculating height for the first time");
+						var box    = el.getBoundingClientRect();
+						prevHeight = box.bottom - box.top;
+					}
+					
+					return prevHeight;
+				},
+				
+				set: function(i){
+					el.style.height = i + "px";
+					prevHeight = i;
 				}
 			}
-		})
+		});
 		
 		
 		heading.addEventListener(touchEnabled ? "touchend" : "click", function(e){
