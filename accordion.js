@@ -264,9 +264,7 @@
 			}
 
 			/** If we're not animating heights, add a CSS class to keep items visible during transitions. */
-			if(!animHeight && classList.toggle("shrinking", totalHeight < prevHeight)){
-				console.info("Height difference: " + (prevHeight - totalHeight));
-			}
+			!animHeight && classList.toggle("shrinking", totalHeight < prevHeight);
 			
 			el.style.height = totalHeight + "px";
 			prevHeight      = totalHeight;
