@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<!--[if lte IE 9]><script src="assets/ie.lteIE9.js"></script><![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="initial-scale=1, minimum-scale=1" />
+<title>Accordion Demo: Small</title>
+
+<link rel="stylesheet" type="text/css" href="assets/reset.css" />
+<link rel="stylesheet" type="text/css" href="../accordion.css" />
+<style>
+
+/** Demo styling, not necessary for the accordion's final effect. */
+html{
+	background: #000;
+	padding: 1em;
+}
+
+ul{
+	padding-left: 0;
+}
+	.accordion > li{
+		list-style: none;
+	}
+	
+	li{
+		list-style-position: inside;
+	}
+		img{
+			max-width: 100%;
+			display: block;
+			margin: 0 auto
+		}
+	
+	/** Nested accordions */
+	.accordion .accordion{
+		background: #9e9;
+	}
+		#fruits,
+		#veggies{
+			padding: 1em;
+			-webkit-column-count: 2;
+			-moz-column-count:    2;
+			-ms-column-count:     2;
+			-o-column-count:      2;
+			column-count:         2;
+		}
+		
+		#alphabet{
+			text-align: justify;
+			padding: 1em;
+		}
+			#alphabet > li{
+				display: inline;
+			}
+
+body > .accordion > li > .fold{
+	background: #fff;
+	padding: 1em;
+}
+
+/** Section headings */
+.accordion > li > h3{
+	background: #2c4d2b;
+	color: #fff;
+	padding: .5em;
+	cursor: pointer;
+	position: relative;
+	z-index: 2;
+
+	-webkit-user-select: none;
+	user-select:         none;
+}
+	/** Faux background to increase brightness */
+	h3::after{
+		content: "";
+		background: #0a0;
+		position: absolute;
+		transition: .3s ease all;
+		opacity: 0;
+		top:	0;
+		left:	0;
+		right:	0;
+		bottom:	0;
+		z-index: -1;
+	}
+		/** Make background "glow" when focussed */
+		h3:focus::after{
+			opacity: .4;
+		}
+</style>
+</head>
+
+
+<body>
+
+	<ul class="accordion">
+		<li>
+			<h3>A</h3>
+			<div class="fold">
+				<ul class="accordion">
+					<li>
+						<h3>Fruits</h3>
+						<div class="fold">
+							<ul id="fruits">
+								<li>Apples</li>
+								<li>Bananas</li>
+								<li>Coconut</li>
+								<li>Date</li>
+								<li>Elderberry</li>
+								<li>Fig</li>
+								<li>Grape</li>
+								<li>Honeydew</li>
+								<li>Ilama</li>
+								<li>Jujube</li>
+								<li>Kumquat</li>
+								<li>Lime</li>
+								<li>Mandarin</li>
+								<li>Nutmeg</li>
+								<li>Orange</li>
+								<li>Pear</li>
+								<li>Quince</li>
+								<li>Raspberry</li>
+								<li>Strawberry</li>
+								<li>Tomato</li>
+								<li>Ugni</li>
+								<li>Vanilla</li>
+								<li>Watermelon</li>
+								<li>Ximenia</li>
+								<li>Yew</li>
+								<li>Zucchini</li>
+							</ul>
+						</div>
+					</li>
+					
+					
+					<li>
+						<h3>Vegetables</h3>
+						<div class="fold">
+							<ul id="veggies">
+								<li>Asparagus</li>
+								<li>Broccoli</li>
+								<li>Capsicum</li>
+								<li>Dill</li>
+								<li>Eggplant</li>
+								<li>Fava Beans</li>
+								<li>Garlic</li>
+								<li>Horseradish</li>
+								<li>Italian Sweet Pepper</li>
+								<li>Jalapeño</li>
+								<li>Kurrat</li>
+								<li>Lettuce</li>
+								<li>Mushroom</li>
+								<li>Nopal</li>
+								<li>Onion</li>
+								<li>Potato</li>
+								<li>Quince</li>
+								<li>Radish</li>
+								<li>Spinach</li>
+								<li>Turnip</li>
+								<li>Ulluco</li>
+								<li>Velvet Bean</li>
+								<li>Watercress</li>
+								<li>Xigua</li>
+								<li>Yam</li>
+								<li>Zucchini</li>
+							</ul>
+						</div>
+					</li>
+					
+					<li>
+						<h3>A&ndash;Z</h3>
+						<div class="fold">
+							<ul id="alphabet">
+								<li>A</li>
+								<li>B</li>
+								<li>C</li>
+								<li>D</li>
+								<li>E</li>
+								<li>F</li>
+								<li>G</li>
+								<li>H</li>
+								<li>I</li>
+								<li>J</li>
+								<li>K</li>
+								<li>L</li>
+								<li>M</li>
+								<li>N</li>
+								<li>O</li>
+								<li>P</li>
+								<li>Q</li>
+								<li>R</li>
+								<li>S</li>
+								<li>T</li>
+								<li>U</li>
+								<li>V</li>
+								<li>W</li>
+								<li>X</li>
+								<li>Y</li>
+								<li>Z</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+			
+			
+		</li>
+		
+		
+		<li>
+			<h3>B</h3>
+			<div class="fold">
+				<img src="assets/img/veggies.jpg" alt="" />
+				<p>Mauris aliquam arcu libero, eget venenatis lorem sodales id. Donec pellentesque tortor quis metus placerat, vel consequat nisi pharetra. Quisque semper magna eget nulla rutrum, ut hendrerit sem imperdiet. Maecenas mauris lectus, semper porttitor nunc vel, interdum blandit ante. Pellentesque suscipit lacinia tempus. Proin feugiat porttitor cursus. Cras commodo justo a elementum interdum. Quisque rhoncus erat ante, ut cursus tellus rutrum et. Cras nulla arcu, tincidunt sed erat at, rutrum posuere orci. Nam imperdiet nisi eu leo mollis scelerisque. Aliquam viverra non velit id sagittis.</p>
+				<p>Cras facilisis mauris et libero sollicitudin sollicitudin. Fusce imperdiet velit eget enim gravida, a mattis sem commodo. Fusce tincidunt nec erat non suscipit. Pellentesque fringilla erat urna, non mollis lacus pulvinar sit amet. Nunc feugiat ligula ultricies dignissim condimentum. Sed rutrum nulla eu eros interdum, nec interdum sapien vehicula. Praesent non est est. Nam consequat eros eget tellus placerat pellentesque. Vivamus eu ante nisl. Suspendisse in lorem et massa consectetur adipiscing. Donec molestie pulvinar adipiscing. Phasellus iaculis ac lorem ac sollicitudin. Aliquam convallis porttitor enim vitae blandit. Pellentesque aliquam dolor semper, facilisis erat vel, vehicula augue.</p>
+			</div>
+		</li>
+	</ul>
+
+
+
+	<script src="../accordion.js"></script>
+	<script src="assets/shared.js"></script>
+	<script>
+		runDemo({
+		});
+	</script>
+
+</body>
+</html>
