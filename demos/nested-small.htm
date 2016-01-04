@@ -95,11 +95,11 @@ body > .accordion > li > .fold{
 <body>
 
 	<ul class="accordion">
-		<li>
+		<li class="open">
 			<h3>A</h3>
 			<div class="fold">
 				<ul class="accordion">
-					<li>
+					<li class="open">
 						<h3>Fruits</h3>
 						<div class="fold">
 							<ul id="fruits">
@@ -224,6 +224,17 @@ body > .accordion > li > .fold{
 	<script src="assets/shared.js"></script>
 	<script>
 		runDemo({
+			animHeight: "auto"
+		});
+		
+		var heading = document.getElementById("a3-heading");
+		0 && heading.addEventListener("click", function(){
+			
+			var fold         = accordions[0].folds[0];
+			var foldStyle    = fold.el.style;
+			fold.height     -= 266;
+			
+			accordions[0].update(fold);
 		});
 	</script>
 

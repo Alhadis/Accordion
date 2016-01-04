@@ -36,7 +36,7 @@
 
 		
 		/**
-		 * Update the heights of the fold's heading/body and returns the total of each.
+		 * Update the heights of the fold's heading/body and return the total of each.
 		 *
 		 * @param {Number} y - Offset to apply to the fold's node, supplied by the containing accordion.
 		 * @return {Number}
@@ -63,15 +63,13 @@
 			
 			/** If opened, set the fold's height to fit both heading *and* content. */
 			if(open){
-				el.style.height = totalHeight + "px";
-				prevHeight      = totalHeight;
-				return el.scrollHeight;
+				THIS.height = totalHeight;
+				return totalHeight;
 			}
 
 			/** Otherwise, just cut it off at the heading. */
 			else{
-				el.style.height = headingHeightPx;
-				prevHeight      = headingHeight;
+				THIS.height = headingHeight;
 				return headingHeight;
 			}
 		};
@@ -110,6 +108,7 @@
 				set: function(i){
 					el.style.height = i + "px";
 					prevHeight = i;
+					console.log("[%s] Height set: %s", heading.textContent, prevHeight);
 				}
 			}
 		});
@@ -207,6 +206,7 @@
 		this.update  = update;
 		this.heading = heading;
 		this.content = content;
+		this.el      = el;
 	};
 
 
@@ -270,10 +270,23 @@
 			
 			/** Callback triggered when folds are opened/closed */
 			var onToggle    = source.onToggle;
-			result.onToggle = onToggle ? function(fold){
+			result.onToggle = function(fold){
+				var height  = fold.height;
 				update();
-				onToggle(fold, accordion);
-			} : update;
+				
+				var diff    = fold.height - height;
+				var nextAcc = THIS;
+				console.log("Diff: %s", diff);
+				
+				while(nextAcc.parentFold){
+					nextAcc.parentFold.height += diff;
+					nextAcc.parent.update(nextAcc.parentFold);
+					nextAcc = nextAcc.parent;
+				}
+				
+				/** Run any specified callbacks */
+				onToggle && onToggle(fold, accordion);
+			};
 		
 			return result;
 		}(options, THIS));
@@ -281,9 +294,13 @@
 
 
 		/** Method to update the accordion's heights on resize */
-		function update(){
-			for(var totalHeight = 0, parent, i = 0, l = folds.length; i < l; ++i)
-				totalHeight += folds[i].update(totalHeight);
+		function update(exclude){
+			
+			for(var totalHeight = 0, parent, i = 0, l = folds.length; i < l; ++i){
+				totalHeight += exclude === folds[i]
+					? folds[i].height
+					: folds[i].update(totalHeight);
+			}
 			
 			/** Check if the visibility of surrounding content will be affected by the accordion's new state */
 			if(autoAnimate && initialised){
@@ -296,9 +313,6 @@
 			
 			el.style.height = totalHeight + "px";
 			prevHeight      = totalHeight;
-			
-			if(parent = THIS.parent)
-				parent.update();
 			
 			return totalHeight;
 		}
