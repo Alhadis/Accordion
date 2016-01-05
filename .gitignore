@@ -1,5 +1,28 @@
+## Mac OS/X
+.apdisk
+.AppleDB
+.AppleDesktop
+.AppleDouble
 .DS_Store
-.project
-error_log
-sftp-config.json
+.LSOverride
+._*
 
+
+## IDE-specific
+sftp-config.json
+.project
+
+
+## Windows
+Desktop.ini
+Thumbs.db
+ehthumbs.db
+$RECYCLE.BIN/
+*.lnk
+
+
+## Other
+error_log
+node_modules
+components
+npm-debug.log
