@@ -25,7 +25,7 @@ clean:
 PWD := $(shell pwd)
 watch:
 	@watchman watch $(PWD) > /dev/null
-	@watchman -- trigger $(PWD) recompress accordion.js -- make > /dev/null
+	@watchman -- trigger $(PWD) recompress accordion.js -- make accordion.min.js > /dev/null
 
 unwatch:
 	@watchman watch-del $(PWD) > /dev/null
