@@ -7,7 +7,8 @@ all:    accordion.min.js
 
 # Generate a compressed version of the file
 accordion.min.js: accordion.js
-	@uglifyjs $(MINIFY_OPTS) < $< > $@
+	@perl -0777 -pe 's{/\*\~+\s*(\w+)?\s*\*/.*?/\*\s*\1?\s*\~+\*/}{}gsi' < $< | \
+	uglifyjs $(MINIFY_OPTS) > $@
 
 
 
