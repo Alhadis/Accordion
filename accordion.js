@@ -5,6 +5,7 @@
 	var accordions    = [];
 	var each          = [].forEach;
 	var touchEnabled  = "ontouchstart" in document.documentElement;
+	var openTimeout   = 5;
 	var UNDEF;
 
 
@@ -28,11 +29,11 @@
 		var useKeyNav   = !options.disableKeys;
 		var classList   = el.classList;
 		
-		var open        = classList.contains(openClass);
 		var heading     = options.heading ? el.querySelector(options.heading) : el.firstElementChild;
 		var content     = options.content ? el.querySelector(options.content) : el.lastElementChild;
 		var prevHeight;
 		var randomID;
+		var open;
 
 		
 		/**
@@ -63,12 +64,14 @@
 			
 			/** If opened, set the fold's height to fit both heading *and* content. */
 			if(open){
+				//console.log(heading.textContent + ": " + totalHeight);
 				THIS.height = totalHeight;
 				return totalHeight;
 			}
 
 			/** Otherwise, just cut it off at the heading. */
 			else{
+				//console.log(heading.textContent + ": " + headingHeight);
 				THIS.height = headingHeight;
 				return headingHeight;
 			}
@@ -85,7 +88,7 @@
 					if((i = !!i) !== open){
 						open = i;
 						classList.toggle(openClass, i);
-						if(onToggle) onToggle(THIS);
+						onToggle && onToggle(THIS);
 					}
 				}
 			},
@@ -97,7 +100,7 @@
 					
 					/** If we haven't calculated the height yet, do so now */
 					if(undefined === prevHeight){
-						console.info(heading.textContent + ": Calculating height for the first time");
+						/*~*/console.info(heading.textContent + ": Calculating height for the first time");/*~*/
 						var box    = el.getBoundingClientRect();
 						prevHeight = box.bottom - box.top;
 					}
@@ -108,7 +111,7 @@
 				set: function(i){
 					el.style.height = i + "px";
 					prevHeight = i;
-					console.log("[%s] Height set: %s", heading.textContent, prevHeight);
+					//console.log("[%s] Height set: %s", heading.textContent, prevHeight);
 				}
 			}
 		});
@@ -202,11 +205,35 @@
 		useKeyNav && heading.setAttribute("tabindex", 0);
 		
 		
+		/** If the fold's container element is marked as open, force an update after a brief delay */
+		if(classList.contains(openClass))
+			setTimeout(function(){
+				THIS.open = true;
+			}, openTimeout += 50)
+		
+		
+		
 		/** Expose some properties/methods for external use */
-		this.update  = update;
-		this.heading = heading;
-		this.content = content;
-		this.el      = el;
+		THIS.update  = update;
+		THIS.heading = heading;
+		THIS.content = content;
+		THIS.el      = el;
+		
+		
+		/*~*/
+		el.fold         = this;
+		this.debugInfo  = function(indent){
+			var str = heading.textContent;
+			str += "\n - Open: "       + (open ? "TRUE" : "FALSE");
+			str += "\n - Heading: "    + heading.getBoundingClientRect().height;
+			str += "\n - Content: "    + content.getBoundingClientRect().height + " (scrollHeight: " + content.scrollHeight + ")";
+			str += "\n - prevHeight: " + prevHeight + "\n";
+			
+			if(this.childAccordions)
+				str += "\n" + this.childAccordions.map(a => a.debugInfo((indent || 0)+2)) + "\n";
+			
+			return str.replace(/^/gm, Array((indent || 0)+1).join("\t"));
+		}; /*~*/
 	};
 
 
@@ -259,6 +286,7 @@
 		/** Internal use */
 		var children    = el.children;
 		var prevHeight  = 0;
+		var index;
 		
 		
 		/** Clone a copy of the options hash to pass to Fold instances */
@@ -276,7 +304,7 @@
 				
 				var diff    = fold.height - height;
 				var nextAcc = THIS;
-				console.log("Diff: %s", diff);
+				/*~*/console.log("Diff: %s", diff);/*~*/
 				
 				while(nextAcc.parentFold){
 					nextAcc.parentFold.height += diff;
@@ -340,6 +368,7 @@
 							f = a.folds[i];
 							if(f === el || f.content.contains(el)){
 								THIS.parentFold = f;
+								(f.childAccordions = f.childAccordions || []).push(THIS);
 								break;
 							}
 						}
@@ -430,10 +459,20 @@
 		
 		
 		/** Get this happening. */
-		accordions.push(THIS);
+		index = (accordions.push(THIS)) - 1;
 		reindex();
 		update();
 		initialised = true;
+		
+		/*~*/
+		el.acc           = this;
+		this.index       = index;
+		this.debugInfo   = function(indent){
+			var str = "ACCORDION:";
+			str += "\n- prevHeight: " + prevHeight;
+			str += "\n- folds: "      + folds.map(e => e.debugInfo(1)).join("\n");
+			return str.replace(/^/gm, Array((indent || 0)+1).join("\t"));
+		}; /*~*/
 	};
 	
 	
@@ -521,7 +560,15 @@
 	/** Export */
 	window.Accordion = Accordion;
 	
+	
+	/*~~*/
 	Object.defineProperty(window, "Accordions", {
 		get: function(){ return accordions }
-	})
+	});
+	
+	Accordion.debug = function(){
+		for(var i of accordions)
+			if(!i.parent) console.log(i.debugInfo());
+	};
+	/*~~*/
 }());

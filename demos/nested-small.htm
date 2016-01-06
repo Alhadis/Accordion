@@ -36,7 +36,9 @@ ul{
 	.accordion .accordion{
 		background: #9e9;
 	}
-		#fruits,
+		#fruits{
+		}
+		
 		#veggies{
 			padding: 1em;
 			-webkit-column-count: 2;
@@ -88,6 +90,24 @@ body > .accordion > li > .fold{
 		h3:focus::after{
 			opacity: .4;
 		}
+
+/** Second-level subheadings */
+h4{
+	background: rgba(0, 170, 0, .5);
+	margin: 0;
+	color: #fff;
+	text-shadow: 0 1px 1px #050;
+	padding: .5em;
+	border-top: 0 solid #0a0;
+	border-width: 1px 0;
+	
+	cursor: pointer;
+	-webkit-user-select: none;
+	user-select:         none;
+}
+	h4 + .fold > ul{
+		padding: 1em;
+	}
 </style>
 </head>
 
@@ -102,33 +122,48 @@ body > .accordion > li > .fold{
 					<li class="open">
 						<h3>Fruits</h3>
 						<div class="fold">
-							<ul id="fruits">
-								<li>Apples</li>
-								<li>Bananas</li>
-								<li>Coconut</li>
-								<li>Date</li>
-								<li>Elderberry</li>
-								<li>Fig</li>
-								<li>Grape</li>
-								<li>Honeydew</li>
-								<li>Ilama</li>
-								<li>Jujube</li>
-								<li>Kumquat</li>
-								<li>Lime</li>
-								<li>Mandarin</li>
-								<li>Nutmeg</li>
-								<li>Orange</li>
-								<li>Pear</li>
-								<li>Quince</li>
-								<li>Raspberry</li>
-								<li>Strawberry</li>
-								<li>Tomato</li>
-								<li>Ugni</li>
-								<li>Vanilla</li>
-								<li>Watermelon</li>
-								<li>Ximenia</li>
-								<li>Yew</li>
-								<li>Zucchini</li>
+							<ul class="accordion" id="fruits">
+								<li>
+									<h4>A-M</h4>
+									<div class="fold">
+										<ul>
+											<li>Apples</li>
+											<li>Bananas</li>
+											<li>Coconut</li>
+											<li>Date</li>
+											<li>Elderberry</li>
+											<li>Fig</li>
+											<li>Grape</li>
+											<li>Honeydew</li>
+											<li>Ilama</li>
+											<li>Jujube</li>
+											<li>Kumquat</li>
+											<li>Lime</li>
+											<li>Mandarin</li>
+										</ul>
+									</div>
+								</li>
+								
+								<li>
+									<h4>N-Z</h4>
+									<div class="fold">
+										<ul>
+											<li>Nutmeg</li>
+											<li>Orange</li>
+											<li>Pear</li>
+											<li>Quince</li>
+											<li>Raspberry</li>
+											<li>Strawberry</li>
+											<li>Tomato</li>
+											<li>Ugni</li>
+											<li>Vanilla</li>
+											<li>Watermelon</li>
+											<li>Ximenia</li>
+											<li>Yew</li>
+											<li>Zucchini</li>
+										</ul>
+									</div>
+								</li>
 							</ul>
 						</div>
 					</li>
