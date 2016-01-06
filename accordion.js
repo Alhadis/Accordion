@@ -417,7 +417,25 @@
 
 		/** Update the accordion's heights if any images have loaded. */
 		each.call(el.querySelectorAll("img"), function(img){
-			img.addEventListener("load", update);
+			var cork = "__accordionLoadOnlyOnce";
+			
+			/** Avoid adding duplicate listeners */
+			if(!img[cork]){
+				img.addEventListener("load", function(e){
+					delete img[cork];
+					var next = e.target;
+					
+					/** Update the closest accordion that wraps the <img/> element */
+					while(next = next.parentNode){
+						if("accordionIndex" in next){
+							accordions[next.accordionIndex].update();
+							break;
+						}
+					}
+				});
+				
+				img[cork] = true;
+			}
 		});
 
 
@@ -462,12 +480,11 @@
 		index = (accordions.push(THIS)) - 1;
 		reindex();
 		update();
-		initialised = true;
+		initialised       = true;
+		el.accordionIndex = index;
 		
 		/*~*/
-		el.acc           = this;
-		this.index       = index;
-		this.debugInfo   = function(indent){
+		this.debugInfo    = function(indent){
 			var str = "ACCORDION:";
 			str += "\n- prevHeight: " + prevHeight;
 			str += "\n- folds: "      + folds.map(e => e.debugInfo(1)).join("\n");
