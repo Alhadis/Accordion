@@ -449,7 +449,7 @@
 			
 			/** Methods */
 			update:           {value: update},
-			redinex:          {value: reindex},
+			reindex:          {value: reindex},
 			findParent:       {value: findParent},
 			
 			/** Read-only properties */
