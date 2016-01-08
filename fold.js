@@ -35,13 +35,10 @@ class Fold{
 	
 	
 	fit(){
-		if(!this.open){
-			this.height = this.heading.scrollHeight;
-		}
-		
-		else{
-			this.height = this.heading.scrollHeight + this.content.scrollHeight;
-		}
+		let height = this.heading.scrollHeight;
+		if(this.open)
+			height += this.content.scrollHeight;
+		this.height = height;
 	}
 	
 	
