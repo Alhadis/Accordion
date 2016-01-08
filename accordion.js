@@ -19,6 +19,7 @@ class Accordion{
 			folds.push(new Fold(this, i));
 		}
 		
+		this.el    = el;
 		this.folds = folds;
 		this.update();
 		
@@ -27,13 +28,29 @@ class Accordion{
 		})
 	}
 	
+	get height(){
+		return this._height;
+	}
+	set height(input){
+		if(input && (input = +input) !== this._height){
+			this.el.style.height = input + "px";
+			this._height         = input;
+		}
+	}
+	
+	
+	
 	
 	update(){
 		let y = 0;
+		let height = 0;
 		for(let i of this.folds){
 			i.y = y;
 			i.fit();
-			y += i.height;
+			y      += i.height;
+			height += i.height;
 		}
+		
+		this.height = height;
 	}
 }

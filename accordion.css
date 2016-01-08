@@ -7,6 +7,7 @@
 }
 	.accordion > *{
 		position: absolute;
+		overflow: hidden;
 		padding: 0;
 		margin:  0;
 	}
@@ -28,7 +29,7 @@
 
 /** Demo shit */
 html{
-	padding: 1em;
+	padding: 1em 2em;
 	background: #000;
 }
 h1, h2, h3{
@@ -38,4 +39,10 @@ h1, h2, h3{
 
 p{
 	margin: 0;
+}
+
+#mindless-copy{
+	margin: 0 -1em;
+	color: #aaa;
+	text-align: justify;
 }
