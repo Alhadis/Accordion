@@ -30,7 +30,6 @@ class Accordion{
 		el.accordion = this;
 		this.el      = el;
 		this.folds   = folds;
-		this.update();
 		
 		/** Find out if this accordion's nested inside another */
 		let next = el;
@@ -49,6 +48,8 @@ class Accordion{
 			}
 		}
 		
+		this.update();
+		
 		/** Temporary shit to remove later */
 		window.addEventListener("resize", e => {
 			this.update();
@@ -66,6 +67,13 @@ class Accordion{
 	}
 	
 	
+	edgeCheck(offset){
+		let box        = this.el.getBoundingClientRect();
+		let isVisible  = box.bottom + (offset || 0) < window.innerHeight;
+		this.el.classList.toggle("edge-visible", isVisible);
+	}
+	
+	
 	updateFold(fold, offset){
 		let next = fold;
 		while(next = next.nextFold)
@@ -74,8 +82,9 @@ class Accordion{
 		this.height += offset;
 		
 		let parentFold = this.parentFold;
-		if(parentFold)
-			this.parent.updateFold(parentFold, offset);
+		parentFold
+			? this.parent.updateFold(parentFold, offset)
+			: this.edgeCheck();
 	}
 	
 	
@@ -90,9 +99,10 @@ class Accordion{
 		}
 		
 		let parentFold = this.parentFold;
-		if(parentFold){
-			this.parent.updateFold(parentFold, height - this._height)
-		}
+		let diff       = height - this._height;
+		parentFold
+			? this.parent.updateFold(parentFold, diff)
+			: this.edgeCheck(diff);
 		
 		this.height = height;
 	}

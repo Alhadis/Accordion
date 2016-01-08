@@ -12,6 +12,7 @@
 		margin:  0;
 	}
 		.accordion > *,
+		.accordion.edge-visible,
 		.accordion .accordion{
 			transition: .3s ease all;
 		}
