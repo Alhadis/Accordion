@@ -35,11 +35,11 @@ class Fold{
 	
 	fit(){
 		if(!this.open){
-			this.height = this.headingHeight;
+			this.height = this.heading.scrollHeight;
 		}
 		
 		else{
-			this.height = this.headingHeight + this.contentHeight;
+			this.height = this.heading.scrollHeight + this.content.scrollHeight;
 		}
 	}
 	
@@ -79,80 +79,18 @@ class Fold{
 	 * @return {Number}
 	 */
 	get height(){
-		if(undefined === this._height)
-			return (this._height = this.headingHeight + this.contentHeight)
+		if(undefined === this._height){
+			let height           = this.heading.scrollHeight + this.content.scrollHeight;
+			this.el.style.height = height + "px";
+			return (this._height = height);
+		}
 		return this._height;
 	}
 	
 	set height(input){
-		if((input = +input) !== this._height){
-			this.el.style.height  = input + "px"
-			this._height          = input;
-		}
-	}
-	
-	
-	/**
-	 * Return the height of the Fold's heading element.
-	 *
-	 * @return {Number}
-	 */
-	get headingHeight(){
-		
-		/** Heading height's not been calculated yet */
-		if(undefined === this._headingHeight){
-			let box    = this.heading.getBoundingClientRect();
-			let height = box.bottom - box.top;
-			return (this._headingHeight = height);
-		}
-		
-		return this._headingHeight;
-	}
-	
-	/**
-	 * Set the height of the Fold's heading.
-	 *
-	 * Typically only ever called when headings break onto new lines due to screen resize.
-	 *
-	 * @param {Number} input
-	 */
-	set headingHeight(input){
-		if((input = +input) !== this._headingHeight){
-			this.heading.style.height  = input + "px";
-			this._headingHeight        = input;
-		}
-	}
-	
-	
-	/**
-	 * Return the height of the Fold's collapsible content area.
-	 *
-	 * @return {Number}
-	 */
-	get contentHeight(){
-		
-		/** Internal height hasn't been calculated yet */
-		if(undefined === this._contentHeight){
-			let box    = this.content.getBoundingClientRect();
-			let height = box.bottom - box.top;
-			return (this._contentHeight = height);
-		}
-		
-		return this._contentHeight;
-	}
-	
-	
-	/**
-	 * Set the height of the Fold's collapsible content region.
-	 *
-	 * This will be called often when folds are toggled.
-	 *
-	 * @param {Number} input
-	 */
-	set contentHeight(input){
-		if((input = +input) !== this._contentHeight){
-			this.content.style.height  = input + "px";
-			this._contentHeight        = input;
+		if(input && (input = +input) !== this._height){
+			this.el.style.height = input + "px"
+			this._height         = input;
 		}
 	}
 }
