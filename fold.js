@@ -18,10 +18,11 @@ class Fold{
 	 * @constructor
 	 */
 	constructor(accordion, el){
-		this.accordion = accordion;
-		this.el        = el;
-		this.heading   = el.firstElementChild;
-		this.content   = el.lastElementChild;
+		this.accordion   = accordion;
+		this.el          = el;
+		this.heading     = el.firstElementChild;
+		this.content     = el.lastElementChild;
+		el.accordionFold = this;
 		
 		this.heading.addEventListener(touchEnabled ? "touchend" : "click", e => {
 			if(e.type !== "touchend" || e.cancelable){

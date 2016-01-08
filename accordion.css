@@ -11,6 +11,10 @@
 		padding: 0;
 		margin:  0;
 	}
+		.accordion > *,
+		.accordion .accordion{
+			transition: .3s ease all;
+		}
 		/** Heading */
 		.accordion > * > :first-child{
 			cursor: pointer;
@@ -23,6 +27,7 @@
 			overflow: hidden;
 			background: #fff;
 			padding: 0 .5em;
+			transition: .3s ease height;
 		}
 
 

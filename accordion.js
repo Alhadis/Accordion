@@ -21,18 +21,21 @@ class Accordion{
 		el.accordion = this;
 		this.el      = el;
 		this.folds   = folds;
+		this.update();
 		
 		/** Find out if this accordion's nested inside another */
 		let next = el;
 		while((next = next.parentNode) && 1 === next.nodeType){
-			if(next.accordion){
-				this.parent = next.accordion;
+			let fold = next.accordionFold;
+			if(fold){
+				this.parent     = fold.accordion;
+				this.parentFold = fold;
+				this.parent.update();
 				break;
 			}
 		}
 		
-		this.update();
-		
+		/** Temporary shit to remove later */
 		window.addEventListener("resize", e => {
 			this.update();
 		})
@@ -49,7 +52,14 @@ class Accordion{
 	}
 	
 	
-	
+	updateFold(fold, offset){
+		let node = fold.el;
+		while(node = node.nextElementSibling){
+			node.accordionFold.y += offset;
+		}
+		fold.height += offset;
+		this.height += offset;
+	}
 	
 	update(){
 		let y = 0;
@@ -61,7 +71,11 @@ class Accordion{
 			height += i.height;
 		}
 		
+		let parentFold = this.parentFold;
+		if(parentFold){
+			this.parent.updateFold(parentFold, height - this._height)
+		}
+		
 		this.height = height;
-		this.parent && this.parent.update();
 	}
 }
