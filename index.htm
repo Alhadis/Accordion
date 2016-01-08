@@ -18,10 +18,37 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 <body>
 
 	<ul class="accordion">
-		<li>
+		<li class="open">
 			<h1>A</h1>
 			<div class="fold">
 				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lectus leo, congue ac leo id, vulputate pretium enim. Praesent congue, odio at placerat ultricies, mi libero lacinia nulla, sit amet scelerisque nunc tortor et ligula. Maecenas sit amet ipsum ac est ullamcorper aliquet. Donec sed nisl sit amet metus volutpat malesuada eget nec orci. In a ipsum volutpat, aliquet quam sed, eleifend neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer sed porta nisl.</p>
+				
+				
+				<ul class="accordion">
+					<li>
+						<h2>A.1</h2>
+						<div class="fold">
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lectus leo, congue ac leo id, vulputate pretium enim. Praesent congue, odio at placerat ultricies, mi libero lacinia nulla, sit amet scelerisque nunc tortor et ligula. Maecenas sit amet ipsum ac est ullamcorper aliquet. Donec sed nisl sit amet metus volutpat malesuada eget nec orci. In a ipsum volutpat, aliquet quam sed, eleifend neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer sed porta nisl.</p>
+						</div>
+					</li>
+					
+					
+					<li>
+						<h2>A.2</h2>
+						<div class="fold">
+							<p>Sed volutpat orci sed viverra commodo. Phasellus sit amet mattis eros, quis iaculis diam. Phasellus et dignissim ante. Proin id ultrices diam. Nulla accumsan rutrum neque, sit amet lacinia enim accumsan a. Donec laoreet turpis dolor, nec semper arcu fringilla at. Vestibulum mollis tellus sem, sit amet faucibus ligula laoreet sed. Integer et turpis eget felis fringilla tempus. Mauris at erat non velit varius ultricies et luctus metus. Integer interdum at lorem ultricies fermentum. Fusce ut sagittis libero. Suspendisse blandit auctor leo, vel tempus massa lobortis at.</p>
+						</div>
+					</li>
+					
+					
+					<li>
+						<h2>A.3</h2>
+						<div class="fold">
+							<p>Etiam vel augue nec nisi molestie blandit. Nam viverra egestas dui, eu blandit orci posuere a. Mauris posuere blandit cursus. Fusce congue turpis sit amet dui bibendum, nec molestie orci ultricies. Phasellus tincidunt mattis sodales. Pellentesque gravida, mauris convallis lacinia faucibus, neque turpis tincidunt justo, at hendrerit erat lacus in mauris. Duis viverra metus vitae porttitor venenatis. In hac habitasse platea dictumst. Maecenas accumsan mi vel elit tempus euismod.</p>
+						</div>
+					</li>
+				</ul>
+				
 			</div>
 		</li>
 		
@@ -50,7 +77,10 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 	<script src="fold.js"></script>
 	<script src="accordion.js"></script>
 	<script>
-		new Accordion(document.getElementsByClassName("accordion")[0])
+		var accordions = document.getElementsByClassName("accordion");
+		for(var i = 0, l = accordions.length; i < l; ++i){
+			new Accordion(accordions[i]);
+		}
 	</script>
 </body>
 </html>

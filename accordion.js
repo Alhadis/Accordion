@@ -15,12 +15,22 @@ class Accordion{
 	constructor(el){
 		let folds = [];
 		
-		for(let i of Array.from(el.children)){
+		for(let i of Array.from(el.children))
 			folds.push(new Fold(this, i));
+		
+		el.accordion = this;
+		this.el      = el;
+		this.folds   = folds;
+		
+		/** Find out if this accordion's nested inside another */
+		let next = el;
+		while((next = next.parentNode) && 1 === next.nodeType){
+			if(next.accordion){
+				this.parent = next.accordion;
+				break;
+			}
 		}
 		
-		this.el    = el;
-		this.folds = folds;
 		this.update();
 		
 		window.addEventListener("resize", e => {
@@ -52,5 +62,6 @@ class Accordion{
 		}
 		
 		this.height = height;
+		this.parent && this.parent.update();
 	}
 }

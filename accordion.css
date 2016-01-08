@@ -41,6 +41,12 @@ p{
 	margin: 0;
 }
 
+.fold > .accordion{
+	margin-bottom: 1em;
+}
+	.fold > .accordion > * > :last-child{
+		background: #ddd;
+	}
 #mindless-copy{
 	margin: 0 -1em;
 	color: #aaa;
