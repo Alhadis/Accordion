@@ -37,9 +37,11 @@ class Accordion{
 		while((next = next.parentNode) && 1 === next.nodeType){
 			let fold = next.accordionFold;
 			if(fold){
-				this.parent     = fold.accordion;
+				let accordion   = fold.accordion;
+				this.parent     = accordion;
 				this.parentFold = fold;
-				this.parent.update();
+				accordion.update();
+				(accordion.children = accordion.children || []).push(this);
 				break;
 			}
 		}
