@@ -15,8 +15,17 @@ class Accordion{
 	constructor(el){
 		let folds = [];
 		
-		for(let i of Array.from(el.children))
-			folds.push(new Fold(this, i));
+		for(let i of Array.from(el.children)){
+			let fold = new Fold(this, i);
+			folds.push(fold);
+			
+			/** Connect the fold to its previous sibling, if it's not the first to be added */
+			let prev = folds[folds.length - 2];
+			if(prev){
+				prev.nextFold     = fold;
+				fold.previousFold = prev;
+			}
+		}
 		
 		el.accordion = this;
 		this.el      = el;
@@ -53,10 +62,9 @@ class Accordion{
 	
 	
 	updateFold(fold, offset){
-		let node = fold.el;
-		while(node = node.nextElementSibling){
-			node.accordionFold.y += offset;
-		}
+		let next = fold;
+		while(next = next.nextFold)
+			next.y  += offset;
 		fold.height += offset;
 		this.height += offset;
 	}
