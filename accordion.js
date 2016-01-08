@@ -1,6 +1,15 @@
 "use strict";
 
 
+/** Name of the onTransitionEnd event supported by this browser. */
+const transitionEnd = (function(){
+	for(var names = "transitionend webkitTransitionEnd oTransitionEnd otransitionend".split(" "), i = 0; i < 4; ++i)
+		if("on"+names[i].toLowerCase() in window) return names[i];
+	return names[0];
+}());
+
+
+
 /**
  * Represents a column of collapsible content regions.
  */
@@ -10,11 +19,12 @@ class Accordion{
 	 * Instantiate a new Accordion instance.
 	 *
 	 * @param {HTMLElement} el - Container wrapped around each immediate fold
+	 * @param {Object} options - Optional hash of settings
+	 * @param {String} options.edgeClass - CSS class toggled based on whether the bottom-edge is visible
 	 * @constructor
 	 */
-	constructor(el){
+	constructor(el, options){
 		let folds = [];
-		
 		for(let i of Array.from(el.children)){
 			let fold = new Fold(this, i);
 			folds.push(fold);
@@ -27,9 +37,16 @@ class Accordion{
 			}
 		}
 		
-		el.accordion = this;
-		this.el      = el;
-		this.folds   = folds;
+		/** Parse options */
+		options        = options || {};
+		this.edgeClass = (undefined === options.edgeClass ? "edge-visible" : options.edgeClass);
+		
+		
+		el.accordion   = this;
+		this.el        = el;
+		this.folds     = folds;
+		this.update();
+		
 		
 		/** Find out if this accordion's nested inside another */
 		let next = el;
@@ -39,6 +56,7 @@ class Accordion{
 				let accordion   = fold.accordion;
 				this.parent     = accordion;
 				this.parentFold = fold;
+				this.edgeClass && el.classList.remove(this.edgeClass);
 				(accordion.children = accordion.children || []).push(this);
 				while(accordion){
 					accordion.update();
@@ -48,7 +66,12 @@ class Accordion{
 			}
 		}
 		
-		this.update();
+		
+		this.edgeClass && this.el.addEventListener(transitionEnd, e => {
+			if(!this.parent && e.target === el && "height" === e.propertyName && el.getBoundingClientRect().bottom > window.innerHeight)
+				el.classList.remove(this.edgeClass);
+		});
+		
 		
 		/** Temporary shit to remove later */
 		window.addEventListener("resize", e => {
@@ -68,23 +91,34 @@ class Accordion{
 	
 	
 	edgeCheck(offset){
-		let box        = this.el.getBoundingClientRect();
-		let isVisible  = box.bottom + (offset || 0) < window.innerHeight;
-		this.el.classList.toggle("edge-visible", isVisible);
+		let edgeClass = this.edgeClass;
+		if(edgeClass){
+			let box         = this.el.getBoundingClientRect();
+			let windowEdge  = window.innerHeight;
+			let classes     = this.el.classList;
+			
+			/** If the bottom-edge is visible (or about to be), enable height animation */
+			if(box.bottom + (offset || 0) < windowEdge)
+				classes.add(edgeClass)
+			
+			/** If the bottom-edge isn't visible anyway, disable height animation immediately */
+			else if(box.bottom > windowEdge)
+				classes.remove(edgeClass);
+		}
 	}
 	
 	
 	updateFold(fold, offset){
 		let next = fold;
+		let parentFold = this.parentFold;
+		
 		while(next = next.nextFold)
 			next.y  += offset;
+		parentFold || this.edgeCheck(offset);
 		fold.height += offset;
 		this.height += offset;
 		
-		let parentFold = this.parentFold;
-		parentFold
-			? this.parent.updateFold(parentFold, offset)
-			: this.edgeCheck();
+		parentFold && this.parent.updateFold(parentFold, offset);
 	}
 	
 	
