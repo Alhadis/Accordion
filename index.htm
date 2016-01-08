@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="initial-scale=1, minimum-scale=1" />
+<title>Accordion &#8545;</title>
+<style>
+/** Reset */
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none!important}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:0}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 2.5em}hr{box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+*{box-sizing: border-box; tab-size: 4;}
+</style>
+
+<link rel="stylesheet" type="text/css" href="accordion.css" />
+</head>
+
+
+<body>
+
+	<ul class="accordion">
+		<li>
+			<h1>A</h1>
+			<div class="fold">
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse lectus leo, congue ac leo id, vulputate pretium enim. Praesent congue, odio at placerat ultricies, mi libero lacinia nulla, sit amet scelerisque nunc tortor et ligula. Maecenas sit amet ipsum ac est ullamcorper aliquet. Donec sed nisl sit amet metus volutpat malesuada eget nec orci. In a ipsum volutpat, aliquet quam sed, eleifend neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Integer sed porta nisl.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h1>B</h1>
+			<div class="fold">
+				<p>Sed volutpat orci sed viverra commodo. Phasellus sit amet mattis eros, quis iaculis diam. Phasellus et dignissim ante. Proin id ultrices diam. Nulla accumsan rutrum neque, sit amet lacinia enim accumsan a. Donec laoreet turpis dolor, nec semper arcu fringilla at. Vestibulum mollis tellus sem, sit amet faucibus ligula laoreet sed. Integer et turpis eget felis fringilla tempus. Mauris at erat non velit varius ultricies et luctus metus. Integer interdum at lorem ultricies fermentum. Fusce ut sagittis libero. Suspendisse blandit auctor leo, vel tempus massa lobortis at.</p>
+			</div>
+		</li>
+		
+		
+		<li>
+			<h1>C</h1>
+			<div class="fold">
+				<p>Etiam vel augue nec nisi molestie blandit. Nam viverra egestas dui, eu blandit orci posuere a. Mauris posuere blandit cursus. Fusce congue turpis sit amet dui bibendum, nec molestie orci ultricies. Phasellus tincidunt mattis sodales. Pellentesque gravida, mauris convallis lacinia faucibus, neque turpis tincidunt justo, at hendrerit erat lacus in mauris. Duis viverra metus vitae porttitor venenatis. In hac habitasse platea dictumst. Maecenas accumsan mi vel elit tempus euismod.</p>
+			</div>
+		</li>
+	</ul>
+
+	<script src="accordion.js"></script>
+	<script>
+		new Accordion(document.getElementsByClassName("accordion")[0])
+	</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+/** Core styling */
+.accordion{
+	padding: 0;
+	margin:  0;
+	position: relative;
+	list-style: none;
+}
+	.accordion > *{
+		position: absolute;
+		padding: 0;
+		margin:  0;
+	}
+		/** Heading */
+		.accordion > * > :first-child{
+			cursor: pointer;
+			background: #2c4d2b;
+			color: #fff;
+		}
+		
+		/** Collapsible content */
+		.accordion > * > :last-child{
+			overflow: hidden;
+			background: #fff;
+			padding: 0 .5em;
+		}
+
+
+
+/** Demo shit */
+html{
+	padding: 1em;
+	background: #000;
+}
+h1, h2, h3{
+	margin: 0;
+	padding: 0 .25em;
+}
+
+p{
+	margin: 0;
+}
