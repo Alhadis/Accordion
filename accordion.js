@@ -40,8 +40,11 @@ class Accordion{
 				let accordion   = fold.accordion;
 				this.parent     = accordion;
 				this.parentFold = fold;
-				accordion.update();
 				(accordion.children = accordion.children || []).push(this);
+				while(accordion){
+					accordion.update();
+					accordion = accordion.parent;
+				}
 				break;
 			}
 		}
@@ -69,7 +72,12 @@ class Accordion{
 			next.y  += offset;
 		fold.height += offset;
 		this.height += offset;
+		
+		let parentFold = this.parentFold;
+		if(parentFold)
+			this.parent.updateFold(parentFold, offset);
 	}
+	
 	
 	update(){
 		let y = 0;
