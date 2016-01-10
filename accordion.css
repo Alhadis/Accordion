@@ -16,6 +16,7 @@
 		.accordion .accordion{
 			transition: .3s ease all;
 		}
+
 		/** Heading */
 		.accordion > * > :first-child{
 			cursor: pointer;
@@ -30,7 +31,10 @@
 			padding: 0 .5em;
 			transition: .3s ease height;
 		}
-
+		.snap.accordion > *,
+		.snap.accordion .accordion{
+			transition: none !important;
+		}
 
 
 /** Demo shit */

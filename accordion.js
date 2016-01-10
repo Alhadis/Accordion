@@ -14,6 +14,7 @@ class Accordion{
 	 * @param {HTMLElement} el - Container wrapped around each immediate fold
 	 * @param {Object} options - Optional hash of settings
 	 * @param {String} options.edgeClass - CSS class toggled based on whether the bottom-edge is visible
+	 * @param {String} options.snapClass - CSS class for disabling transitions between window resizes
 	 * @constructor
 	 */
 	constructor(el, options){
@@ -36,6 +37,7 @@ class Accordion{
 		/** Parse options */
 		options        = options || {};
 		this.edgeClass = (undefined === options.edgeClass ? "edge-visible" : options.edgeClass);
+		this.snapClass = (undefined === options.snapClass ? "snap" : options.snapClass)
 		
 		
 		el.accordion   = this;
@@ -134,19 +136,23 @@ class Accordion{
 	
 	
 	updateWidth(){
+		let snap = this.snapClass;
+		snap && this.el.classList.add(snap);
+		
 		this.update();
 		if(this.children)
 			this.children.forEach(a => a.updateWidth())
+		
+		snap && setTimeout(e => this.el.classList.remove(snap), 20);
 	}
 }
 
 
 Accordion.onResize = debounce(function(e){
 	
-	for(let i of accordions){
-		if(!i.parent)
-			i.updateWidth();
-	}
+	for(let i of accordions)
+		i.parent || i.updateWidth();
+	
 }, 50);
 
 window.addEventListener("resize", Accordion.onResize);
