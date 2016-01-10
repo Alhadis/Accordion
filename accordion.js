@@ -1,16 +1,6 @@
 "use strict";
 
-
-/** Name of the onTransitionEnd event supported by this browser. */
-const transitionEnd = (function(){
-	for(var names = "transitionend webkitTransitionEnd oTransitionEnd otransitionend".split(" "), i = 0; i < 4; ++i)
-		if("on"+names[i].toLowerCase() in window) return names[i];
-	return names[0];
-}());
-
-
 let accordions = [];
-
 
 
 /**
@@ -77,13 +67,8 @@ class Accordion{
 			if(!this.parent && e.target === el && "height" === e.propertyName && el.getBoundingClientRect().bottom > window.innerHeight)
 				el.classList.remove(this.edgeClass);
 		});
-		
-		
-		/** Temporary shit to remove later */
-		window.addEventListener("resize", e => {
-			this.update();
-		})
 	}
+	
 	
 	get height(){
 		return this._height;
@@ -147,3 +132,10 @@ class Accordion{
 		this.height = height;
 	}
 }
+
+
+Accordion.onResize = debounce(function(e){
+	console.log("Hi");
+}, 100);
+
+window.addEventListener("resize", Accordion.onResize);

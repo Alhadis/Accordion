@@ -1,7 +1,5 @@
 "use strict";
 
-const touchEnabled = "ontouchstart" in document.documentElement;
-
 let folds = [];
 
 
