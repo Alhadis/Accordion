@@ -131,11 +131,22 @@ class Accordion{
 		
 		this.height = height;
 	}
+	
+	
+	updateWidth(){
+		this.update();
+		if(this.children)
+			this.children.forEach(a => a.updateWidth())
+	}
 }
 
 
 Accordion.onResize = debounce(function(e){
-	console.log("Hi");
-}, 100);
+	
+	for(let i of accordions){
+		if(!i.parent)
+			i.updateWidth();
+	}
+}, 50);
 
 window.addEventListener("resize", Accordion.onResize);

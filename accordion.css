@@ -58,3 +58,7 @@ p{
 	color: #aaa;
 	text-align: justify;
 }
+
+.clamp-width{
+	max-width: 20em;
+}
