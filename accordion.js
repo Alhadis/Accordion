@@ -9,6 +9,9 @@ const transitionEnd = (function(){
 }());
 
 
+let accordions = [];
+
+
 
 /**
  * Represents a column of collapsible content regions.
@@ -24,6 +27,9 @@ class Accordion{
 	 * @constructor
 	 */
 	constructor(el, options){
+		this.index = accordions.push(this) - 1;
+		
+		/** Create a fold for each immediate descendant of the Accordion's container */
 		let folds = [];
 		for(let i of Array.from(el.children)){
 			let fold = new Fold(this, i);

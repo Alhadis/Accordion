@@ -2,6 +2,8 @@
 
 const touchEnabled = "ontouchstart" in document.documentElement;
 
+let folds = [];
+
 
 /**
  * Represents a single panel of togglable content inside an Accordion.
@@ -18,6 +20,8 @@ class Fold{
 	 * @constructor
 	 */
 	constructor(accordion, el){
+		this.index       = folds.push(this) - 1;
+		
 		this.accordion   = accordion;
 		this.el          = el;
 		this.heading     = el.firstElementChild;
