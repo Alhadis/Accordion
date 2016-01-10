@@ -55,7 +55,13 @@ class Fold{
 		if((input = !!input) !== this._open){
 			this.el.classList.toggle("open", input);
 			this._open = input;
-			this.accordion.update();
+			
+			/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
+			if(this.needsRefresh){
+				delete this.needsRefresh;
+				this.accordion.updateWidth();
+			}
+			else this.accordion.update();
 		}
 	}
 	

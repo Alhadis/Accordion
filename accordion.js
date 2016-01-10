@@ -135,13 +135,13 @@ class Accordion{
 	}
 	
 	
-	updateWidth(){
-		let snap = this.snapClass;
+	updateWidth(allowSnap){
+		let snap = allowSnap ? this.snapClass : false;
 		snap && this.el.classList.add(snap);
 		
 		this.update();
 		if(this.children)
-			this.children.forEach(a => a.updateWidth())
+			this.children.forEach(a => a.parentFold.open ? a.updateWidth() : (a.parentFold.needsRefresh = true))
 		
 		snap && setTimeout(e => this.el.classList.remove(snap), 20);
 	}
@@ -151,7 +151,7 @@ class Accordion{
 Accordion.onResize = debounce(function(e){
 	
 	for(let i of accordions)
-		i.parent || i.updateWidth();
+		i.parent || i.updateWidth(true);
 	
 }, 50);
 
