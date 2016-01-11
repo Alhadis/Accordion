@@ -145,18 +145,20 @@ class Accordion{
 		
 		snap && setTimeout(e => this.el.classList.remove(snap), 20);
 	}
+	
+	
+	static setResizeRate(delay){
+		let fn = function(e){
+			console.log("Updating");
+			for(let i of accordions)
+				i.parent || i.updateWidth(true);
+		};
+		
+		window.removeEventListener("resize", this.onResize);
+		this.onResize = (delay = +delay || 0) > 0 ? debounce(fn, delay) : fn;
+		window.addEventListener("resize", this.onResize);
+	};
 }
 
-
-Accordion.setResizeRate = function(delay){
-	let fn = function(e){
-		for(let i of accordions)
-			i.parent || i.updateWidth(true);
-	};
-	
-	window.removeEventListener("resize", Accordion.onResize);
-	Accordion.onResize = (delay = +delay || 0) > 0 ? debounce(fn, delay) : fn;
-	window.addEventListener("resize", Accordion.onResize);
-};
 
 Accordion.setResizeRate(25);
