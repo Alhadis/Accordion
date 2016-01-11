@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Test Fixture for Detecting Dimensions of Loading Images</title>
+<style>
+img{
+	max-width: 2em;
+}
+
+td{
+	border: 1px solid;
+	border-collapse: separate;
+}
+td{
+	white-space: nowrap;
+}
+</style>
+</head>
+
+<body>
+	<table>
+		<thead><tr><th>Dimensions</th><th>Image</th></tr></thead>
+		<tbody>
+			<tr><td></td><td><img src="http://nah.bog.us/nope.jpg" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?2" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?3" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?4" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?5" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?6" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?7" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?8" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?9" alt="" /></td></tr>
+			<tr><td></td><td><img src="http://www.sunflowerwellnessretreat.com/wp-content/uploads/2014/08/Sunflower-Wellness.png?0" alt="" /></td></tr>
+		</tbody>
+	</table>
+	
+	
+	<script>
+		"use strict";
+		
+		/**
+		 * Run a callback once an image's dimensions are accessible.
+		 *
+		 * The function will also be executed if an image fails to load, and should
+		 * serve as no indicator of the image's actual loading status. Note that IE
+		 * doesn't fire this event if the user cancels the loading of a webpage
+		 * before an image has a chance to begin loading.
+		 *
+		 * @param {HTMLImageElement} img - Image element to monitor
+		 * @param {Function} fn - Callback to execute
+		 */
+		function onSizeKnown(img, fn){
+			
+			/** Huzzah, nothing to do here! Everybody go home early! */
+			if((isReady = function(){ return img.complete || img.naturalWidth || img.naturalHeight })()){
+				fn.call(null, img); return;
+			}
+			
+			var isReady;
+			var eventTypes = ["abort", "error", "load"];
+			var check   = function(e){(isReady() || (e && e.type === "error")) && done()};
+			var done    = function(){
+				clearInterval(intervalID);
+				for(i = 0; i < 3; ++i) img.removeEventListener(eventTypes[i], check);
+				fn.call(null, img);
+			}
+			
+			var intervalID = setInterval(check, 20), i;
+			for(i = 0; i < 3; ++i) img.addEventListener(eventTypes[i], check)
+		}
+
+		
+		
+		for(var i = 0, l = document.images.length; i < l; ++i){
+			var img = document.images[i];
+			onSizeKnown(img, function(img){
+				img.parentNode.previousSibling.innerHTML = "DONE: " + img.naturalWidth + " × " + img.naturalHeight;
+			});
+		}
+	</script>
+</body>
+</html>

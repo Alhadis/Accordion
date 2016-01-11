@@ -56,3 +56,36 @@ function debounce(fn, limit, soon){
 		}
 	};
 };
+
+
+
+/**
+ * Run a callback once an image's dimensions are accessible.
+ *
+ * The function will also be executed if an image fails to load, and should
+ * serve as no indicator of the image's actual loading status. Note that IE
+ * doesn't fire this event if the user cancels the loading of a webpage
+ * before an image has a chance to begin loading.
+ *
+ * @param {HTMLImageElement} img - Image element to monitor
+ * @param {Function} fn - Callback to execute
+ */
+function onSizeKnown(img, fn){
+	
+	/** Huzzah, nothing to do here! Everybody go home early! */
+	if((isReady = function(){ return img.complete || img.naturalWidth || img.naturalHeight })()){
+		fn.call(null, img); return;
+	}
+	
+	var isReady;
+	var eventTypes = ["abort", "error", "load"];
+	var check   = function(e){(isReady() || (e && e.type === "error")) && done()};
+	var done    = function(){
+		clearInterval(intervalID);
+		for(i = 0; i < 3; ++i) img.removeEventListener(eventTypes[i], check);
+		fn.call(null, img);
+	}
+	
+	var intervalID = setInterval(check, 20), i;
+	for(i = 0; i < 3; ++i) img.addEventListener(eventTypes[i], check)
+}

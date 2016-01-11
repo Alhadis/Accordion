@@ -66,3 +66,7 @@ p{
 .clamp-width{
 	max-width: 20em;
 }
+
+img{
+	max-width: 100%;
+}
