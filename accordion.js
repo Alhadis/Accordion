@@ -149,15 +149,18 @@ class Accordion{
 	
 	static setResizeRate(delay){
 		let fn = function(e){
-			console.log("Updating");
 			for(let i of accordions)
 				i.parent || i.updateWidth(true);
 		};
 		
 		window.removeEventListener("resize", this.onResize);
-		this.onResize = (delay = +delay || 0) > 0 ? debounce(fn, delay) : fn;
-		window.addEventListener("resize", this.onResize);
-	};
+		
+		/** Make sure we weren't passed an explicit value of FALSE, or a negative value */
+		if(false !== delay && (delay = +delay || 0) >= 0){
+			this.onResize = delay ? debounce(fn, delay) : fn;
+			window.addEventListener("resize", this.onResize);
+		}
+	}
 }
 
 
