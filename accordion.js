@@ -83,21 +83,6 @@ class Accordion{
 	}
 	
 	
-	
-	/**
-	 * Return the top-most Accordion in the instance's ancestry.
-	 *
-	 * If the instance has no parent, it returns itself.
-	 *
-	 * @return {Accordion}
-	 */
-	get root(){
-		let result = this;
-		while(result.parent) result = result.parent;
-		return result;
-	}
-	
-	
 	edgeCheck(offset){
 		let edgeClass = this.edgeClass;
 		if(edgeClass){

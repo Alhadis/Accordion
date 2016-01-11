@@ -26,35 +26,6 @@ class Fold{
 		this.content     = el.lastElementChild;
 		el.accordionFold = this;
 		
-		
-		/** Add handlers to update fold sizes when images load */
-		for(let img of Array.from(el.querySelectorAll("img"))){
-			let cork     = "__accordionLoadOnlyOnce";
-			
-			/** Avoid adding duplicate listeners */
-			if(!img[cork]){
-				
-				let update = img => {
-					delete img[cork];
-					let next = img;
-					
-					/** Locate the closest element in the image's ancestry marked as an accordion fold */
-					while(next && 1 === next.nodeType && (next = next.parentNode)){
-						if("accordionFold" in next){
-							next.accordionFold.accordion.root.updateWidth();
-							break;
-						}
-					}
-				};
-				
-				img[cork] = true;
-				onSizeKnown(img, update);
-				for(let i of ["abort", "error", "load"])
-					img.addEventListener(i, e => update(e.target));
-			}
-		}
-		
-		
 		this.heading.addEventListener(touchEnabled ? "touchend" : "click", e => {
 			if(e.type !== "touchend" || e.cancelable){
 				this.open = !this.open;
@@ -63,7 +34,6 @@ class Fold{
 			return false;
 		});
 	}
-	
 	
 	
 	fit(){
