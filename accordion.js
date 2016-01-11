@@ -148,11 +148,15 @@ class Accordion{
 }
 
 
-Accordion.onResize = debounce(function(e){
+Accordion.setResizeRate = function(delay){
+	let fn = function(e){
+		for(let i of accordions)
+			i.parent || i.updateWidth(true);
+	};
 	
-	for(let i of accordions)
-		i.parent || i.updateWidth(true);
-	
-}, 50);
+	window.removeEventListener("resize", Accordion.onResize);
+	Accordion.onResize = (delay = +delay || 0) > 0 ? debounce(fn, delay) : fn;
+	window.addEventListener("resize", Accordion.onResize);
+};
 
-window.addEventListener("resize", Accordion.onResize);
+Accordion.setResizeRate(25);
