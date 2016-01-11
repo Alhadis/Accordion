@@ -15,7 +15,7 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 </head>
 
 
-<body class="clamp-width">
+<body>
 
 	<ul class="accordion">
 		<li class="open">
@@ -109,10 +109,14 @@ html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:1
 			new Accordion(elements[i]);
 		}
 		
-		setTimeout(e => document.querySelector("h2").dispatchEvent(new MouseEvent("click")), 500);
-		setTimeout(e => document.querySelector("h3").dispatchEvent(new MouseEvent("click")), 750);
-		setTimeout(e => document.body.classList.remove("clamp-width"), 1000);
-		setTimeout(e => Accordion.onResize(), 1050);
+		var testResize = false;
+		if(testResize){
+			document.body.classList.add("clamp-width");
+			setTimeout(e => document.querySelector("h2").dispatchEvent(new MouseEvent("click")), 500);
+			setTimeout(e => document.querySelector("h3").dispatchEvent(new MouseEvent("click")), 750);
+			setTimeout(e => document.body.classList.remove("clamp-width"), 1000);
+			setTimeout(e => Accordion.onResize(), 1050);
+		}
 	</script>
 </body>
 </html>
