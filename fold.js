@@ -99,4 +99,17 @@ class Fold{
 			this._height         = input;
 		}
 	}
+	
+	
+	
+	/**
+	 * Whether the Fold's container has been resized incorrectly.
+	 *
+	 * @type {Boolean}
+	 * @readonly
+	 * @property
+	 */
+	get wrongSize(){
+		return this.heading.scrollHeight + this.content.scrollHeight !== this.el.scrollHeight;
+	}
 }

@@ -147,6 +147,23 @@ class Accordion{
 	}
 	
 	
+	/**
+	 * Whether one of the Accordion's folds has been resized incorrectly.
+	 *
+	 * @type {Boolean}
+	 * @readonly
+	 * @property
+	 */
+	get wrongSize(){
+		for(let i of this.folds)
+			if(i.wrongSize) return true;
+		if(this.children) for(let i of this.children)
+			if(i.wrongSize) return true;
+		return false;
+	}
+	
+	
+	
 	static setResizeRate(delay){
 		let fn = function(e){
 			for(let i of accordions)
