@@ -101,6 +101,13 @@ class Accordion{
 	}
 	
 	
+	
+	/**
+	 * Update the vertical ordinate of each sibling for a particular fold.
+	 *
+	 * @param {Fold} fold
+	 * @param {Number} offset - Pixel distance to adjust by
+	 */
 	updateFold(fold, offset){
 		let next = fold;
 		let parentFold = this.parentFold;
@@ -115,6 +122,9 @@ class Accordion{
 	}
 	
 	
+	/**
+	 * Update the height of each fold to fit its content.
+	 */
 	update(){
 		let y = 0;
 		let height = 0;
@@ -135,16 +145,26 @@ class Accordion{
 	}
 	
 	
-	updateWidth(allowSnap){
+	
+	/**
+	 * Recalculate the boundaries of an Accordion and its descendants.
+	 *
+	 * This method should only be called if the width of a container changes,
+	 * or a fold's contents have resized unexpectedly (such as when images load).
+	 *
+	 * @param {Boolean} allowSnap - Snap folds instantly into place without transitioning
+	 */
+	refresh(allowSnap){
 		let snap = allowSnap ? this.snapClass : false;
 		snap && this.el.classList.add(snap);
 		
 		this.update();
 		if(this.children)
-			this.children.forEach(a => a.parentFold.open ? a.updateWidth() : (a.parentFold.needsRefresh = true))
+			this.children.forEach(a => a.parentFold.open ? a.refresh() : (a.parentFold.needsRefresh = true))
 		
 		snap && setTimeout(e => this.el.classList.remove(snap), 20);
 	}
+	
 	
 	
 	/**
@@ -167,7 +187,7 @@ class Accordion{
 	static setResizeRate(delay){
 		let fn = function(e){
 			for(let i of accordions)
-				i.parent || i.updateWidth(true);
+				i.parent || i.refresh(true);
 		};
 		
 		window.removeEventListener("resize", this.onResize);

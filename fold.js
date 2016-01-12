@@ -59,7 +59,7 @@ class Fold{
 			/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
 			if(this.needsRefresh){
 				delete this.needsRefresh;
-				this.accordion.updateWidth();
+				this.accordion.refresh();
 			}
 			else this.accordion.update();
 		}
