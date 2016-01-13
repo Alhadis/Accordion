@@ -33,5 +33,10 @@
 		/** Collapsible content */
 		.accordion > * > :last-child{
 			overflow: hidden;
-			transition: .3s ease height;
+			transition: .3s ease height, .3s step-start visibility;
 		}
+			.accordion > .closed > :last-child,
+			.accordion > .closed .accordion > .open > :last-child{
+				transition-timing-function: ease, step-end;
+				visibility: hidden;
+			}
