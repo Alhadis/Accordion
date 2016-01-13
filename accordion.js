@@ -160,7 +160,7 @@ class Accordion{
 		
 		this.update();
 		if(this.children)
-			this.children.forEach(a => a.parentFold.open ? a.refresh() : (a.parentFold.needsRefresh = true))
+			this.children.forEach(a => a.parentFold.open ? a.refresh(allowSnap) : (a.parentFold.needsRefresh = true))
 		
 		snap && setTimeout(e => this.el.classList.remove(snap), 20);
 	}
