@@ -16,53 +16,22 @@
 		.accordion .accordion{
 			transition: .3s ease all;
 		}
-
-		/** Heading */
-		.accordion > * > :first-child{
-			cursor: pointer;
-			background: #2c4d2b;
-			color: #fff;
-		}
 		
-		/** Collapsible content */
-		.accordion > * > :last-child{
-			overflow: hidden;
-			background: #fff;
-			padding: 0 .5em;
-			transition: .3s ease height;
-		}
+		/** Rule to disable transitions between gap corrections */
 		.snap.accordion > *,
 		.snap.accordion .accordion{
 			transition: none !important;
 		}
 
-
-/** Demo shit */
-html{
-	padding: 1em 2em;
-	background: #000;
-}
-h1, h2, h3{
-	margin: 0;
-	padding: 0 .25em;
-}
-
-p{
-	margin: 0;
-}
-
-.fold > .accordion{
-	margin-bottom: 1em;
-}
-	.fold > .accordion > * > :last-child{
-		background: #ddd;
-	}
-#mindless-copy{
-	margin: 0 -1em;
-	color: #aaa;
-	text-align: justify;
-}
-
-.clamp-width{
-	max-width: 20em;
-}
+		/** Headings */
+		.accordion > * > :first-child{
+			cursor: pointer;
+			user-select: none;
+			margin: 0;
+		}
+		
+		/** Collapsible content */
+		.accordion > * > :last-child{
+			overflow: hidden;
+			transition: .3s ease height;
+		}
