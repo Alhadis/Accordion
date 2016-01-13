@@ -56,10 +56,7 @@ class Accordion{
 				this.parentFold = fold;
 				this.edgeClass && el.classList.remove(this.edgeClass);
 				(accordion.children = accordion.children || []).push(this);
-				while(accordion){
-					accordion.update();
-					accordion = accordion.parent;
-				}
+				accordion.update();
 				break;
 			}
 		}
