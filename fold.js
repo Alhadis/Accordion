@@ -46,14 +46,22 @@ class Fold{
 	
 	
 	get open(){
-		if(undefined === this._open)
-			return (this._open = this.el.classList.contains("open"));
+		
+		/** Derive the fold's opened state from the DOM if it's not been determined yet */
+		if(undefined === this._open){
+			let classes = this.el.classList;
+			let open    = classes.contains("open");
+			classes.toggle("closed", !open);
+			return (this._open = open);
+		}
+		
 		return this._open;
 	}
 	
 	set open(input){
 		if((input = !!input) !== this._open){
-			this.el.classList.toggle("open", input);
+			this.el.classList.toggle("open",    input);
+			this.el.classList.toggle("closed", !input);
 			this._open = input;
 			
 			/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
