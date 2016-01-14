@@ -135,7 +135,7 @@ class Accordion{
 		let parentFold = this.parentFold;
 		let diff       = height - this._height;
 		parentFold
-			? this.parent.updateFold(parentFold, diff)
+			? (parentFold.open && this.parent.updateFold(parentFold, diff))
 			: this.edgeCheck(diff);
 		
 		this.height = height;
