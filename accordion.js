@@ -40,7 +40,7 @@ class Accordion{
 		this.snapClass = (undefined === options.snapClass ? "snap" : options.snapClass)
 		
 		
-		el.accordion   = this;
+		el.accordion   = this.index;
 		this.el        = el;
 		this.folds     = folds;
 		this.update();
@@ -49,7 +49,7 @@ class Accordion{
 		/** Find out if this accordion's nested inside another */
 		let next = el;
 		while((next = next.parentNode) && 1 === next.nodeType){
-			let fold = next.accordionFold;
+			let fold = Accordion.getFold(next);
 			if(fold){
 				let accordion   = fold.accordion;
 				this.parent     = accordion;
@@ -181,6 +181,23 @@ class Accordion{
 	
 	
 	
+	/**
+	 * Return the top-level ancestor this accordion's nested inside.
+	 *
+	 * @type {Accordion}
+	 * @readonly
+	 * @property
+	 */
+	get root(){
+		let result = this;
+		while(result){
+			if(!result.parent) return result;
+			result = result.parent;
+		}
+	}
+	
+	
+	
 	static setResizeRate(delay){
 		let fn = function(e){
 			for(let i of accordions)
@@ -193,6 +210,41 @@ class Accordion{
 		if(false !== delay && (delay = +delay || 0) >= 0){
 			this.onResize = delay ? debounce(fn, delay) : fn;
 			window.addEventListener("resize", this.onResize);
+		}
+	}
+	
+	
+	
+	/**
+	 * Return the closest (most deeply-nested) accordion enclosing an element.
+	 *
+	 * @param {Node} node
+	 * @return {Accordion}
+	 */
+	static getAccordion(node){
+		while(node){
+			if("accordion" in node)
+				return accordions[node.accordion];
+			
+			node = node.parentNode;
+			if(!node || node.nodeType !== 1) return null;
+		}
+	}
+	
+	
+	/**
+	 * Return the closest (most deeply-nested) fold enclosing an element.
+	 *
+	 * @param {Node} node
+	 * @return {Fold}
+	 */
+	static getFold(node){
+		while(node){
+			if("accordionFold" in node)
+				return folds[node.accordionFold];
+			
+			node = node.parentNode;
+			if(!node || node.nodeType !== 1) return null;
 		}
 	}
 }

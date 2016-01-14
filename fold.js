@@ -24,7 +24,7 @@ class Fold{
 		this.el          = el;
 		this.heading     = el.firstElementChild;
 		this.content     = el.lastElementChild;
-		el.accordionFold = this;
+		el.accordionFold = this.index;
 		
 		this.heading.addEventListener(touchEnabled ? "touchend" : "click", e => {
 			if(e.type !== "touchend" || e.cancelable){
