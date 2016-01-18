@@ -36,6 +36,9 @@ class Fold{
 	}
 	
 	
+	/**
+	 * Adjust a fold's container to fit its content.
+	 */
 	fit(){
 		let height = this.heading.scrollHeight;
 		if(this.open)
@@ -45,6 +48,12 @@ class Fold{
 	
 	
 	
+	/**
+	 * Whether or not the fold's currently opened.
+	 *
+	 * @property
+	 * @type {Boolean}
+	 */
 	get open(){
 		
 		/** Derive the fold's opened state from the DOM if it's not been determined yet */
@@ -73,6 +82,14 @@ class Fold{
 		}
 	}
 	
+	
+	
+	/**
+	 * Vertical position of the fold within an accordion's container.
+	 *
+	 * @property
+	 * @type {Number}
+	 */
 	get y(){
 		if(undefined === this._y)
 			return (this._y = parseInt(this.el.style.top) || 0);
@@ -87,10 +104,12 @@ class Fold{
 	}
 	
 	
+	
 	/**
-	 * Height of the Fold's outermost container.
+	 * Height of the fold's outermost container.
 	 *
-	 * @return {Number}
+	 * @property
+	 * @type {Number}
 	 */
 	get height(){
 		if(undefined === this._height){
@@ -111,7 +130,7 @@ class Fold{
 	
 	
 	/**
-	 * Whether the Fold's container has been resized incorrectly.
+	 * Whether the fold's container has been resized incorrectly.
 	 *
 	 * @type {Boolean}
 	 * @readonly

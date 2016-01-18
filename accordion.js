@@ -74,10 +74,15 @@ class Accordion{
 		});
 	}
 	
+
 	
-	get height(){
-		return this._height;
-	}
+	/**
+	 * Height of the accordion's container element.
+	 *
+	 * @property
+	 * @type {Number}
+	 */
+	get height(){ return this._height; }
 	set height(input){
 		if(input && (input = +input) !== this._height){
 			this.el.style.height = input + "px";
@@ -86,6 +91,13 @@ class Accordion{
 	}
 	
 	
+	
+	/**
+	 * Internal method to check if an accordion's bottom-edge is visible to the user (or about to be).
+	 *
+	 * @param {Number} offset
+	 * @private
+	 */
 	edgeCheck(offset){
 		let edgeClass = this.edgeClass;
 		if(edgeClass){
@@ -204,6 +216,11 @@ class Accordion{
 	
 	
 	
+	/**
+	 * Alter the rate at which screen-resize events update accordion widths.
+	 *
+	 * @param {Number} delay - Rate expressed in milliseconds
+	 */
 	static setResizeRate(delay){
 		let fn = function(e){
 			for(let i of accordions)
