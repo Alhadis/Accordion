@@ -14,29 +14,45 @@
 		.accordion > *,
 		.accordion.edge-visible,
 		.accordion .accordion{
-			transition: .3s ease all;
+			-webkit-transition: .3s ease all;
+			-moz-transition:    .3s ease all;
+			-o-transition:      .3s ease all;
+			transition:         .3s ease all;
 		}
 		
 		/** Rule to disable transitions between gap corrections */
 		.snap.accordion > *,
 		.snap.accordion .accordion{
-			transition: none !important;
+			-webkit-transition: none !important;
+			-moz-transition:    none !important;
+			-o-transition:      none !important;
+			transition:         none !important;
 		}
 
 		/** Headings */
 		.accordion > * > :first-child{
 			cursor: pointer;
-			user-select: none;
 			margin: 0;
+			
+			-webkit-user-select: none;
+			-moz-user-select:    none;
+			-ms-user-select:     none;
+			user-select:         none;
 		}
 		
 		/** Collapsible content */
 		.accordion > * > :last-child{
 			overflow: hidden;
-			transition: .3s ease height, .3s step-start visibility;
+			-webkit-transition: .3s ease height, .3s step-start visibility;
+			-moz-transition:    .3s ease height, .3s step-start visibility;
+			-o-transition:      .3s ease height, .3s step-start visibility;
+			transition:         .3s ease height, .3s step-start visibility;
 		}
 			.accordion > .closed > :last-child,
 			.accordion > .closed .accordion > .open > :last-child{
-				transition-timing-function: ease, step-end;
+				-webkit-transition-timing-function: ease, step-end;
+				-moz-transition-timing-function:    ease, step-end;
+				-o-transition-timing-function:      ease, step-end;
+				transition-timing-function:         ease, step-end;
 				visibility: hidden;
 			}
