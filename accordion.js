@@ -55,7 +55,8 @@ class Accordion{
 				this.parent     = accordion;
 				this.parentFold = fold;
 				this.edgeClass && el.classList.remove(this.edgeClass);
-				(accordion.children = accordion.children || []).push(this);
+				(accordion.children   = accordion.children   || []).push(this);
+				(fold.childAccordions = fold.childAccordions || []).push(this);
 
 				/** Adjust the height of the containing fold's element */
 				if(fold.open){

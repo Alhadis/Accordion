@@ -18,7 +18,7 @@ p{
 
 
 /** Headings */
-h1, h2, h3{
+h1, h2, h3, h4, h5, h6{
 	padding: 0 .25em;
 	transition: .3s ease background-color;
 	background: #2c4d2b;
@@ -26,7 +26,10 @@ h1, h2, h3{
 }
 	h1:focus,
 	h2:focus,
-	h3:focus{
+	h3:focus,
+	h4:focus,
+	h5:focus,
+	h6:focus{
 		background: #1a721a !important;
 		outline: none;
 	}
