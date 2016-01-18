@@ -30,6 +30,7 @@ p{
 h1, h2, h3, h4, h5, h6{
 	padding: 0 .25em;
 	background: #2c4d2b;
+	text-shadow: 1px 1px 1px #020;
 	color: #fff;
 	
 	-webkit-transition: .3s ease background-color;
@@ -69,3 +70,6 @@ h1, h2, h3, h4, h5, h6{
 	color: #aaa;
 	text-align: justify;
 }
+	#mindless-copy > p{
+		margin: 1em 0;
+	}
