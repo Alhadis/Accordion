@@ -41,6 +41,7 @@ class Accordion{
 		
 		
 		el.accordion   = this.index;
+		el.setAttribute("role", "tablist");
 		this.el        = el;
 		this.folds     = folds;
 		this.update();

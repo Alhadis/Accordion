@@ -18,18 +18,26 @@ class Fold{
 	 * @constructor
 	 */
 	constructor(accordion, el){
+		let heading      = el.firstElementChild;
+		let content      = el.lastElementChild;
+
 		this.index       = folds.push(this) - 1;
-		
 		this.accordion   = accordion;
 		this.el          = el;
-		this.heading     = el.firstElementChild;
-		this.content     = el.lastElementChild;
+		this.heading     = heading;
+		this.content     = content;
 		el.accordionFold = this.index;
 		
 		
-		/** Configure keyboard navigation */
-		this.heading.tabIndex = 0;
-		this.heading.addEventListener("keydown", e => {
+		/** ARIA attributes */
+		heading.setAttribute("role", "tab");
+		content.setAttribute("role", "tabpanel");
+		this.checkIDs();
+		
+		
+		/** Keyboard navigation */
+		heading.tabIndex = 0;
+		heading.addEventListener("keydown", e => {
 			const key = e.keyCode;
 			let fold;
 			
@@ -152,7 +160,7 @@ class Fold{
 		});
 		
 		
-		this.heading.addEventListener(touchEnabled ? "touchend" : "click", e => {
+		heading.addEventListener(touchEnabled ? "touchend" : "click", e => {
 			if(e.type !== "touchend" || e.cancelable){
 				this.open = !this.open;
 				e.preventDefault();
@@ -160,6 +168,51 @@ class Fold{
 			return false;
 		});
 	}
+	
+	
+	
+	/**
+	 * Ensure the fold's elements have unique ID attributes.
+	 *
+	 * If no ID attributes are present, or they conflict with another DOM element's
+	 * identifier, new IDs are generated for each element (randomly if needed).
+	 *
+	 * Internal-use only, called from instance's constructor.
+	 *
+	 * @private
+	 */
+	checkIDs(){
+		const headingSuffix = "-heading";
+		const contentSuffix = "-content";
+		let elID            = this.el.id;
+		let heading         = this.heading;
+		let content         = this.content;
+		let id;
+		
+		/** Neither of the fold's elements have an ID attribute */
+		if(!heading.id && !content.id){
+			id             = elID || uniqueID("a");
+			heading.id     = id + headingSuffix;
+			content.id     = id + contentSuffix;
+		}
+		
+		/** Either the heading or element lack an ID */
+		else if(!content.id) content.id   = (elID || heading.id) + contentSuffix;
+		else if(!heading.id) heading.id   = (elID || content.id) + headingSuffix;
+		
+		/** Finally, double-check each element's ID is really unique */
+		const $ = s => document.querySelectorAll("#"+s);
+		while($(content.id).length > 1 || $(heading.id).length > 1){
+			id         = uniqueID("a");
+			content.id = id + contentSuffix;
+			heading.id = id + headingSuffix;
+		}
+		
+		/** Update ARIA attributes */
+		heading.setAttribute("aria-controls",    content.id);
+		content.setAttribute("aria-labelledby",  heading.id);
+	}
+	
 	
 	
 	/**
@@ -198,6 +251,13 @@ class Fold{
 			this.el.classList.toggle("open",    input);
 			this.el.classList.toggle("closed", !input);
 			this._open = input;
+			
+			/** Update ARIA attributes */
+			const heading = this.heading;
+			heading.setAttribute("aria-selected",      input);
+			heading.setAttribute("aria-expanded",      input);
+			this.content.setAttribute("aria-hidden",  !input);
+			
 			
 			/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
 			if(this.needsRefresh){
