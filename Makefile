@@ -6,30 +6,12 @@ TPL := demos/index.htm
 
 
 # Outline of static accordion demo
-define outline
-	+
-		+
-			+
-			-
-			-
-		-
-			-
-			-
-		-
-			-
-			-
-		-
-	-
-	-
-		-
-		-
-	-
-endef
+OUTLINE := demos/outline.txt
 
 
 # Build and inject an accordion scaffold structure in the demos folder
 scaffold:
-	@echo "$$outline" | utils/scaffold-build.js | \
+	@utils/scaffold-build.js < $(OUTLINE) | \
 	tidy \
 		--quiet yes \
 		--indent-with-tabs yes \
@@ -41,3 +23,14 @@ scaffold:
 	perl -p -e 's/^/\t/g' | \
 	perl -p -e "s/%LIPSUM%/$$(lorem-ipsum 2 paragraphs | tr -d $$'\n')/g" | \
 	utils/scaffold-inject.pl $(TPL)
+
+
+# Watchman triggers: Automatically update in response to filesystem changes
+watch:
+	@watchman watch $(PWD) > /dev/null
+	@watchman -- trigger $(PWD) rebuild-scaffold $(OUTLINE) -- make scaffold > /dev/null
+
+unwatch:
+	@watchman watch-del $(PWD) > /dev/null
+
+PWD := $(shell pwd)
