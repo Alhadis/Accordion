@@ -56,7 +56,13 @@ class Accordion{
 				this.parentFold = fold;
 				this.edgeClass && el.classList.remove(this.edgeClass);
 				(accordion.children = accordion.children || []).push(this);
-				accordion.update();
+
+				/** Adjust the height of the containing fold's element */
+				if(fold.open){
+					let scrollHeight = fold.el.scrollHeight;
+					let distance     = (fold.heading.scrollHeight + fold.content.scrollHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
+					accordion.updateFold(fold, distance);
+				}
 				break;
 			}
 		}
