@@ -134,7 +134,7 @@ class Accordion{
 		fold.height += offset;
 		this.height += offset;
 		
-		parentFold && this.parent.updateFold(parentFold, offset);
+		parentFold && parentFold.open && this.parent.updateFold(parentFold, offset);
 	}
 	
 	
