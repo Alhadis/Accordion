@@ -11,14 +11,28 @@ class Accordion{
 	/**
 	 * Instantiate a new Accordion instance.
 	 *
-	 * @param {HTMLElement} el - Container wrapped around each immediate fold
-	 * @param {Object} options - Optional hash of settings
-	 * @param {String} options.edgeClass - CSS class toggled based on whether the bottom-edge is visible
-	 * @param {String} options.snapClass - CSS class for disabling transitions between window resizes
+	 * @param {HTMLElement} el                 - Container wrapped around each immediate fold
+	 * @param {Object}      options            - Optional hash of settings
+	 * @param {String}      options.openClass  - CSS class controlling each fold's "open" state
+	 * @param {String}      options.closeClass - CSS class used to mark a fold as closed
+	 * @param {String}      options.edgeClass  - CSS class toggled based on whether the bottom-edge is visible
+	 * @param {String}      options.snapClass  - CSS class for disabling transitions between window resizes
+	 * @param {Boolean}     options.noAria     - Disable the addition and management of ARIA attributes
+	 * @param {Boolean}     options.noKeys     - Disable keyboard navigation
 	 * @constructor
 	 */
 	constructor(el, options){
 		this.index = accordions.push(this) - 1;
+		
+		/** Parse options */
+		options         = options || {};
+		this.openClass  = options.openClass  || "open";
+		this.closeClass = options.closeClass || "closed";
+		this.edgeClass  = (undefined === options.edgeClass ? "edge-visible" : options.edgeClass);
+		this.snapClass  = (undefined === options.snapClass ? "snap"         : options.snapClass);
+		this.noAria     = !!options.noAria;
+		this.noKeys     = !!options.noKeys;
+		
 		
 		/** Create a fold for each immediate descendant of the Accordion's container */
 		let folds = [];
@@ -34,16 +48,11 @@ class Accordion{
 			}
 		}
 		
-		/** Parse options */
-		options        = options || {};
-		this.edgeClass = (undefined === options.edgeClass ? "edge-visible" : options.edgeClass);
-		this.snapClass = (undefined === options.snapClass ? "snap" : options.snapClass)
 		
-		
-		el.accordion   = this.index;
-		el.setAttribute("role", "tablist");
-		this.el        = el;
-		this.folds     = folds;
+		el.accordion    = this.index;
+		this.noAria || el.setAttribute("role", "tablist");
+		this.el         = el;
+		this.folds      = folds;
 		this.update();
 		
 		
