@@ -30,3 +30,14 @@ watch:
 
 unwatch:
 	@watchman watch-del $(PWD) > /dev/null
+
+
+# Options to switch between the transpiled version and the original ES6 sources
+DEMOS := $(wildcard demos/*.htm)
+use-src:
+	@perl -pi -e 's/(<script src="\.\.\/(?=\w+\.js))/$$1src\//gi' $(DEMOS)
+
+use-compiled:
+	@perl -pi -e 's/(<script src="\.\.\/)src\//$$1/gi' $(DEMOS)
+
+.PHONY: use-src use-compiled
