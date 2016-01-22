@@ -540,7 +540,7 @@
 		var snapClass     = (undefined === options.snapClass    ? "snap"         : options.snapClass);
 		var enabledClass  = (undefined === options.enabledClass ? "accordion"    : options.enabledClass);
 		var disabledClass = options.disabledClass;
-		var _height, _disabled;
+		var _height, _disabled, _parent, _parentFold;
 
 
 		Object.defineProperties(THIS, {
@@ -599,6 +599,41 @@
 						else if(lastResizeRate)
 							Accordion.setResizeRate(lastResizeRate);
 					}
+				}
+			},
+			
+			/** Get or set the accordion enclosing this one */
+			parent: {
+				set: function(input){ _parent = input; },
+				get: function(){
+					var result = _parent;
+					if(!result) return null;
+					
+					/** Search for the first ancestor that *isn't* disabled */
+					while(result){
+						if(!result.disabled) return result;
+						result = result.parent;
+					}
+					return null;
+				}
+			},
+			
+			/** Get or set the fold of the accordion enclosing this one */
+			parentFold: {
+				set: function(input){ _parentFold = input; },
+				get: function(){
+					var fold = _parentFold;
+					if(!fold) return null;
+					
+					var accordion = fold.accordion;
+					
+					/** Search for the first ancestor that *isn't* disabled */
+					while(fold && accordion){
+						if(!accordion.disabled) return fold;
+						if(accordion = accordion.parent)
+							fold = accordion.parentFold;
+					}
+					return null;
 				}
 			},
 			

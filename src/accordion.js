@@ -100,6 +100,48 @@ class Accordion{
 	}
 	
 	
+	/**
+	 * Get or set the accordion enclosing this one.
+	 *
+	 * @property
+	 * @type {Accordion}
+	 */
+	set parent(input){ this._parent = input; }
+	get parent(){
+		let result = this._parent;
+		if(!result) return null;
+		
+		/** Search for the first ancestor that *isn't* disabled */
+		while(result){
+			if(!result.disabled) return result;
+			result = result.parent;
+		}
+		return null;
+	}
+	
+	
+	/**
+	 * Get or set the fold of the accordion enclosing this one.
+	 *
+	 * @property
+	 * @type {Fold}
+	 */
+	set parentFold(input){ this._parentFold = input; }
+	get parentFold(){
+		let fold = this._parentFold;
+		if(!fold) return null;
+		
+		let accordion = fold.accordion;
+		
+		/** Search for the first ancestor that *isn't* disabled */
+		while(fold && accordion){
+			if(!accordion.disabled) return fold;
+			if(accordion = accordion.parent)
+				fold = accordion.parentFold;
+		}
+		return null;
+	}
+	
 	
 	/**
 	 * Whether the accordion's been deactivated.
