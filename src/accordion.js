@@ -1,6 +1,8 @@
 "use strict";
 
-let accordions = [];
+let accordions       = [];
+let activeAccordions = 0;
+let lastResizeRate;
 
 
 /**
@@ -11,27 +13,32 @@ class Accordion{
 	/**
 	 * Instantiate a new Accordion instance.
 	 *
-	 * @param {HTMLElement} el                 - Container wrapped around each immediate fold
-	 * @param {Object}      options            - Optional hash of settings
-	 * @param {String}      options.openClass  - CSS class controlling each fold's "open" state
-	 * @param {String}      options.closeClass - CSS class used to mark a fold as closed
-	 * @param {String}      options.edgeClass  - CSS class toggled based on whether the bottom-edge is visible
-	 * @param {String}      options.snapClass  - CSS class for disabling transitions between window resizes
-	 * @param {Boolean}     options.noAria     - Disable the addition and management of ARIA attributes
-	 * @param {Boolean}     options.noKeys     - Disable keyboard navigation
+	 * @param {HTMLElement} el                    - Container wrapped around each immediate fold
+	 * @param {Object}      options               - Optional hash of settings
+	 * @param {String}      options.openClass     - CSS class controlling each fold's "open" state
+	 * @param {String}      options.closeClass    - CSS class used to mark a fold as closed
+	 * @param {String}      options.edgeClass     - CSS class toggled based on whether the bottom-edge is visible
+	 * @param {String}      options.snapClass     - CSS class for disabling transitions between window resizes
+	 * @param {String}      options.enabledClass  - CSS class marking an accordion as enabled
+	 * @param {String}      options.disabledClass - CSS class marking an accordion as disabled
+	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
+	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
+	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
 	 * @constructor
 	 */
 	constructor(el, options){
 		this.index = accordions.push(this) - 1;
 		
 		/** Parse options */
-		options         = options || {};
-		this.openClass  = options.openClass  || "open";
-		this.closeClass = options.closeClass || "closed";
-		this.edgeClass  = (undefined === options.edgeClass ? "edge-visible" : options.edgeClass);
-		this.snapClass  = (undefined === options.snapClass ? "snap"         : options.snapClass);
-		this.noAria     = !!options.noAria;
-		this.noKeys     = !!options.noKeys;
+		options            = options || {};
+		this.openClass     = options.openClass  || "open";
+		this.closeClass    = options.closeClass || "closed";
+		this.edgeClass     = (undefined === options.edgeClass    ? "edge-visible" : options.edgeClass);
+		this.snapClass     = (undefined === options.snapClass    ? "snap"         : options.snapClass);
+		this.enabledClass  = (undefined === options.enabledClass ? "accordion"    : options.enabledClass);
+		this.disabledClass = options.disabledClass;
+		this.noAria        = !!options.noAria;
+		this.noKeys        = !!options.noKeys;
 		
 		
 		/** Create a fold for each immediate descendant of the Accordion's container */
@@ -53,6 +60,11 @@ class Accordion{
 		this.noAria || el.setAttribute("role", "tablist");
 		this.el         = el;
 		this.folds      = folds;
+
+		/** Add .enabledClass early - it might affect the heights of each fold */
+		if(!options.disabled && this.enabledClass)
+			el.classList.add(this.enabledClass);
+		
 		this.update();
 		
 		
@@ -79,13 +91,75 @@ class Accordion{
 		}
 		
 		
-		this.edgeClass && this.el.addEventListener(transitionEnd, e => {
+		this.edgeClass && this.el.addEventListener(transitionEnd, this.onTransitionEnd = e => {
 			if(!this.parent && e.target === el && "height" === e.propertyName && el.getBoundingClientRect().bottom > window.innerHeight)
 				el.classList.remove(this.edgeClass);
 		});
+		
+		this.disabled = !!options.disabled;
 	}
 	
+	
+	
+	/**
+	 * Whether the accordion's been deactivated.
+	 *
+	 * @property
+	 * @type {Boolean}
+	 */
+	get disabled(){ return this._disabled; }
+	set disabled(input){
+		if((input = !!input) !== this._disabled){
+			const el      = this.el;
+			const style   = el.style;
+			const classes = el.classList;
+			
+			this.enabledClass  && classes.toggle(this.enabledClass,  !input);
+			this.disabledClass && classes.toggle(this.disabledClass,  input);
+			
+			
+			/** Deactivating */
+			if(this._disabled = input){
+				style.height = null;
+				this.snapClass && classes.remove(this.snapClass);
+				if(this.edgeClass){
+					el.removeEventListener(transitionEnd, this.onTransitionEnd);
+					classes.remove(this.edgeClass);
+				}
+				
+				for(let i of this.folds)
+					i.disabled = true;
+				
+				this.noAria || el.removeAttribute("role");
+				--activeAccordions;
+			}
+			
+			
+			/** Reactivating */
+			else{
+				for(let i of this.folds)
+					i.disabled = false;
+				
+				this.noAria || el.setAttribute("role", "tablist");
+				++activeAccordions;
+				this.update();
+			}
+			
 
+			
+			/** If there're no more active accordions, disable the onResize handler */
+			if(activeAccordions <= 0){
+				activeAccordions = 0;
+				Accordion.setResizeRate(false);
+			}
+			
+			/** Otherwise, reactivate the onResize handler, assuming it was previously active */
+			else if(lastResizeRate)
+				Accordion.setResizeRate(lastResizeRate);
+		}
+	}
+	
+	
 	
 	/**
 	 * Height of the accordion's container element.
@@ -235,7 +309,7 @@ class Accordion{
 	static setResizeRate(delay){
 		let fn = function(e){
 			for(let i of accordions)
-				i.parent || i.refresh(true);
+				i.parent || i.disabled || i.refresh(true);
 		};
 		
 		window.removeEventListener("resize", this.onResize);
@@ -244,6 +318,7 @@ class Accordion{
 		if(false !== delay && (delay = +delay || 0) >= 0){
 			this.onResize = delay ? debounce(fn, delay) : fn;
 			window.addEventListener("resize", this.onResize);
+			if(delay) lastResizeRate = delay;
 		}
 	}
 	

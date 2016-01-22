@@ -28,16 +28,8 @@ class Fold{
 		this.content     = content;
 		this.openClass   = accordion.openClass;
 		this.closeClass  = accordion.closeClass;
+		this.ariaEnabled = !accordion.noAria;
 		el.accordionFold = this.index;
-		
-		
-		
-		/** ARIA attributes */
-		if(!(this.noAria = accordion.noAria)){
-			heading.setAttribute("role", "tab");
-			content.setAttribute("role", "tabpanel");
-			this.checkIDs();
-		}
 		
 		
 		/** Keyboard navigation */
@@ -235,6 +227,47 @@ class Fold{
 	
 	
 	/**
+	 * Add or remove relevant ARIA attributes from the fold's elements.
+	 *
+	 * @property
+	 * @type {Boolean}
+	 */
+	get ariaEnabled(){ return this._ariaEnabled; }
+	set ariaEnabled(input){
+		if((input = !!input) !== !!this._ariaEnabled){
+			const heading = this.heading;
+			const content = this.content;
+			this._ariaEnabled = input;
+			
+			/** Enable ARIA-attribute management */
+			if(input){
+				heading.setAttribute("role", "tab");
+				content.setAttribute("role", "tabpanel");
+				this.checkIDs();
+				
+				/** Update the attributes that're controlled by .open's setter */
+				heading.setAttribute("aria-selected",  this._open);
+				heading.setAttribute("aria-expanded",  this._open);
+				content.setAttribute("aria-hidden",   !this._open);
+			}
+			
+			/** Disabling; remove all relevant attributes */
+			else{
+				heading.removeAttribute("role");
+				heading.removeAttribute("aria-controls");
+				heading.removeAttribute("aria-selected");
+				heading.removeAttribute("aria-expanded");
+				
+				content.removeAttribute("role");
+				content.removeAttribute("aria-labelledby");
+				content.removeAttribute("aria-hidden");
+			}
+		}
+	}
+	
+	
+	
+	/**
 	 * Whether or not the fold's currently opened.
 	 *
 	 * @property
@@ -260,7 +293,7 @@ class Fold{
 			this._open = input;
 			
 			/** Update ARIA attributes */
-			if(!this.noAria){
+			if(this.ariaEnabled){
 				const heading = this.heading;
 				heading.setAttribute("aria-selected",      input);
 				heading.setAttribute("aria-expanded",      input);
@@ -277,6 +310,54 @@ class Fold{
 		}
 	}
 	
+	
+	
+	/**
+	 * Whether the fold's been deactivated.
+	 *
+	 * Not set directly; changed when setting an accordion's .disabled property.
+	 *
+	 * @property
+	 * @type {Boolean}
+	 */
+	get disabled(){ return this._disabled }
+	set disabled(input){
+		if((input = !!input) !== !!this._disabled){
+			let heading = this.heading;
+			let style   = this.el.style;
+			let classes = this.el.classList;
+			
+			/** Deactivated */
+			if(this._disabled = input){
+				style.height =
+				style.top    = null;
+				
+				heading.removeEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+				classes.remove(this.openClass, this.closeClass);
+				if(this.onKeyDown){
+					heading.removeEventListener("keydown", this.onKeyDown);
+					heading.removeAttribute("tabindex");
+				}
+				
+				if(this.ariaEnabled){
+					this.ariaEnabled  = false;
+					this._ariaEnabled = true;
+				}
+			}
+			
+			/** Reactivated */
+			else{
+				style.height = this._height + "px";
+				style.top    = this._y      + "px";
+				heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+				
+				if(this.onKeyDown){
+					heading.addEventListener("keydown", this.onKeyDown);
+					heading.tabIndex = 0;
+				}
+			}
+		}
+	}
 	
 	
 	/**

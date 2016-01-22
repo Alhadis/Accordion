@@ -143,24 +143,189 @@
 		var elClasses    = el.classList;
 		var openClass    = accordion.openClass;
 		var closeClass   = accordion.closeClass;
-		var ariaEnabled  = !accordion.noAria;
 		var keysEnabled  = !accordion.noKeys;
-		var _open, _y, _height;
+		var _disabled    = false;
+		var _open, _y, _height, _ariaEnabled;
+		
+		Object.defineProperties(THIS, {
+			fit: {value: fit},
+			
+			
+			/** Add or remove relevant ARIA attributes from the fold's elements */
+			ariaEnabled: {
+				get: function(){ return _ariaEnabled; },
+				set: function(input){
+					if((input = !!input) !== !!_ariaEnabled){
+						_ariaEnabled = input;
+						
+						/** Enable ARIA-attribute management */
+						if(input){
+							heading.setAttribute("role", "tab");
+							content.setAttribute("role", "tabpanel");
+							checkIDs();
+							
+							/** Update the attributes that're controlled by .open's setter */
+							heading.setAttribute("aria-selected",  this._open);
+							heading.setAttribute("aria-expanded",  this._open);
+							content.setAttribute("aria-hidden",   !this._open);
+						}
+						
+						/** Disabling; remove all relevant attributes */
+						else{
+							heading.removeAttribute("role");
+							heading.removeAttribute("aria-controls");
+							heading.removeAttribute("aria-selected");
+							heading.removeAttribute("aria-expanded");
+							
+							content.removeAttribute("role");
+							content.removeAttribute("aria-labelledby");
+							content.removeAttribute("aria-hidden");
+						}
+					}
+				}
+			},
 
+			
+			
+			/** Whether or not the fold's currently opened */
+			open: {
+				
+				get: function(){
+					
+					/** Derive the fold's opened state from the DOM if it's not been determined yet */
+					if(undefined === _open){
+						var isOpened = elClasses.contains(openClass);
+						elClasses.toggle(closeClass, !isOpened);
+						return (_open = isOpened);
+					}
+					
+					return _open;
+				},
+				
+				
+				set: function(input){
+					if((input = !!input) !== _open){
+						elClasses.toggle(openClass,   input);
+						elClasses.toggle(closeClass, !input);
+						_open = input;
+						
+						/** Update ARIA attributes */
+						if(_ariaEnabled){
+							heading.setAttribute("aria-selected",  input);
+							heading.setAttribute("aria-expanded",  input);
+							content.setAttribute("aria-hidden",   !input);
+						}
+						
+						/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
+						if(THIS.needsRefresh){
+							delete THIS.needsRefresh;
+							accordion.refresh();
+						}
+						else accordion.update();
+					}
+				}
+			},
+			
+			
+			/** Whether the fold's been deactivated */
+			disabled: {
+				get: function(){ return _disabled },
+				set: function(input){
+					if((input = !!input) !== _disabled){
+						var style = el.style;
+						
+						/** Deactivated */
+						if(_disabled = input){
+							style.height =
+							style.top    = null;
+							
+							heading.removeEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+							elClasses.remove(openClass, closeClass);
+							if(this.onKeyDown){
+								heading.removeEventListener("keydown", this.onKeyDown);
+								heading.removeAttribute("tabindex");
+							}
+							
+							if(_ariaEnabled){
+								this.ariaEnabled = false;
+								_ariaEnabled     = true;
+							}
+						}
+						
+						/** Reactivated */
+						else{
+							style.height = _height + "px";
+							style.top    = _y      + "px";
+							heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+							
+							if(this.onKeyDown){
+								heading.addEventListener("keydown", this.onKeyDown);
+								heading.tabIndex = 0;
+							}
+						}
+					}
+				}
+			},
+			
+			
+			/** Vertical position of the fold within an accordion's container */
+			y: {
+				get: function(){
+					if(undefined === _y)
+						return (_y = parseInt(el.style.top) || 0);
+					return _y;
+				},
+				
+				set: function(input){
+					if((input = +input) !== _y){
+						el.style.top  = input + "px";
+						_y            = input;
+					}
+				}
+			},
+			
+			
+			/** Height of the fold's outermost container */
+			height: {
+				
+				get: function(){
+					if(undefined === _height){
+						_height = heading.scrollHeight + content.scrollHeight;
+						el.style.height = _height + "px";
+					}
+					return _height;
+				},
+				
+				set: function(input){
+					if(input && (input = +input) !== _height){
+						el.style.height = input + "px"
+						_height         = input;
+					}
+				}
+			},
+			
+			
+			/** Whether the fold's container has been resized incorrectly. */
+			wrongSize: {
+				get: function(){
+					return this.heading.scrollHeight + this.content.scrollHeight !== this.el.scrollHeight;
+				}
+			}
+		});
+		
+		
+		
 		THIS.index       = folds.push(THIS) - 1;
 		THIS.accordion   = accordion;
 		THIS.el          = el;
 		THIS.heading     = heading;
 		THIS.content     = content;
+		THIS.ariaEnabled = !accordion.noAria;
 		el.accordionFold = THIS.index;
 		
 		
 		
-		/** ARIA attributes */
-		if(ariaEnabled) (function(){
-			heading.setAttribute("role", "tab");
-			content.setAttribute("role", "tabpanel");
-			
+		function checkIDs(){
 			var headingSuffix = "-heading";
 			var contentSuffix = "-content";
 			var elID            = el.id;
@@ -188,7 +353,7 @@
 			/** Update ARIA attributes */
 			heading.setAttribute("aria-controls",    content.id);
 			content.setAttribute("aria-labelledby",  heading.id);
-		}());
+		}
 		
 		
 		
@@ -338,98 +503,6 @@
 				height += content.scrollHeight;
 			THIS.height = height;
 		}
-		
-		
-		
-		Object.defineProperties(THIS, {
-			
-			fit: {value: fit},
-			
-			
-			/** Whether or not the fold's currently opened */
-			open: {
-				
-				get: function(){
-					
-					/** Derive the fold's opened state from the DOM if it's not been determined yet */
-					if(undefined === _open){
-						var isOpened = elClasses.contains(openClass);
-						elClasses.toggle(closeClass, !isOpened);
-						return (_open = isOpened);
-					}
-					
-					return _open;
-				},
-				
-				
-				set: function(input){
-					if((input = !!input) !== _open){
-						elClasses.toggle(openClass,   input);
-						elClasses.toggle(closeClass, !input);
-						_open = input;
-						
-						/** Update ARIA attributes */
-						if(ariaEnabled){
-							heading.setAttribute("aria-selected",  input);
-							heading.setAttribute("aria-expanded",  input);
-							content.setAttribute("aria-hidden",   !input);
-						}
-						
-						/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
-						if(THIS.needsRefresh){
-							delete THIS.needsRefresh;
-							accordion.refresh();
-						}
-						else accordion.update();
-					}
-				}
-			},
-			
-			
-			/** Vertical position of the fold within an accordion's container */
-			y: {
-				get: function(){
-					if(undefined === _y)
-						return (_y = parseInt(el.style.top) || 0);
-					return _y;
-				},
-				
-				set: function(input){
-					if((input = +input) !== _y){
-						el.style.top  = input + "px";
-						_y            = input;
-					}
-				}
-			},
-			
-			
-			/** Height of the fold's outermost container */
-			height: {
-				
-				get: function(){
-					if(undefined === _height){
-						_height = heading.scrollHeight + content.scrollHeight;
-						el.style.height = _height + "px";
-					}
-					return _height;
-				},
-				
-				set: function(input){
-					if(input && (input = +input) !== _height){
-						el.style.height = input + "px"
-						_height         = input;
-					}
-				}
-			},
-			
-			
-			/** Whether the fold's container has been resized incorrectly. */
-			wrongSize: {
-				get: function(){
-					return this.heading.scrollHeight + this.content.scrollHeight !== this.el.scrollHeight;
-				}
-			}
-		});
 	}
 
 
@@ -438,35 +511,96 @@
 
 
 
-	var accordions = [];
+	var accordions       = [];
+	var activeAccordions = 0;
+	var lastResizeRate;
 
 
 	/**
 	 * Represents a column of collapsible content regions.
 	 *
-	 * @param {HTMLElement} el                 - Container wrapped around each immediate fold
-	 * @param {Object}      options            - Optional hash of settings
-	 * @param {String}      options.openClass  - CSS class controlling each fold's "open" state
-	 * @param {String}      options.closeClass - CSS class used to mark a fold as closed
-	 * @param {String}      options.edgeClass  - CSS class toggled based on whether the bottom-edge is visible
-	 * @param {String}      options.snapClass  - CSS class for disabling transitions between window resizes
-	 * @param {Boolean}     options.noAria     - Disable the addition and management of ARIA attributes
-	 * @param {Boolean}     options.noKeys     - Disable keyboard navigation
+	 * @param {HTMLElement} el                    - Container wrapped around each immediate fold
+	 * @param {Object}      options               - Optional hash of settings
+	 * @param {String}      options.openClass     - CSS class controlling each fold's "open" state
+	 * @param {String}      options.closeClass    - CSS class used to mark a fold as closed
+	 * @param {String}      options.edgeClass     - CSS class toggled based on whether the bottom-edge is visible
+	 * @param {String}      options.snapClass     - CSS class for disabling transitions between window resizes
+	 * @param {String}      options.enabledClass  - CSS class marking an accordion as enabled
+	 * @param {String}      options.disabledClass - CSS class marking an accordion as disabled
+	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
+	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
+	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
 	 * @constructor
 	 */
 	var Accordion = function(el, options){
-		var THIS        = this;
-		var elClasses   = el.classList;
-		var options     = options || {};
-		var edgeClass   = (undefined === options.edgeClass ? "edge-visible" : options.edgeClass);
-		var snapClass   = (undefined === options.snapClass ? "snap"         : options.snapClass);
-		var _height;
+		var THIS          = this;
+		var elClasses     = el.classList;
+		var options       = options || {};
+		var edgeClass     = (undefined === options.edgeClass    ? "edge-visible" : options.edgeClass);
+		var snapClass     = (undefined === options.snapClass    ? "snap"         : options.snapClass);
+		var enabledClass  = (undefined === options.enabledClass ? "accordion"    : options.enabledClass);
+		var disabledClass = options.disabledClass;
+		var _height, _disabled;
 
 
 		Object.defineProperties(THIS, {
 			update:     {value: update},
 			updateFold: {value: updateFold},
 			refresh:    {value: refresh},
+			
+			/** Whether the accordion's been deactivated */
+			disabled: {
+				get: function(){ return _disabled; },
+				set: function(input){
+					if((input = !!input) !== _disabled){
+						var style   = el.style;
+						var folds   = THIS.folds;
+						
+						enabledClass  && elClasses.toggle(enabledClass,  !input);
+						disabledClass && elClasses.toggle(disabledClass,  input);
+						
+						
+						/** Deactivating */
+						if(_disabled = input){
+							style.height = null;
+							snapClass && elClasses.remove(snapClass);
+							if(edgeClass){
+								el.removeEventListener(transitionEnd, THIS.onTransitionEnd);
+								elClasses.remove(edgeClass);
+							}
+							
+							for(var i = 0, l = folds.length; i < l; ++i)
+								folds[i].disabled = true;
+							
+							THIS.noAria || el.removeAttribute("role");
+							--activeAccordions;
+						}
+						
+						
+						/** Reactivating */
+						else{
+							for(var i = 0, l = folds.length; i < l; ++i)
+								folds[i].disabled = false;
+							
+							THIS.noAria || el.setAttribute("role", "tablist");
+							++activeAccordions;
+							update();
+						}
+						
+
+						
+						/** If there're no more active accordions, disable the onResize handler */
+						if(activeAccordions <= 0){
+							activeAccordions = 0;
+							Accordion.setResizeRate(false);
+						}
+						
+						/** Otherwise, reactivate the onResize handler, assuming it was previously active */
+						else if(lastResizeRate)
+							Accordion.setResizeRate(lastResizeRate);
+					}
+				}
+			},
 			
 			/** Height of the accordion's container element */
 			height: {
@@ -532,6 +666,11 @@
 		THIS.noAria || el.setAttribute("role", "tablist");
 		THIS.el         = el;
 		THIS.folds      = folds;
+		
+		/** Add .enabledClass early - it might affect the heights of each fold */
+		if(!options.disabled && enabledClass)
+			elClasses.add(enabledClass);
+		
 		update();
 		
 		
@@ -558,12 +697,14 @@
 		}
 		
 		
-		edgeClass && el.addEventListener(transitionEnd, function(e){
+		edgeClass && el.addEventListener(transitionEnd, this.onTransitionEnd = function(e){
 			if(!THIS.parent && e.target === el && "height" === e.propertyName && el.getBoundingClientRect().bottom > window.innerHeight)
 				elClasses.remove(edgeClass);
 		});
 		
-
+		this.disabled = !!options.disabled;
+		
+		
 		
 		/**
 		 * Internal method to check if an accordion's bottom-edge is visible to the user (or about to be).
@@ -676,7 +817,7 @@
 		var fn = function(e){
 			for(var a, i = 0, l = accordions.length; i < l; ++i){
 				a = accordions[i];
-				a.parent || a.refresh(true);
+				a.parent || a.disabled || a.refresh(true);
 			}
 		};
 		
@@ -687,6 +828,7 @@
 		if(false !== delay && (delay = +delay || 0) >= 0){
 			THIS.onResize = delay ? debounce(fn, delay) : fn;
 			window.addEventListener("resize", THIS.onResize);
+			if(delay) lastResizeRate = delay;
 		}
 	}
 	

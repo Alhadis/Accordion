@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<!--[if lte IE 9]><script src="assets/ie.lteIE9.js"></script><![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="initial-scale=1, minimum-scale=1" />
+<title>Accordion Demo: Disabling</title>
+
+<link rel="stylesheet" type="text/css" href="assets/reset.css" />
+<link rel="stylesheet" type="text/css" href="../accordion.css" />
+<style>
+
+.accordion{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+	.accordion > li{
+
+	}
+		.accordion > li > h3,
+		.accordion > li > h4{
+			background: #2c4d2b;
+			color: #fff;
+			padding: .5em;
+		}
+			.accordion > li > h3:focus,
+			.accordion > li > h4:focus{
+				background: #52964f;
+			}
+			
+			.enabled.accordion > li > h3,
+			.enabled.accordion > li > h4{
+				cursor: pointer;
+				-webkit-user-select:  none;
+				-moz-user-select:     none;
+				user-select:          none;
+			}
+
+		.accordion > li > .fold{
+			padding: 1em;
+		}
+
+		/** Align fruit graphics/demo content */
+		img{
+			max-width: 20em;
+			margin: 0 1.5em 1em 0;
+			float: left;
+		}
+			img + p{
+				margin-top: 0;
+			}
+	
+	#toggle-accordion{
+		position: fixed;
+		bottom: 0;
+		left:	50%;
+		width:	11em;
+		margin-left: -5.5em;
+		text-align: center;
+		white-space: nowrap;
+		background: rgba(220,220,220,.85);
+		text-shadow: 0 0 1em #dcdcdc;
+		padding: .5em 0;
+		margin-bottom: .5em;
+		z-index: 2;
+		cursor: pointer;
+	}
+</style>
+</head>
+
+
+<body>
+	
+	<ul id="fruits">
+		<li>
+			<h3>Apples</h3>
+			<div class="fold">
+				<img src="assets/img/apple.jpg" alt="Apple" />
+				<p>The apple tree (Malus domestica) is a deciduous tree in the rose family best known for its sweet, pomaceous fruit, the apple. It is cultivated worldwide as a fruit tree, and is the most widely grown species in the genus Malus. The tree originated in Central Asia, where its wild ancestor, Malus sieversii, is still found today. Apples have been grown for thousands of years in Asia and Europe, and were brought to North America by European colonists. Apples have religious and mythological significance in many cultures, including Norse, Greek and European Christian traditions.</p>
+				<p>Apple trees are large if grown from seed, but small if grafted onto roots (rootstock). There are more than 7,500 known cultivars of apples, resulting in a range of desired characteristics. Different cultivars are bred for various tastes and uses, including cooking, eating raw and cider production. Apples are generally propagated by grafting, although wild apples grow readily from seed. Trees and fruit are prone to a number of fungal, bacterial and pest problems, which can be controlled by a number of organic and non-organic means. In 2010, the fruit's genome was decoded as part of research on disease control and selective breeding in apple production.</p>
+				<p>About 69 million tons of apples were grown worldwide in 2010, and China produced almost half of this total. The United States is the second-leading producer, with more than 6% of world production. Turkey is third, followed by Italy, India and Poland. Apples are often eaten raw, but can also be found in many prepared foods (especially desserts) and drinks. Many beneficial health effects are thought to result from eating apples; however, two types of allergies are attributed to various proteins found in the fruit.</p>
+				
+				
+				<ul id="apple-types">
+					<li>
+						<h4>Baldwin</h4>
+						<div class="fold">
+							<p>The Baldwin apple is a bright red winter apple, very good in quality, and easily shipped. It was for many years the most popular apple in New England, New York, and for export from the United States of America. It is also known as 'Calville Butter', 'Felch', 'Late Baldwin', 'Pecker', 'Red Baldwin's Pippin', 'Steele's Red Winter', and 'Woodpecker'</p>
+							<p>According to local tradition, the apple was found near Wood Hill by William Butters (1711-1784), grandson of Will Butter, first white settler in what is now Wilmington, Massachusetts. William Butters raised the tree in his yard, near the present Baldwin Apple Monument.</p>
+							<p>According to S. A. Beach's Apples of New York, the Baldwin originated soon after 1740 as a chance seedling on the farm of Mr. John Ball of Wilmington, Massachusetts, and for about 40 years thereafter its cultivation was confined to that immediate neighborhood. The farm later came into the possession of a Mr. Butters, who gave the name Woodpecker to the apple because the tree was frequented by woodpeckers. Deacon Samuel Thompson, a surveyor of Woburn, Massachusetts, brought it to the attention of Col. Loammi Baldwin, who propagated it and more widely introduced it in eastern Massachusetts. From Col. Baldwin's interest in the variety it came to be called the Baldwin.</p>
+							<p>A monument to the Baldwin apple now stands on today's Chestnut street in Wilmington. The monument's inscription reads: This monument marks the site of the first Baldwin Apple Tree found growing wild near here. It fell in the gale of 1815. The apple first known as the Butters, Woodpecker or Pecker apple was named after Col. Loammi Baldwin of Woburn. Erected in 1895 by the Rumford Historical Association.</p>
+							<p>A harsh winter in 1934 wiped out many of the Baldwin apple orchards in New England. Its popularity as an eating apple waned, but some orchards were preserved for many years because of its desirability as a mixing apple for cider. However, the orchards have not been replaced when they played out. Baldwin Apples, unlike many apples, have long been prized for the making of hard cider. "West County Cider" makes Baldwin Cider from trees planted in the early 1900s. It is their most popular cider. The apple is noted for its particularly small to medium size (ca. 6-8 cm), when compared to other apples like the Macintosh. It is an exceptionally hard apple and would remain remarkably free from blemishes and other blights with few pesticides being needed. Because of its hardness it shipped well without bruising and for a time was prized for this quality. Aside from cider making it was also known as an exceptionally good pie apple and due to its inherent hardness would maintain more crispness through the baking process than other apples would.</p>
+						</div>
+					</li>
+					
+					<li>
+						<h4>Bismarck</h4>
+						<div class="fold">
+							<p>Bismarck (Malus domestica 'Bismarck') is an apple cultivar. The fruit from the tree is used for cooking due to its sharp flavour and is most commonly pureed when cooking.</p>
+							<p>There are several different accounts of the origin on this apple cultivar. One theory is that it originated from Bismarck in Tasmania (now Collinsvale), which was a German settlement. Another theory is that it was raised by F. Fricke, a German settler at Carisbrooke, Victoria, Australia. A third is that it originated in Canterbury, New Zealand. The fruit was grown in Victoria and also in England and across Europe until the 1930s.</p>
+							<p>The tree itself will grow to approximately 25 ft spread and 15 ft in height bearing a large crop of medium size fruit with a green and red skin. The apple is not commonly grown and its distribution is far and few across the globe. The tree and its crop were awarded the RHS First Class Certificate in 1887.</p>
+						</div>
+					</li>
+					
+					
+					<li>
+						<h4>Golden Delicious</h4>
+						<div class="fold">
+							<p>The Golden Delicious is a cultivar of apple with a yellow colour, not closely related to the Red Delicious apple. According to the US Apple Association website it is one of the 15 most popular apple cultivars in the United States.</p>
+							<p>Golden Delicious is a large, yellowish-green skinned cultivar and very sweet to the taste. It is prone to bruising and shriveling, so it needs careful handling and storage. It is a favorite for salads, apple sauce, and apple butter.</p>
+							<p>This cultivar is a chance seedling possibly a hybrid of Grimes Golden and Golden Reinette. The original tree was found on the Mullins' family farm in Clay County, West Virginia, United States and was locally known as Mullin's Yellow Seedling and Annit apple. Anderson Mullins sold the tree and propagation rights to Stark Brothers Nurseries, which first marketed it as a companion of their Red Delicious in 1914.</p>
+							<p>In 2010, an Italian-led consortium announced they had decoded the complete genome of the Golden delicious apple. It had the highest number of genes (57,000) of any plant genome studied to date.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</li>
+
+
+		<li>
+			<h3>Bananas</h3>
+			<div class="fold">
+				<img src="assets/img/banana.jpg" alt="Banana" />
+				<p>A banana is an edible fruit, botanically a berry, produced by several kinds of large herbaceous flowering plants in the genus Musa. (In some countries, bananas used for cooking may be called plantains.) The fruit is variable in size, colour and firmness, but is usually elongated and curved, with soft flesh rich in starch covered with a rind which may be green, yellow, red, purple, or brown when ripe. The fruits grow in clusters hanging from the top of the plant. Almost all modern edible parthenocarpic (seedless) bananas come from two wild species – Musa acuminata and Musa balbisiana. The scientific names of most cultivated bananas are Musa acuminata, Musa balbisiana, and Musa × paradisiaca for the hybrid Musa acuminata × M. balbisiana, depending on their genomic constitution. The old scientific name Musa sapientum is no longer used.</p>
+				<p>Musa species are native to tropical Indomalaya and Australia, and are likely to have been first domesticated in Papua New Guinea. They are grown in at least 107 countries, primarily for their fruit, and to a lesser extent to make fibre, banana wine and banana beer and as ornamental plants.</p>
+				<p>Worldwide, there is no sharp distinction between "bananas" and "plantains". Especially in the Americas and Europe, "banana" usually refers to soft, sweet, dessert bananas, particularly those of the Cavendish group, which are the main exports from banana-growing countries. By contrast, Musa cultivars with firmer, starchier fruit are called "plantains". In other regions, such as Southeast Asia, many more kinds of banana are grown and eaten, so the simple two-fold distinction is not useful and is not made in local languages.</p>
+				<p>The term "banana" is also used as the common name for the plants which produce the fruit. This can extend to other members of the genus Musa like the scarlet banana (Musa coccinea), pink banana (Musa velutina) and the Fe'i bananas. It can also refer to members of the genus Ensete, like the snow banana (Ensete glaucum) and the economically important false banana (Ensete ventricosum). Both genera are classified under the banana family, Musaceae.</p>
+			</div>
+		</li>
+
+		
+		<li>
+			<h3>Coconut</h3>
+			<div class="fold">
+				<img src="assets/img/coconut.jpg" alt="Coconut" />
+				<p>The Coconut tree (Cocos nucifera) is a member of the family Arecaceae (palm family). It is the only accepted species in the genus Cocos. The term Coconut can refer to the entire coconut palm, the seed, or the fruit, which, botanically, is a drupe, not a nut. The spelling cocoanut is an archaic form of the word. The term is derived from the 16th-century Portuguese and Spanish word coco meaning "head" or "skull", from the three indentations on the coconut shell that resemble facial features.</p>
+				<p>The coconut is known for its great versatility as seen in the many uses of its different parts and found throughout the tropics and subtropics. Coconuts are part of the daily diets of many people. Coconuts are different from any other fruits because they contain a large quantity of "water" and when immature they are known as tender-nuts or jelly-nuts and may be harvested for drinking. When mature, they still contain some water and can be used as seednuts or processed to give oil from the kernel, charcoal from the hard shell and coir from the fibrous husk. The endosperm is initially in its nuclear phase suspended within the coconut water. As development continues, cellular layers of endosperm deposit along the walls of the coconut, becoming the edible coconut "flesh". When dried, the coconut flesh is called copra. The oil and milk derived from it are commonly used in cooking and frying; coconut oil is also widely used in soaps and cosmetics. The clear liquid coconut water within is potable. The husks and leaves can be used as material to make a variety of products for furnishing and decorating. It also has cultural and religious significance in many societies that use it.</p>
+			</div>
+		</li>
+	</ul>
+
+
+	<script src="../helpers.js"></script>
+	<script src="../fold.js"></script>
+	<script src="../accordion.js"></script>
+	
+	<script src="assets/shared.js"></script>
+	
+	<label id="toggle-accordion"><input type="checkbox" id="accordion-active" /> Disable Accordion</label>
+	<script>
+		"use strict";
+		
+		var fruits     = new Accordion(document.getElementById("fruits"));
+		var appleTypes = new Accordion(document.getElementById("apple-types"));
+		
+		document.getElementById("accordion-active").addEventListener("change", e => {
+			fruits.disabled = e.target.checked;
+		});
+	</script>
+
+</body>
+</html>
