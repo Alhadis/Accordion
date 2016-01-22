@@ -195,7 +195,7 @@
 		/** Keyboard navigation */
 		if(keysEnabled){
 			heading.tabIndex = 0;
-			heading.addEventListener("keydown", function(e){
+			heading.addEventListener("keydown", this.onKeyDown = function(e){
 				var key = e.keyCode;
 				var fold;
 				
@@ -318,7 +318,7 @@
 		}
 		
 		
-		heading.addEventListener(touchEnabled ? "touchend" : "click", function(e){
+		heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress = function(e){
 			if(e.type !== "touchend" || e.cancelable){
 				THIS.open = !THIS.open;
 				e.preventDefault();

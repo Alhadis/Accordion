@@ -43,7 +43,7 @@ class Fold{
 		/** Keyboard navigation */
 		if(!accordion.noKeys){
 			heading.tabIndex = 0;
-			heading.addEventListener("keydown", e => {
+			heading.addEventListener("keydown", this.onKeyDown = e => {
 				const key = e.keyCode;
 				let fold;
 				
@@ -167,7 +167,7 @@ class Fold{
 		}
 		
 		
-		heading.addEventListener(touchEnabled ? "touchend" : "click", e => {
+		heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress = e => {
 			if(e.type !== "touchend" || e.cancelable){
 				this.open = !this.open;
 				e.preventDefault();
