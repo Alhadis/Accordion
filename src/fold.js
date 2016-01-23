@@ -159,7 +159,7 @@ class Fold{
 		}
 		
 		
-		heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress = e => {
+		heading.addEventListener(pressEvent, this.onPress = e => {
 			if(e.type !== "touchend" || e.cancelable){
 				this.open = !this.open;
 				e.preventDefault();
@@ -332,7 +332,7 @@ class Fold{
 				style.height =
 				style.top    = null;
 				
-				heading.removeEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+				heading.removeEventListener(pressEvent, this.onPress);
 				classes.remove(this.openClass, this.closeClass);
 				if(this.onKeyDown){
 					heading.removeEventListener("keydown", this.onKeyDown);
@@ -349,7 +349,7 @@ class Fold{
 			else{
 				style.height = this._height + "px";
 				style.top    = this._y      + "px";
-				heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+				heading.addEventListener(pressEvent, this.onPress);
 				
 				if(this.onKeyDown){
 					heading.addEventListener("keydown", this.onKeyDown);

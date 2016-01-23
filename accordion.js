@@ -2,6 +2,7 @@
 	"use strict";
 
 	var touchEnabled = "ontouchstart" in document.documentElement;
+	var pressEvent   = touchEnabled ? "touchend" : "click";
 	var each         = [].forEach;
 
 
@@ -239,7 +240,7 @@
 							style.height =
 							style.top    = null;
 							
-							heading.removeEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+							heading.removeEventListener(pressEvent, this.onPress);
 							elClasses.remove(openClass, closeClass);
 							if(this.onKeyDown){
 								heading.removeEventListener("keydown", this.onKeyDown);
@@ -256,7 +257,7 @@
 						else{
 							style.height = _height + "px";
 							style.top    = _y      + "px";
-							heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress);
+							heading.addEventListener(pressEvent, this.onPress);
 							
 							if(this.onKeyDown){
 								heading.addEventListener("keydown", this.onKeyDown);
@@ -483,7 +484,7 @@
 		}
 		
 		
-		heading.addEventListener(touchEnabled ? "touchend" : "click", this.onPress = function(e){
+		heading.addEventListener(pressEvent, this.onPress = function(e){
 			if(e.type !== "touchend" || e.cancelable){
 				THIS.open = !THIS.open;
 				e.preventDefault();

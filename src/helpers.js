@@ -1,6 +1,7 @@
 "use strict";
 
 const touchEnabled = "ontouchstart" in document.documentElement;
+const pressEvent   = touchEnabled ? "touchend" : "click";
 
 
 /** Name of the onTransitionEnd event supported by this browser. */
