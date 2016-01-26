@@ -171,50 +171,6 @@ class Fold{
 	
 	
 	/**
-	 * Ensure the fold's elements have unique ID attributes.
-	 *
-	 * If no ID attributes are present, or they conflict with another DOM element's
-	 * identifier, new IDs are generated for each element (randomly if needed).
-	 *
-	 * Internal-use only, called from instance's constructor.
-	 *
-	 * @private
-	 */
-	checkIDs(){
-		const headingSuffix = "-heading";
-		const contentSuffix = "-content";
-		let elID            = this.el.id;
-		let heading         = this.heading;
-		let content         = this.content;
-		let id;
-		
-		/** Neither of the fold's elements have an ID attribute */
-		if(!heading.id && !content.id){
-			id             = elID || uniqueID("a");
-			heading.id     = id + headingSuffix;
-			content.id     = id + contentSuffix;
-		}
-		
-		/** Either the heading or element lack an ID */
-		else if(!content.id) content.id   = (elID || heading.id) + contentSuffix;
-		else if(!heading.id) heading.id   = (elID || content.id) + headingSuffix;
-		
-		/** Finally, double-check each element's ID is really unique */
-		const $ = s => document.querySelectorAll("#"+s);
-		while($(content.id).length > 1 || $(heading.id).length > 1){
-			id         = uniqueID("a");
-			content.id = id + contentSuffix;
-			heading.id = id + headingSuffix;
-		}
-		
-		/** Update ARIA attributes */
-		heading.setAttribute("aria-controls",    content.id);
-		content.setAttribute("aria-labelledby",  heading.id);
-	}
-	
-	
-	
-	/**
 	 * Adjust a fold's container to fit its content.
 	 */
 	fit(){
@@ -243,7 +199,37 @@ class Fold{
 			if(input){
 				heading.setAttribute("role", "tab");
 				content.setAttribute("role", "tabpanel");
-				this.checkIDs();
+				
+				
+				/** Ensure the fold's elements have unique ID attributes. */
+				const headingSuffix = "-heading";
+				const contentSuffix = "-content";
+				let elID            = this.el.id;
+				let id;
+				
+				/** Neither of the fold's elements have an ID attribute */
+				if(!heading.id && !content.id){
+					id             = elID || uniqueID("a");
+					heading.id     = id + headingSuffix;
+					content.id     = id + contentSuffix;
+				}
+				
+				/** Either the heading or element lack an ID */
+				else if(!content.id) content.id   = (elID || heading.id) + contentSuffix;
+				else if(!heading.id) heading.id   = (elID || content.id) + headingSuffix;
+				
+				/** Finally, double-check each element's ID is really unique */
+				const $ = s => document.querySelectorAll("#"+s);
+				while($(content.id).length > 1 || $(heading.id).length > 1){
+					id         = uniqueID("a");
+					content.id = id + contentSuffix;
+					heading.id = id + headingSuffix;
+				}
+				
+				/** Update ARIA attributes */
+				heading.setAttribute("aria-controls",    content.id);
+				content.setAttribute("aria-labelledby",  heading.id);
+				
 				
 				/** Update the attributes that're controlled by .open's setter */
 				heading.setAttribute("aria-selected",  this._open);
