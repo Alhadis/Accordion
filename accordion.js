@@ -240,6 +240,7 @@
 							style.height =
 							style.top    = null;
 							
+							touchEnabled && heading.removeEventListener("touchstart", this.onTouchStart);
 							heading.removeEventListener(pressEvent, this.onPress);
 							elClasses.remove(openClass, closeClass);
 							if(this.onKeyDown){
@@ -257,6 +258,7 @@
 						else{
 							style.height = _height + "px";
 							style.top    = _y      + "px";
+							touchEnabled && heading.addEventListener("touchstart", this.onTouchStart);
 							heading.addEventListener(pressEvent, this.onPress);
 							
 							if(this.onKeyDown){
@@ -484,8 +486,16 @@
 		}
 		
 		
+		/** Listener to record the viewport's scroll offsets at the beginning of a touch */
+		var scrollX, scrollY;
+		touchEnabled && heading.addEventListener("touchstart", this.onTouchStart = function(e){
+			scrollX = window.pageXOffset;
+			scrollY = window.pageYOffset;
+		});
+		
+		
 		heading.addEventListener(pressEvent, this.onPress = function(e){
-			if(e.type !== "touchend" || e.cancelable){
+			if(e.type !== "touchend" || (e.cancelable && window.pageXOffset === scrollX && window.pageYOffset === scrollY)){
 				THIS.open = !THIS.open;
 				e.preventDefault();
 			}

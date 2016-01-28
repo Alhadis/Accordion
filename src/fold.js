@@ -159,8 +159,16 @@ class Fold{
 		}
 		
 		
+		/** Listener to record the viewport's scroll offsets at the beginning of a touch */
+		let scrollX, scrollY;
+		touchEnabled && heading.addEventListener("touchstart", this.onTouchStart = e => {
+			scrollX = window.pageXOffset;
+			scrollY = window.pageYOffset;
+		});
+		
+		
 		heading.addEventListener(pressEvent, this.onPress = e => {
-			if(e.type !== "touchend" || e.cancelable){
+			if(e.type !== "touchend" || (e.cancelable && window.pageXOffset === scrollX && window.pageYOffset === scrollY)){
 				this.open = !this.open;
 				e.preventDefault();
 			}
@@ -318,6 +326,7 @@ class Fold{
 				style.height =
 				style.top    = null;
 				
+				touchEnabled && heading.removeEventListener("touchstart", this.onTouchStart);
 				heading.removeEventListener(pressEvent, this.onPress);
 				classes.remove(this.openClass, this.closeClass);
 				if(this.onKeyDown){
@@ -335,6 +344,7 @@ class Fold{
 			else{
 				style.height = this._height + "px";
 				style.top    = this._y      + "px";
+				touchEnabled && heading.addEventListener("touchstart", this.onTouchStart);
 				heading.addEventListener(pressEvent, this.onPress);
 				
 				if(this.onKeyDown){
