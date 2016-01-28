@@ -147,6 +147,10 @@
 		var keysEnabled  = !accordion.noKeys;
 		var _disabled    = false;
 		var _open, _y, _height, _ariaEnabled;
+		var scrollX, scrollY;
+		var onTouchStart;
+		var onKeyDown;
+		
 		
 		Object.defineProperties(THIS, {
 			fit: {value: fit},
@@ -240,11 +244,11 @@
 							style.height =
 							style.top    = null;
 							
-							touchEnabled && heading.removeEventListener("touchstart", this.onTouchStart);
+							touchEnabled && heading.removeEventListener("touchstart", onTouchStart);
 							heading.removeEventListener(pressEvent, this.onPress);
 							elClasses.remove(openClass, closeClass);
-							if(this.onKeyDown){
-								heading.removeEventListener("keydown", this.onKeyDown);
+							if(onKeyDown){
+								heading.removeEventListener("keydown", onKeyDown);
 								heading.removeAttribute("tabindex");
 							}
 							
@@ -258,11 +262,11 @@
 						else{
 							style.height = _height + "px";
 							style.top    = _y      + "px";
-							touchEnabled && heading.addEventListener("touchstart", this.onTouchStart);
+							touchEnabled && heading.addEventListener("touchstart", onTouchStart);
 							heading.addEventListener(pressEvent, this.onPress);
 							
-							if(this.onKeyDown){
-								heading.addEventListener("keydown", this.onKeyDown);
+							if(onKeyDown){
+								heading.addEventListener("keydown", onKeyDown);
 								heading.tabIndex = 0;
 							}
 						}
@@ -363,7 +367,7 @@
 		/** Keyboard navigation */
 		if(keysEnabled){
 			heading.tabIndex = 0;
-			heading.addEventListener("keydown", this.onKeyDown = function(e){
+			heading.addEventListener("keydown", onKeyDown = function(e){
 				var key = e.keyCode;
 				var fold;
 				
@@ -487,8 +491,7 @@
 		
 		
 		/** Listener to record the viewport's scroll offsets at the beginning of a touch */
-		var scrollX, scrollY;
-		touchEnabled && heading.addEventListener("touchstart", this.onTouchStart = function(e){
+		touchEnabled && heading.addEventListener("touchstart", onTouchStart = function(e){
 			scrollX = window.pageXOffset;
 			scrollY = window.pageYOffset;
 		});
