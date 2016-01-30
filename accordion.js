@@ -150,6 +150,7 @@
 		var scrollX, scrollY;
 		var onTouchStart;
 		var onKeyDown;
+		var onPress;
 		
 		
 		Object.defineProperties(THIS, {
@@ -170,9 +171,9 @@
 							checkIDs();
 							
 							/** Update the attributes that're controlled by .open's setter */
-							heading.setAttribute("aria-selected",  this._open);
-							heading.setAttribute("aria-expanded",  this._open);
-							content.setAttribute("aria-hidden",   !this._open);
+							heading.setAttribute("aria-selected",  _open);
+							heading.setAttribute("aria-expanded",  _open);
+							content.setAttribute("aria-hidden",   !_open);
 						}
 						
 						/** Disabling; remove all relevant attributes */
@@ -245,7 +246,7 @@
 							style.top    = null;
 							
 							touchEnabled && heading.removeEventListener("touchstart", onTouchStart);
-							heading.removeEventListener(pressEvent, this.onPress);
+							heading.removeEventListener(pressEvent, onPress);
 							elClasses.remove(openClass, closeClass);
 							if(onKeyDown){
 								heading.removeEventListener("keydown", onKeyDown);
@@ -253,7 +254,7 @@
 							}
 							
 							if(_ariaEnabled){
-								this.ariaEnabled = false;
+								THIS.ariaEnabled = false;
 								_ariaEnabled     = true;
 							}
 						}
@@ -263,7 +264,7 @@
 							style.height = _height + "px";
 							style.top    = _y      + "px";
 							touchEnabled && heading.addEventListener("touchstart", onTouchStart);
-							heading.addEventListener(pressEvent, this.onPress);
+							heading.addEventListener(pressEvent, onPress);
 							
 							if(onKeyDown){
 								heading.addEventListener("keydown", onKeyDown);
@@ -521,7 +522,7 @@
 		});
 		
 		
-		heading.addEventListener(pressEvent, this.onPress = function(e){
+		heading.addEventListener(pressEvent, onPress = function(e){
 			if(e.type !== "touchend" || (e.cancelable && window.pageXOffset === scrollX && window.pageYOffset === scrollY)){
 				THIS.open = !THIS.open;
 				e.preventDefault();
