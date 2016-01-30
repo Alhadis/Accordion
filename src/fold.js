@@ -240,9 +240,9 @@ class Fold{
 				
 				
 				/** Update the attributes that're controlled by .open's setter */
-				heading.setAttribute("aria-selected",  this._open);
-				heading.setAttribute("aria-expanded",  this._open);
-				content.setAttribute("aria-hidden",   !this._open);
+				heading.setAttribute("aria-selected",  !!this._open);
+				heading.setAttribute("aria-expanded",  !!this._open);
+				content.setAttribute("aria-hidden",     !this._open);
 			}
 			
 			/** Disabling; remove all relevant attributes */

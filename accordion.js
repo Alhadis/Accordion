@@ -171,8 +171,8 @@
 							checkIDs();
 							
 							/** Update the attributes that're controlled by .open's setter */
-							heading.setAttribute("aria-selected",  _open);
-							heading.setAttribute("aria-expanded",  _open);
+							heading.setAttribute("aria-selected", !!_open);
+							heading.setAttribute("aria-expanded", !!_open);
 							content.setAttribute("aria-hidden",   !_open);
 						}
 						
