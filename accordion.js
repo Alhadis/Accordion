@@ -297,7 +297,7 @@
 				
 				get: function(){
 					if(undefined === _height){
-						_height = heading.scrollHeight + content.scrollHeight;
+						_height = THIS.headingHeight + THIS.contentHeight;
 						el.style.height = _height + "px";
 					}
 					return _height;
@@ -311,11 +311,35 @@
 				}
 			},
 			
+
+			/** Current height of the fold's heading */
+			headingHeight: {
+				get: function(){
+					return this.heading.scrollHeight;
+				}
+			},
+			
+			
+			/** Current height of the fold's content */
+			contentHeight: {
+				get: function(){
+					return this.content.scrollHeight;
+				}
+			},
+			
+			
+			/** Current height of the fold's container element */
+			totalHeight: {
+				get: function(){
+					return this.el.scrollHeight;
+				}
+			},
+			
 			
 			/** Whether the fold's container has been resized incorrectly. */
 			wrongSize: {
 				get: function(){
-					return this.heading.scrollHeight + this.content.scrollHeight !== this.el.scrollHeight;
+					return THIS.headingHeight + THIS.contentHeight !== THIS.totalHeight;
 				}
 			}
 		});
@@ -512,9 +536,9 @@
 		 * Adjust a fold's container to fit its content.
 		 */
 		function fit(){
-			var height = heading.scrollHeight;
+			var height = THIS.headingHeight;
 			if(THIS.open)
-				height += content.scrollHeight;
+				height += THIS.contentHeight;
 			THIS.height = height;
 		}
 	}
@@ -737,8 +761,8 @@
 
 				/** Adjust the height of the containing fold's element */
 				if(fold.open){
-					var scrollHeight = fold.el.scrollHeight;
-					var distance     = (fold.heading.scrollHeight + fold.content.scrollHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
+					var scrollHeight = fold.totalHeight;
+					var distance     = (fold.headingHeight + fold.contentHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
 					accordion.updateFold(fold, distance);
 				}
 				break;

@@ -182,9 +182,9 @@ class Fold{
 	 * Adjust a fold's container to fit its content.
 	 */
 	fit(){
-		let height = this.heading.scrollHeight;
+		let height = this.headingHeight;
 		if(this.open)
-			height += this.content.scrollHeight;
+			height += this.contentHeight;
 		this.height = height;
 	}
 	
@@ -385,7 +385,7 @@ class Fold{
 	 */
 	get height(){
 		if(undefined === this._height){
-			let height           = this.heading.scrollHeight + this.content.scrollHeight;
+			let height           = this.headingHeight + this.contentHeight;
 			this.el.style.height = height + "px";
 			return (this._height = height);
 		}
@@ -400,6 +400,38 @@ class Fold{
 	}
 	
 	
+	/**
+	 * Current height of the fold's heading.
+	 *
+	 * @type {Number}
+	 * @readonly
+	 */
+	get headingHeight(){
+		return this.heading.scrollHeight;
+	}
+	
+	
+	/**
+	 * Current height of the fold's content.
+	 *
+	 * @type {Number}
+	 * @readonly
+	 */
+	get contentHeight(){
+		return this.content.scrollHeight;
+	}
+	
+	
+	/**
+	 * Current height of the fold's container element.
+	 *
+	 * @type {Number}
+	 * @readonly
+	 */
+	get totalHeight(){
+		return this.el.scrollHeight;
+	}
+	
 	
 	/**
 	 * Whether the fold's container has been resized incorrectly.
@@ -409,6 +441,6 @@ class Fold{
 	 * @property
 	 */
 	get wrongSize(){
-		return this.heading.scrollHeight + this.content.scrollHeight !== this.el.scrollHeight;
+		return this.headingHeight + this.contentHeight !== this.totalHeight;
 	}
 }
