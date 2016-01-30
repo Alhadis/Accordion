@@ -315,7 +315,7 @@
 			/** Current height of the fold's heading */
 			headingHeight: {
 				get: function(){
-					return this.heading.scrollHeight;
+					return heading.scrollHeight;
 				}
 			},
 			
@@ -323,7 +323,7 @@
 			/** Current height of the fold's content */
 			contentHeight: {
 				get: function(){
-					return this.content.scrollHeight;
+					return content.scrollHeight;
 				}
 			},
 			
@@ -331,7 +331,7 @@
 			/** Current height of the fold's container element */
 			totalHeight: {
 				get: function(){
-					return this.el.scrollHeight;
+					return el.scrollHeight;
 				}
 			},
 			
