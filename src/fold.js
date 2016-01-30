@@ -21,15 +21,16 @@ class Fold{
 		let heading      = el.firstElementChild;
 		let content      = el.lastElementChild;
 
-		this.index       = folds.push(this) - 1;
-		this.accordion   = accordion;
-		this.el          = el;
-		this.heading     = heading;
-		this.content     = content;
-		this.openClass   = accordion.openClass;
-		this.closeClass  = accordion.closeClass;
-		this.ariaEnabled = !accordion.noAria;
-		el.accordionFold = this.index;
+		this.index        = folds.push(this) - 1;
+		this.accordion    = accordion;
+		this.el           = el;
+		this.heading      = heading;
+		this.content      = content;
+		this.openClass    = accordion.openClass;
+		this.closeClass   = accordion.closeClass;
+		this.ariaEnabled  = !accordion.noAria;
+		this.heightOffset = accordion.heightOffset;
+		el.accordionFold  = this.index;
 		
 		
 		/** Keyboard navigation */
@@ -407,7 +408,7 @@ class Fold{
 	 * @readonly
 	 */
 	get headingHeight(){
-		return this.heading.scrollHeight;
+		return this.heading.scrollHeight + this.heightOffset;
 	}
 	
 	

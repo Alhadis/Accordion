@@ -316,7 +316,7 @@
 			/** Current height of the fold's heading */
 			headingHeight: {
 				get: function(){
-					return heading.scrollHeight;
+					return heading.scrollHeight + THIS.heightOffset;
 				}
 			},
 			
@@ -347,13 +347,14 @@
 		
 		
 		
-		THIS.index       = folds.push(THIS) - 1;
-		THIS.accordion   = accordion;
-		THIS.el          = el;
-		THIS.heading     = heading;
-		THIS.content     = content;
-		THIS.ariaEnabled = !accordion.noAria;
-		el.accordionFold = THIS.index;
+		THIS.index        = folds.push(THIS) - 1;
+		THIS.accordion    = accordion;
+		THIS.el           = el;
+		THIS.heading      = heading;
+		THIS.content      = content;
+		THIS.ariaEnabled  = !accordion.noAria;
+		THIS.heightOffset = accordion.heightOffset;
+		el.accordionFold  = THIS.index;
 		
 		
 		
@@ -569,6 +570,7 @@
 	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
+	 * @param {Number}      options.heightOffset  - Distance to offset each fold by
 	 * @constructor
 	 */
 	var Accordion = function(el, options){
@@ -714,11 +716,12 @@
 
 		
 		/** Assign options as properties */
-		THIS.openClass  = options.openClass  || "open";
-		THIS.closeClass = options.closeClass || "closed";
-		THIS.noAria     = !!options.noAria;
-		THIS.noKeys     = !!options.noKeys;
-		THIS.index      = accordions.push(THIS) - 1;
+		THIS.openClass    = options.openClass  || "open";
+		THIS.closeClass   = options.closeClass || "closed";
+		THIS.noAria       = !!options.noAria;
+		THIS.noKeys       = !!options.noKeys;
+		THIS.index        = accordions.push(THIS) - 1;
+		THIS.heightOffset = +options.heightOffset || 0;
 		
 		
 		/** Create a fold for each immediate descendant of the Accordion's container */

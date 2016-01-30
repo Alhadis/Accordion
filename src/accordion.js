@@ -24,6 +24,7 @@ class Accordion{
 	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
+	 * @param {Number}      options.heightOffset  - Distance to offset each fold by
 	 * @constructor
 	 */
 	constructor(el, options){
@@ -39,6 +40,7 @@ class Accordion{
 		this.disabledClass = options.disabledClass;
 		this.noAria        = !!options.noAria;
 		this.noKeys        = !!options.noKeys;
+		this.heightOffset  = +options.heightOffset || 0;
 		
 		
 		/** Create a fold for each immediate descendant of the Accordion's container */
