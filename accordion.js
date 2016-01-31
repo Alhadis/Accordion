@@ -145,6 +145,7 @@
 		var openClass    = accordion.openClass;
 		var closeClass   = accordion.closeClass;
 		var keysEnabled  = !accordion.noKeys;
+		var useBorders   = accordion.useBorders;
 		var _disabled    = false;
 		var _open, _y, _height, _ariaEnabled;
 		var scrollX, scrollY;
@@ -316,7 +317,16 @@
 			/** Current height of the fold's heading */
 			headingHeight: {
 				get: function(){
-					return heading.scrollHeight + THIS.heightOffset;
+					return heading.scrollHeight
+						+ THIS.heightOffset
+						+ (useBorders ? THIS.headingBorder : 0)
+				}
+			},
+			
+			/** Total height consumed by the heading element's CSS borders, if any */
+			headingBorder: {
+				get: function(){
+					return (heading.offsetHeight || 0) - (heading.clientHeight || 0);
 				}
 			},
 			
@@ -329,10 +339,17 @@
 			},
 			
 			
-			/** Current height of the fold's container element */
-			totalHeight: {
+			/** Total height of the fold's container element */
+			elHeight: {
 				get: function(){
-					return el.scrollHeight;
+					return el.scrollHeight + (useBorders ? THIS.elBorder : 0);
+				}
+			},
+			
+			/** Total height consumed by container element's CSS borders, if any */
+			elBorder: {
+				get: function(){
+					return (el.offsetHeight || 0) - (el.clientHeight || 0);
 				}
 			},
 			
@@ -340,7 +357,7 @@
 			/** Whether the fold's container has been resized incorrectly. */
 			wrongSize: {
 				get: function(){
-					return THIS.headingHeight + THIS.contentHeight !== THIS.totalHeight;
+					return THIS.headingHeight + THIS.contentHeight !== THIS.elHeight;
 				}
 			}
 		});
@@ -355,6 +372,7 @@
 		THIS.ariaEnabled  = !accordion.noAria;
 		THIS.heightOffset = accordion.heightOffset;
 		el.accordionFold  = THIS.index;
+		useBorders        = "auto" === useBorders ? (0 !== THIS.elBorder + THIS.headingBorder) : useBorders;
 		
 		
 		
@@ -539,8 +557,8 @@
 		 */
 		function fit(){
 			var height = THIS.headingHeight;
-			if(THIS.open)
-				height += THIS.contentHeight;
+			if(THIS.open)   height += THIS.contentHeight;
+			if(useBorders)  height += THIS.elBorder;
 			THIS.height = height;
 		}
 	}
@@ -571,6 +589,7 @@
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
 	 * @param {Number}      options.heightOffset  - Distance to offset each fold by
+	 * @param {Boolean}     options.useBorders    - Consider borders when calculating fold heights
 	 * @constructor
 	 */
 	var Accordion = function(el, options){
@@ -722,6 +741,7 @@
 		THIS.noKeys       = !!options.noKeys;
 		THIS.index        = accordions.push(THIS) - 1;
 		THIS.heightOffset = +options.heightOffset || 0;
+		THIS.useBorders   = undefined === options.useBorders ? "auto" : options.useBorders;
 		
 		
 		/** Create a fold for each immediate descendant of the Accordion's container */
@@ -765,7 +785,7 @@
 
 				/** Adjust the height of the containing fold's element */
 				if(fold.open){
-					var scrollHeight = fold.totalHeight;
+					var scrollHeight = fold.el.scrollHeight;
 					var distance     = (fold.headingHeight + fold.contentHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
 					accordion.updateFold(fold, distance);
 				}

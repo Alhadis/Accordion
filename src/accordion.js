@@ -25,6 +25,7 @@ class Accordion{
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
 	 * @param {Number}      options.heightOffset  - Distance to offset each fold by
+	 * @param {Boolean}     options.useBorders    - Consider borders when calculating fold heights
 	 * @constructor
 	 */
 	constructor(el, options){
@@ -41,6 +42,7 @@ class Accordion{
 		this.noAria        = !!options.noAria;
 		this.noKeys        = !!options.noKeys;
 		this.heightOffset  = +options.heightOffset || 0;
+		this.useBorders    = undefined === options.useBorders ? "auto" : options.useBorders;
 		
 		
 		/** Create a fold for each immediate descendant of the Accordion's container */
@@ -84,7 +86,7 @@ class Accordion{
 
 				/** Adjust the height of the containing fold's element */
 				if(fold.open){
-					let scrollHeight = fold.totalHeight;
+					let scrollHeight = fold.el.scrollHeight;
 					let distance     = (fold.headingHeight + fold.contentHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
 					accordion.updateFold(fold, distance);
 				}

@@ -18,9 +18,10 @@ class Fold{
 	 * @constructor
 	 */
 	constructor(accordion, el){
-		let heading      = el.firstElementChild;
-		let content      = el.lastElementChild;
-
+		let heading       = el.firstElementChild;
+		let content       = el.lastElementChild;
+		let useBorders    = accordion.useBorders;
+		
 		this.index        = folds.push(this) - 1;
 		this.accordion    = accordion;
 		this.el           = el;
@@ -30,6 +31,7 @@ class Fold{
 		this.closeClass   = accordion.closeClass;
 		this.ariaEnabled  = !accordion.noAria;
 		this.heightOffset = accordion.heightOffset;
+		this.useBorders   = "auto" === useBorders ? (0 !== this.elBorder + this.headingBorder) : useBorders;
 		el.accordionFold  = this.index;
 		
 		
@@ -184,8 +186,8 @@ class Fold{
 	 */
 	fit(){
 		let height = this.headingHeight;
-		if(this.open)
-			height += this.contentHeight;
+		if(this.open)        height += this.contentHeight;
+		if(this.useBorders)  height += this.elBorder;
 		this.height = height;
 	}
 	
@@ -408,7 +410,20 @@ class Fold{
 	 * @readonly
 	 */
 	get headingHeight(){
-		return this.heading.scrollHeight + this.heightOffset;
+		return this.heading.scrollHeight
+			+ this.heightOffset
+			+ (this.useBorders ? this.headingBorder : 0);
+	}
+	
+	/**
+	 * Total height consumed by the heading element's CSS borders, if any.
+	 *
+	 * @type {Number}
+	 * @readonly
+	 */
+	get headingBorder(){
+		let heading = this.heading;
+		return (heading.offsetHeight || 0) - (heading.clientHeight || 0);
 	}
 	
 	
@@ -424,13 +439,24 @@ class Fold{
 	
 	
 	/**
-	 * Current height of the fold's container element.
+	 * Total height of the fold's container element.
 	 *
 	 * @type {Number}
 	 * @readonly
 	 */
-	get totalHeight(){
-		return this.el.scrollHeight;
+	get elHeight(){
+		return this.el.scrollHeight + (this.useBorders ? this.elBorder : 0);
+	}
+	
+	/**
+	 * Total height consumed by container element's CSS borders, if any.
+	 * 
+	 * @type {Number}
+	 * @readonly
+	 */
+	get elBorder(){
+		let el = this.el;
+		return (el.offsetHeight || 0) - (el.clientHeight || 0);
 	}
 	
 	
@@ -442,6 +468,6 @@ class Fold{
 	 * @property
 	 */
 	get wrongSize(){
-		return this.headingHeight + this.contentHeight !== this.totalHeight;
+		return this.headingHeight + this.contentHeight !== this.elHeight;
 	}
 }
