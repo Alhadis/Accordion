@@ -468,6 +468,6 @@ class Fold{
 	 * @property
 	 */
 	get wrongSize(){
-		return this.headingHeight + this.contentHeight !== this.elHeight;
+		return this.headingHeight + this.contentHeight !== this.el.scrollHeight;
 	}
 }

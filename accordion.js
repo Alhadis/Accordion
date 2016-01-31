@@ -357,7 +357,7 @@
 			/** Whether the fold's container has been resized incorrectly. */
 			wrongSize: {
 				get: function(){
-					return THIS.headingHeight + THIS.contentHeight !== THIS.elHeight;
+					return THIS.headingHeight + THIS.contentHeight !== el.scrollHeight;
 				}
 			}
 		});
