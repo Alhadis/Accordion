@@ -87,7 +87,7 @@ class Accordion{
 				/** Adjust the height of the containing fold's element */
 				if(fold.open){
 					let scrollHeight = fold.el.scrollHeight;
-					let distance     = (fold.headingHeight + fold.contentHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
+					let distance     = (fold.headingHeight + fold.content.scrollHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
 					accordion.updateFold(fold, distance);
 				}
 				break;

@@ -186,7 +186,7 @@ class Fold{
 	 */
 	fit(){
 		let height = this.headingHeight;
-		if(this.open)        height += this.contentHeight;
+		if(this.open)        height += this.content.scrollHeight;
 		if(this.useBorders)  height += this.elBorder;
 		this.height = height;
 	}
@@ -388,7 +388,7 @@ class Fold{
 	 */
 	get height(){
 		if(undefined === this._height){
-			let height           = this.headingHeight + this.contentHeight;
+			let height           = this.headingHeight + this.content.scrollHeight;
 			this.el.style.height = height + "px";
 			return (this._height = height);
 		}
@@ -401,6 +401,7 @@ class Fold{
 			this._height         = input;
 		}
 	}
+	
 	
 	
 	/**
@@ -424,17 +425,6 @@ class Fold{
 	get headingBorder(){
 		let heading = this.heading;
 		return (heading.offsetHeight || 0) - (heading.clientHeight || 0);
-	}
-	
-	
-	/**
-	 * Current height of the fold's content.
-	 *
-	 * @type {Number}
-	 * @readonly
-	 */
-	get contentHeight(){
-		return this.content.scrollHeight;
 	}
 	
 	
@@ -468,6 +458,6 @@ class Fold{
 	 * @property
 	 */
 	get wrongSize(){
-		return this.headingHeight + this.contentHeight !== this.el.scrollHeight;
+		return this.headingHeight + this.content.scrollHeight !== this.el.scrollHeight;
 	}
 }
