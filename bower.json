@@ -1,0 +1,16 @@
+{
+	"name": "silk-accordion",
+	"description": "Silky-smooth accordion widgets with no external dependencies.",
+	"keywords": ["accordion", "widget", "component", "folding", "foldable", "fold", "ui"],
+	"repository": {
+		"url":  "https://github.com/Alhadis/Accordion",
+		"type": "git"
+	},
+	"license": "ISC",
+	"moduleType": "globals",
+	"ignore": ["demos/*"],
+	"main": [
+		"src/accordion.js",
+		"src/accordion.css"
+	]
+}
