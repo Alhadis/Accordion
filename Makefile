@@ -6,7 +6,7 @@ all:    accordion.min.js
 
 
 # Generate a compressed version of the file
-accordion.min.js: accordion.js
+accordion.min.js: src/accordion.js
 	@perl -0777 -pe 's{/\*\~+\s*(\w+)?\s*\*/.*?/\*\s*\1?\s*\~+\*/}{}gsi' < $< | \
 	uglifyjs $(MINIFY_OPTS) > $@
 
@@ -26,7 +26,7 @@ clean:
 PWD := $(shell pwd)
 watch:
 	@watchman watch $(PWD) > /dev/null
-	@watchman -- trigger $(PWD) recompress accordion.js -- make accordion.min.js > /dev/null
+	@watchman -- trigger $(PWD) recompress src/accordion.js -- make accordion.min.js > /dev/null
 
 unwatch:
 	@watchman watch-del $(PWD) > /dev/null
@@ -35,9 +35,9 @@ unwatch:
 # Options to switch between the transpiled version and the original ES6 sources
 DEMOS := $(wildcard demos/*.htm)
 use-src:
-	@perl -pi -e 's/(<script src="\.\.\/(?=\w+\.js))/$$1src\//gi' $(DEMOS)
+	@perl -pi -e 's/(<script src="\.\.\/src\/(?=\w+\.js))/$$1es6\//gi' $(DEMOS)
 
 use-compiled:
-	@perl -pi -e 's/(<script src="\.\.\/)src\//$$1/gi' $(DEMOS)
+	@perl -pi -e 's/(<script src="\.\.\/src\/)es6\//$$1/gi' $(DEMOS)
 
 .PHONY: use-src use-compiled
