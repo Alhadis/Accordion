@@ -34,7 +34,7 @@ dist: amd common-js es6 raw
 
 # Minify a JavaScript resource
 %.min.js: %.js
-	@uglifyjs -c --mangle < $< > $@
+	@uglifyjs -c --mangle --source-map $@.map $< > $@
 
 
 # Copy a source file into the destination directory before modifying it
