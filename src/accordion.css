@@ -23,7 +23,7 @@
 		/** Transform-related */
 		.accordion,
 		.accordion > *{
-			will-change:         transform;
+			will-change: height, transform;
 			-webkit-perspective: 90em;
 			-moz-perspective:    90em;
 			perspective:         90em;
