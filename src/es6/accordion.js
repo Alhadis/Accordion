@@ -1,6 +1,10 @@
 "use strict";
 
-let accordions       = [];
+/*~~
+import {transitionEnd, debounce} from "./helpers";
+~~*/
+
+const accordions     = [];
 let activeAccordions = 0;
 let lastResizeRate;
 
@@ -406,3 +410,8 @@ class Accordion{
 
 
 Accordion.setResizeRate(25);
+
+
+/*~~
+export default Accordion;
+~~*/

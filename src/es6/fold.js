@@ -1,6 +1,10 @@
 "use strict";
 
-let folds = [];
+/*~~
+import {touchEnabled, pressEvent, uniqueID} from "./helpers";
+~~*/
+
+const folds = [];
 
 
 /**
@@ -461,3 +465,8 @@ class Fold{
 		return this.headingHeight + this.content.scrollHeight !== this.el.scrollHeight;
 	}
 }
+
+
+/*~~
+export { Fold, folds };
+~~*/

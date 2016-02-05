@@ -114,3 +114,15 @@ const uniqueID = (function(){
 	
 	return uniqueID;
 }());
+
+
+
+/*~~
+export {
+	touchEnabled,
+	pressEvent,
+	transitionEnd,
+	debounce,
+	uniqueID
+};
+~~*/

@@ -1,7 +1,8 @@
 "use strict";
 
-import { touchEnabled, pressEvent, transitionEnd, debounce, uniqueID } from "./helpers";
-let folds = [];
+import {touchEnabled, pressEvent, uniqueID} from "./helpers";
+
+const folds = [];
 
 
 /**
@@ -463,4 +464,5 @@ class Fold{
 	}
 }
 
-export default Fold;
+
+export { Fold, folds };

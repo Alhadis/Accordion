@@ -73,28 +73,12 @@ $(COMMON-JS): $(SRC_ES5)
 
 
 
-# ECMAScript 6: Chuck in some import/export directives
-# They're not included in the ES6 source because Chrome doesn't support module loading yet :c
-# I'll, eh, use Webpack next time.
+# ECMAScript 6: Expose some import/export directives
 es6: $(addprefix $(ES6)/,$(SRC_ES6))
 
-$(ES6)/helpers.js: $(SRC)/es6/helpers.js
+$(ES6)/%.js: $(SRC)/es6/%.js
 	@$(call copy)
-	@echo '\n\nexport default $(EXPORT_UTIL);' >> $@
-
-$(ES6)/fold.js: $(SRC)/es6/fold.js
-	@$(call copy)
-	@perl -0777 -p \
-		-e 's/^("use strict";\n)/$$1\nimport $(EXPORT_UTIL) from ".\/helpers";/' < $< > $@
-	@echo '\nexport default Fold;' >> $@
-
-$(ES6)/accordion.js: $(SRC)/es6/accordion.js
-	@$(call copy)
-	@perl -0777 -p \
-		-e 's/^("use strict";\n)/$$1\nimport $(EXPORT_UTIL) from ".\/helpers";/; \
-		s/(helpers";)/$$1\nimport Fold from ".\/fold";\n\n/;' < $< > $@
-	@echo '\nexport default Accordion;' >> $@
-
+	@perl -0777 -pi -e 's{(/\*~~\s*|\s*~~\*/)}{}g;' $@
 
 
 

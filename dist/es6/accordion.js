@@ -1,10 +1,8 @@
 "use strict";
 
-import { touchEnabled, pressEvent, transitionEnd, debounce, uniqueID } from "./helpers";
-import Fold from "./fold";
+import {transitionEnd, debounce} from "./helpers";
 
-
-let accordions       = [];
+const accordions     = [];
 let activeAccordions = 0;
 let lastResizeRate;
 
@@ -410,5 +408,6 @@ class Accordion{
 
 
 Accordion.setResizeRate(25);
+
 
 export default Accordion;

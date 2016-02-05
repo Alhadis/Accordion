@@ -116,4 +116,11 @@ const uniqueID = (function(){
 }());
 
 
-export default { touchEnabled, pressEvent, transitionEnd, debounce, uniqueID };
+
+export {
+	touchEnabled,
+	pressEvent,
+	transitionEnd,
+	debounce,
+	uniqueID
+};
