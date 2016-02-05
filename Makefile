@@ -72,6 +72,7 @@ $(COMMON-JS): $(SRC_ES5)
 		s/^\t//gm' < $< > $@
 
 
+
 # ECMAScript 6: Chuck in some import/export directives
 # They're not included in the ES6 source because Chrome doesn't support module loading yet :c
 # I'll, eh, use Webpack next time.
@@ -96,4 +97,25 @@ $(ES6)/accordion.js: $(SRC)/es6/accordion.js
 
 
 
-.PHONY: clean
+
+watch:
+	$(call watch,$(SRC)/'*',dist)
+
+unwatch:
+	$(call unwatch)
+
+
+# Run a Make task in response to filesystem changes
+# - Requires Watchman: https://facebook.github.io/watchman/
+# - Usage: $(call watch,file-pattern,task-name)
+PWD := $(shell pwd)
+define watch
+	@watchman watch $(PWD) > /dev/null
+	@watchman -- trigger $(PWD) '$(2)-$(1)' $(1) -- make $(2) > /dev/null
+endef
+
+define unwatch
+	@watchman watch-del $(PWD) > /dev/null
+endef
+
+.PHONY: clean watch unwatch
