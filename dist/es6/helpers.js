@@ -117,10 +117,33 @@ const uniqueID = (function(){
 
 
 
+/** Name of the CSSOM property used by this browser for CSS transforms */
+const cssTransform = (function(n){
+	s = document.documentElement.style;
+	if((prop = n.toLowerCase()) in s) return prop;
+	for(var prop, s, p = "Webkit Moz Ms O Khtml", p = (p.toLowerCase() + p).split(" "), i = 0; i < 10; ++i)
+		if((prop = p[i]+n) in s) return prop;
+	return "";
+}("Transform"));
+
+
+/** Whether 3D transforms are supported by this browser */
+const css3DSupported = (function(propName){
+	const e = document.createElement("div"), s = e.style,
+	v = [["translateY(", ")"], ["translate3d(0,", ",0)"]]
+	try{ s[propName] = v[1].join("1px"); } catch(e){}
+	return v[+!!s[propName]] === v[1];
+}(cssTransform));
+
+
+
+
 export {
 	touchEnabled,
 	pressEvent,
 	transitionEnd,
 	debounce,
-	uniqueID
+	uniqueID,
+	cssTransform,
+	css3DSupported
 };

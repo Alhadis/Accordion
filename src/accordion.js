@@ -118,6 +118,23 @@
 	}());
 
 
+	/** Name of the CSSOM property used by this browser for CSS transforms */
+	var cssTransform = (function(n){
+		s = document.documentElement.style;
+		if((prop = n.toLowerCase()) in s) return prop;
+		for(var prop, s, p = "Webkit Moz Ms O Khtml", p = (p.toLowerCase() + p).split(" "), i = 0; i < 10; ++i)
+			if((prop = p[i]+n) in s) return prop;
+		return "";
+	}("Transform"));
+
+
+	/** Whether 3D transforms are supported by this browser */
+	var css3DSupported = (function(propName){
+		var e = document.createElement("div"), s = e.style,
+		v = [["translateY(", ")"], ["translate3d(0,", ",0)"]]
+		try{ s[propName] = v[1].join("1px"); } catch(e){}
+		return v[+!!s[propName]] === v[1];
+	}(cssTransform));
 
 
 
@@ -138,15 +155,16 @@
 	 * @constructor
 	 */
 	var Fold = function(accordion, el){
-		var THIS         = this;
-		var heading      = el.firstElementChild;
-		var content      = el.lastElementChild;
-		var elClasses    = el.classList;
-		var openClass    = accordion.openClass;
-		var closeClass   = accordion.closeClass;
-		var keysEnabled  = !accordion.noKeys;
-		var useBorders   = accordion.useBorders;
-		var _disabled    = false;
+		var THIS            = this;
+		var heading         = el.firstElementChild;
+		var content         = el.lastElementChild;
+		var elClasses       = el.classList;
+		var openClass       = accordion.openClass;
+		var closeClass      = accordion.closeClass;
+		var keysEnabled     = !accordion.noKeys;
+		var useBorders      = accordion.useBorders;
+		var useTransforms   = !accordion.noTransforms && cssTransform;
+		var _disabled       = false;
 		var _open, _y, _height, _ariaEnabled;
 		var scrollX, scrollY;
 		var onTouchStart;
@@ -243,8 +261,10 @@
 						
 						/** Deactivated */
 						if(_disabled = input){
-							style.height =
-							style.top    = null;
+							style.height = null;
+							useTransforms
+								? (style[cssTransform] = null)
+								: (style.top = null);
 							
 							touchEnabled && heading.removeEventListener("touchstart", onTouchStart);
 							heading.removeEventListener(pressEvent, onPress);
@@ -263,7 +283,13 @@
 						/** Reactivated */
 						else{
 							style.height = _height + "px";
-							style.top    = _y      + "px";
+							useTransforms
+								? style[cssTransform] =
+									css3DSupported
+										? ("translate3D(0," + _y + "px,0)")
+										: ("translateY("    + _y + "px)")
+								: (style.top = _y + "px");
+							
 							touchEnabled && heading.addEventListener("touchstart", onTouchStart);
 							heading.addEventListener(pressEvent, onPress);
 							
@@ -287,8 +313,13 @@
 				
 				set: function(input){
 					if((input = +input) !== _y){
-						el.style.top  = input + "px";
-						_y            = input;
+						_y = input;
+						useTransforms
+							? el.style[cssTransform] =
+								css3DSupported
+									? ("translate3D(0," + input + "px,0)")
+									: ("translateY("    + input + "px)")
+							: (el.style.top = input + "px");
 					}
 				}
 			},
@@ -581,6 +612,7 @@
 	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
+	 * @param {Boolean}     options.noTransforms  - Disable CSS transforms; positioning will be used instead
 	 * @param {Number}      options.heightOffset  - Distance to offset each fold by
 	 * @param {Boolean}     options.useBorders    - Consider borders when calculating fold heights
 	 * @constructor
@@ -732,6 +764,7 @@
 		THIS.closeClass   = options.closeClass || "closed";
 		THIS.noAria       = !!options.noAria;
 		THIS.noKeys       = !!options.noKeys;
+		THIS.noTransforms = !!options.noTransforms;
 		THIS.index        = accordions.push(THIS) - 1;
 		THIS.heightOffset = +options.heightOffset || 0;
 		THIS.useBorders   = undefined === options.useBorders ? "auto" : options.useBorders;

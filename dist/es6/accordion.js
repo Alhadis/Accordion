@@ -26,6 +26,7 @@ class Accordion{
 	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
+	 * @param {Boolean}     options.noTransforms  - Disable CSS transforms; positioning will be used instead
 	 * @param {Number}      options.heightOffset  - Distance to offset each fold by
 	 * @param {Boolean}     options.useBorders    - Consider borders when calculating fold heights
 	 * @constructor
@@ -43,6 +44,7 @@ class Accordion{
 		this.disabledClass = options.disabledClass;
 		this.noAria        = !!options.noAria;
 		this.noKeys        = !!options.noKeys;
+		this.noTransforms  = !!options.noTransforms;
 		this.heightOffset  = +options.heightOffset || 0;
 		this.useBorders    = undefined === options.useBorders ? "auto" : options.useBorders;
 		

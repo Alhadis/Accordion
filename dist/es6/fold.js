@@ -1,6 +1,6 @@
 "use strict";
 
-import {touchEnabled, pressEvent, uniqueID} from "./helpers";
+import {touchEnabled, pressEvent, uniqueID, cssTransform, css3DSupported} from "./helpers";
 
 const folds = [];
 
@@ -20,21 +20,22 @@ class Fold{
 	 * @constructor
 	 */
 	constructor(accordion, el){
-		let heading       = el.firstElementChild;
-		let content       = el.lastElementChild;
-		let useBorders    = accordion.useBorders;
+		let heading          = el.firstElementChild;
+		let content          = el.lastElementChild;
+		let useBorders       = accordion.useBorders;
 		
-		this.index        = folds.push(this) - 1;
-		this.accordion    = accordion;
-		this.el           = el;
-		this.heading      = heading;
-		this.content      = content;
-		this.openClass    = accordion.openClass;
-		this.closeClass   = accordion.closeClass;
-		this.ariaEnabled  = !accordion.noAria;
-		this.heightOffset = accordion.heightOffset;
-		this.useBorders   = "auto" === useBorders ? (0 !== this.elBorder + this.headingBorder) : useBorders;
-		el.accordionFold  = this.index;
+		this.index           = folds.push(this) - 1;
+		this.accordion       = accordion;
+		this.el              = el;
+		this.heading         = heading;
+		this.content         = content;
+		this.openClass       = accordion.openClass;
+		this.closeClass      = accordion.closeClass;
+		this.ariaEnabled     = !accordion.noAria;
+		this.heightOffset    = accordion.heightOffset;
+		this.useBorders      = "auto" === useBorders ? (0 !== this.elBorder + this.headingBorder) : useBorders;
+		this.useTransforms   = !accordion.noTransforms && cssTransform;
+		el.accordionFold     = this.index;
 		
 		
 		/** Keyboard navigation */
@@ -328,8 +329,10 @@ class Fold{
 			
 			/** Deactivated */
 			if(this._disabled = input){
-				style.height =
-				style.top    = null;
+				style.height = null;
+				this.useTransforms
+					? (style[cssTransform] = null)
+					: (style.top = null);
 				
 				touchEnabled && heading.removeEventListener("touchstart", this.onTouchStart);
 				heading.removeEventListener(pressEvent, this.onPress);
@@ -348,7 +351,13 @@ class Fold{
 			/** Reactivated */
 			else{
 				style.height = this._height + "px";
-				style.top    = this._y      + "px";
+				this.useTransforms
+					? style[cssTransform] =
+						css3DSupported
+							? ("translate3D(0," + this._y + "px,0)")
+							: ("translateY("    + this._y + "px)")
+					: (style.top = this._y + "px");
+				
 				touchEnabled && heading.addEventListener("touchstart", this.onTouchStart);
 				heading.addEventListener(pressEvent, this.onPress);
 				
@@ -375,8 +384,14 @@ class Fold{
 	
 	set y(input){
 		if((input = +input) !== this._y){
-			this.el.style.top  = input + "px";
-			this._y            = input;
+			this._y     = input;
+			const style = this.el.style;
+			this.useTransforms
+				? style[cssTransform] =
+					css3DSupported
+						? ("translate3D(0," + input + "px,0)")
+						: ("translateY("    + input + "px)")
+				: (style.top = input + "px");
 		}
 	}
 	

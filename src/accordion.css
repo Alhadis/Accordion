@@ -20,6 +20,25 @@
 			transition:         .3s ease all;
 		}
 		
+		/** Transform-related */
+		.accordion,
+		.accordion > *{
+			will-change:         transform;
+			-webkit-perspective: 90em;
+			-moz-perspective:    90em;
+			perspective:         90em;
+			
+			-webkit-backface-visibility: hidden;
+			-moz-backface-visibility:    hidden;
+			backface-visibility:         hidden;
+			
+			-webkit-transform:  translate3d(0,0,0);
+			-moz-transform:     translate3d(0,0,0);
+			-ms-transform:      translateY(0);
+			-o-transform:       translate3d(0,0,0);
+			transform:          translate3d(0,0,0);
+		}
+		
 		/** Rule to disable transitions between gap corrections */
 		.snap.accordion > *,
 		.snap.accordion .accordion{
