@@ -31,6 +31,7 @@ class Accordion{
 	 * @param {Boolean}     options.noTransforms  - Disable CSS transforms; positioning will be used instead
 	 * @param {Number}      options.heightOffset  - Distance to offset each fold by
 	 * @param {Boolean}     options.useBorders    - Consider borders when calculating fold heights
+	 * @param {Function}    options.onToggle      - Callback executed when opening or closing a fold
 	 * @constructor
 	 */
 	constructor(el, options){
@@ -49,6 +50,7 @@ class Accordion{
 		this.noTransforms  = !!options.noTransforms;
 		this.heightOffset  = +options.heightOffset || 0;
 		this.useBorders    = undefined === options.useBorders ? "auto" : options.useBorders;
+		this.onToggle      = options.onToggle;
 		
 		
 		/** Create a fold for each immediate descendant of the Accordion's container */

@@ -37,6 +37,7 @@ class Fold{
 		this.heightOffset    = accordion.heightOffset;
 		this.useBorders      = "auto" === useBorders ? (0 !== this.elBorder + this.headingBorder) : useBorders;
 		this.useTransforms   = !accordion.noTransforms && cssTransform;
+		this.onToggle        = accordion.onToggle;
 		el.accordionFold     = this.index;
 		
 		
@@ -290,6 +291,11 @@ class Fold{
 	
 	set open(input){
 		if((input = !!input) !== this._open){
+			
+			/** If an onToggle callback was specified, run it. Avoid doing anything if it returns false. */
+			if("function" === typeof this.onToggle && false === this.onToggle.call(null, this, input))
+				return;
+			
 			this.el.classList.toggle(this.openClass,   input);
 			this.el.classList.toggle(this.closeClass, !input);
 			this._open = input;

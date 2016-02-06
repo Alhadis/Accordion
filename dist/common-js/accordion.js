@@ -163,6 +163,7 @@ var Fold = function(accordion, el){
 	var keysEnabled     = !accordion.noKeys;
 	var useBorders      = accordion.useBorders;
 	var useTransforms   = !accordion.noTransforms && cssTransform;
+	var onToggle        = accordion.onToggle;
 	var _disabled       = false;
 	var _open, _y, _height, _ariaEnabled;
 	var scrollX, scrollY;
@@ -229,6 +230,11 @@ var Fold = function(accordion, el){
 			
 			set: function(input){
 				if((input = !!input) !== _open){
+					
+					/** If an onToggle callback was specified, run it. Avoid doing anything if it returns false. */
+					if("function" === typeof onToggle && false === onToggle.call(null, THIS, input))
+						return;
+					
 					elClasses.toggle(openClass,   input);
 					elClasses.toggle(closeClass, !input);
 					_open = input;
@@ -614,6 +620,7 @@ var lastResizeRate;
  * @param {Boolean}     options.noTransforms  - Disable CSS transforms; positioning will be used instead
  * @param {Number}      options.heightOffset  - Distance to offset each fold by
  * @param {Boolean}     options.useBorders    - Consider borders when calculating fold heights
+ * @param {Function}    options.onToggle      - Callback executed when opening or closing a fold
  * @constructor
  */
 var Accordion = function(el, options){
@@ -767,6 +774,7 @@ var Accordion = function(el, options){
 	THIS.index        = accordions.push(THIS) - 1;
 	THIS.heightOffset = +options.heightOffset || 0;
 	THIS.useBorders   = undefined === options.useBorders ? "auto" : options.useBorders;
+	THIS.onToggle     = options.onToggle;
 	
 	
 	/** Create a fold for each immediate descendant of the Accordion's container */
