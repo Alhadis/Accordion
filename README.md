@@ -42,7 +42,7 @@ var el = document.querySelector(".accordion");
 new Accordion(el);
 ```
 
-[Options](#options) can be passed in a second argument:
+[Options](docs/options.md) can be passed in a second argument:
 ```js
 new Accordion(el, {
     onToggle: function(fold, isOpen){
