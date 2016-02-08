@@ -25,7 +25,7 @@ element::
 	
 options::
 	__(Object)__
-	Optional dictionary of link:options.md[options].
+	Optional dictionary of link:options.adoc[options].
 
 
 
@@ -62,7 +62,7 @@ has finished loading).
 allowSnap::
 	__(Boolean)__
 	Snap folds instantly into place without transitioning. + 
-	Relies on link:options.md#snapclass[snapClass] to disable CSS transitions.
+	Relies on link:options.adoc#snapclass[snapClass] to disable CSS transitions.
 
 
 
@@ -106,7 +106,7 @@ Properties
 ----------
 
 In addition to the properties listed here, the values of the following
-link:options.md[constructor options]
+link:options.adoc[constructor options]
 are stored on the instance as properties:
 
 ++++
