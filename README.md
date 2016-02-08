@@ -70,3 +70,16 @@ Options
 | [openClass](docs/options.adoc#openclass)         | String   | `"open"`         | CSS class controlling each fold's "open" state                  |
 | [snapClass](docs/options.adoc#snapclass)         | String   | `"snap"`         | CSS class for disabling transitions between window resizes      |
 | [useBorders](docs/options.adoc#useborders)       | Boolean  | `"auto"`         | Consider borders when calculating fold heights                  |
+
+
+Modular use
+-----------
+Different distribution flavours are available in the `dist` directory:
+
+* **amd:** For [RequireJS](http://requirejs.org/)
+* **common-js:** For [NodeJS](https://nodejs.org/)-like ecosystems
+* **es6:** For [Babel](http://babeljs.io/), or whenever ES6 becomes universally supported by browsers.
+* **raw:** Compressed and uncompressed ES5 versions, the latter of which is also available in `src`.
+
+The base stylesheet is located at `src/accordion.css`.
+Feel free to embed it into your application's existing styling, tweaking it if desired.
