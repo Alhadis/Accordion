@@ -1,0 +1,161 @@
+Fold API
+========
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+//========
+
+A +Fold+ represents a single panel of togglable content inside an
+link:accordion.adoc[Accordion].
+
+You don't create these directly; you access them through an accordion's
+link:accordion.adoc#folds[+folds+] property.
+
+
+Methods
+-------
+
+=== fit( )
+Adjust a fold's container to fit its content.
+
+
+
+
+
+Properties
+----------
+
+=== accordion
+Type::
+	__Accordion__
+
+Reference to the link:accordion.adoc:[accordion] the fold is attached to.
+
+
+
+=== ariaEnabled
+Type::
+	__Boolean__
+
+Whether ARIA attributes have been added to the fold's elements.
+
+Mainly for internal use only.
+
+
+
+=== content
+Type::
+	__HTMLElement__
+
+Reference to the togglable panel of content that's displayed to a reader after they press the <<heading>>.
+
+This is set to the last child of the <<el,container element>> when a fold is created.
+
+
+
+=== disabled
+Type::
+	__Boolean__
+
+Whether the fold's been deactivated.
+
+Not set directly; changed when setting an accordion's
+link:accordion.adoc[+disabled+] property.
+
+
+
+=== el
+Type::
+	__HTMLElement__
+
+The element enclosing the fold's <<heading>> and <<content>> panel.
+
+Throughout this documentation, the +el+ property will commonly be referred to as the __container element__.
+
+
+
+=== elBorder
+Type::
+	__Number__
+
+*(Read-only)* Total height consumed by the container element's CSS borders, if any.
+
+
+
+
+=== elHeight
+Type::
+	__Number__
+
+*(Read-only)* Total height of the fold's container element.
+
+
+
+=== heading
+Type::
+	__HTMLElement__
+
+The label that a user presses to toggle the fold's opened state.
+
+This is set to the first element found inside <<el>>.
+
+
+
+=== headingBorder
+Type::
+	__Number__
+
+*(Read-only)* Total height consumed by the heading element's CSS borders, if any.
+
+
+
+=== headingHeight
+Type::
+	__Number__
+
+*(Read-only)* Current height of the fold's heading.
+
+
+
+
+=== height
+Type::
+	__Number__
+
+Height of the fold's outermost container.
+
+
+
+=== index
+Type::
+	__Number__
+
+Zero-based integer representing the order of this fold within the containing accordion.
+
+
+=== open
+Type::
+	__Boolean__
+
+Whether or not the fold's currently opened.
+
+When changing this property, the accordion's
+link:accordion.adoc[onToggle] callback, if any, is triggered.
+If the callback explicitly returns +false+, no change is made to the +open+ value.
+
+
+
+=== wrongSize
+Type::
+	__Boolean__
+
+*(Read-only)* Whether the fold's container has been resized incorrectly.
+
+
+
+
+=== y
+Type::
+	__Number__
+
+Vertical position of the fold within an accordion's container.

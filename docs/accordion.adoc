@@ -1,0 +1,222 @@
+Accordion API
+=============
+:toc:
+:toclevels: 3
+:toc-placement: preamble
+//=============
+
+An +Accordion+ represents a column of collapsible content regions.
+
+Every instance contains an array of link:fold.adoc[Fold] objects:
+one for each child of the accordion's container element.
+
+
+
+Constructor
+-----------
+[source,js]
+new Accordion(element, options);
+
+Initialise a new accordion instance.
+
+element::
+	__(Element)__
+	Reference to a DOM element. Stored in the instance's <<el,.el>> property.
+	
+options::
+	__(Object)__
+	Optional dictionary of link:options.md[options].
+
+
+
+
+Methods
+-------
+Most of these methods are called internally.
+Generally, they won't need to be used directly.
+
+
+=== update( )
+Update the height of each fold to fit its content.
+
+
+=== updateFold(fold, offset)
+Update the vertical ordinate of each sibling for a particular fold.
+
+fold::
+	__(Fold)__
+	The Fold whose height changed.
+
+offset::
+	__(Number)__
+	Pixel distance to adjust by.
+
+
+=== refresh(allowSnap)
+Recalculate the boundaries of an Accordion and its descendants.
+
+This method should only be called if the width of a container changes,
+or if a fold's contents have resized unexpectedly (such as when an image
+has finished loading).
+
+allowSnap::
+	__(Boolean)__
+	Snap folds instantly into place without transitioning. + 
+	Relies on link:options.md#snapclass[snapClass] to disable CSS transitions.
+
+
+
+
+Static Methods
+--------------
+
+=== Accordion.getAccordion(node)
+Return the closest (most deeply-nested) accordion enclosing an element.
+
+node::
+	__(Node)__
+	Document node being queried.
+
+
+=== Accordion.getFold(node)
+Return the closest (most deeply-nested) fold enclosing an element.
+
+node::
+	__(Node)__
+	Document node being queried.
+
+
+=== Accordion.setResizeRate(delay)
+Alter the rate at which screen-resize events update accordion widths.
+
+The default rate is 25ms.
+
+delay::
+	__(Number)__
+	Rate expressed in milliseconds. +
+	  +
+	If +false+ or a negative value is supplied, no resize handling is performed.
+	Passing zero has the effect of handling resizes as quickly as the event is dispatched
+	by the browser, which usually isn't very performant.
+
+
+
+
+Properties
+----------
+
+In addition to the properties listed here, the values of the following
+link:options.md[constructor options]
+are stored on the instance as properties:
+
+++++
+<ul>
+	<li><a href="options.adoc#closeclass">closeClass</a></li>
+	<li><a href="options.adoc#heightoffset">heightOffset</a></li>
+	<li><a href="options.adoc#noaria">noAria</a></li>
+	<li><a href="options.adoc#nokeys">noKeys</a></li>
+	<li><a href="options.adoc#notransforms">noTransforms</a></li>
+	<li><a href="options.adoc#ontoggle">onToggle</a></li>
+	<li><a href="options.adoc#openclass">openClass</a></li>
+	<li><a href="options.adoc#useborders">useBorders</a></li>
+</ul>
+++++
+
+
+
+=== childAccordions
+Type::
+	__Array__
+
+List of accordions nested inside this one.
+
+This property is only defined for accordions with children.
+
+
+
+=== disabled
+Type::
+	__Boolean__
+
+Whether the accordion's been deactivated.
+
+When disabling an accordion, all styling and event listeners are removed.
+Essentially, this "undoes" the entire instance as though it no longer exists
+in the page. The accordion can be easily restored by setting +disabled+ to false.
+
+An expected use-case for this property is activating an accordion only after the
+screen shrinks to a certain size. This would allow tabbed or lengthy content to be
+better portrayed on smartphones.
+
+
+=== el
+Type::
+	__HTMLElement__
+
+Reference to the accordion's container element.
+
+The container element is the single HTML node that encloses each collapsible content section.
+It's passed as the first argument when creating a new +Accordion+ instance:
+
+[source,js]
+new Accordion(el, options);
+
+
+
+=== folds
+Type::
+	__Array__
+
+List of
+link:fold.adoc[Fold]
+instances.
+
+
+
+=== height
+Type::
+	__Number__
+
+Height of the accordion's <<el,container element>>.
+
+
+=== index
+Type::
+	__Number__
+
+Zero-based integer representing the order in which this accordion was created.
+
+
+=== parent
+Type::
+	__Accordion__
+
+The accordion enclosing this one.
+
+Disabled accordions are skipped when traversing an instance's ancestry.
+
+
+
+=== parentFold
+Type::
+	__Fold__
+
+The fold of the <<parent>> accordion that encloses this one.
+
+As with the +.parent+ property, disabled ancestors are skipped when traversing the ancestry.
+
+
+
+=== root
+Type::
+	__Accordion__
+
+*(Read-only)* Top-level ancestor this accordion's nested inside.
+
+
+
+=== wrongSize
+Type::
+	__Boolean__
+
+*(Read-only)* Whether one of the Accordion's folds has been resized incorrectly.
