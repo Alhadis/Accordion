@@ -34,7 +34,9 @@ dist: amd common-js es6 raw
 
 # Minify a JavaScript resource
 %.min.js: %.js
-	@uglifyjs $^ --output $@ -c --mangle --source-map filename=$@.map
+	@uglifyjs $^ --output $@ -c --mangle --source-map
+	@perl -pi -e 's|"dist/raw/accordion.js"|"accordion.js"|' $@.map
+	@printf "\n//# sourceMappingURL=%s" $(@F).map >> $@
 
 
 # Copy a source file into the destination directory before modifying it
