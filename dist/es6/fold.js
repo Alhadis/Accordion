@@ -1,6 +1,6 @@
 "use strict";
 
-import {touchEnabled, pressEvent, uniqueID, cssTransform, css3DSupported} from "./helpers";
+import {touchEnabled, pressEvent, setToken, uniqueID, cssTransform, css3DSupported} from "./helpers.js";
 
 const folds = [];
 
@@ -278,10 +278,9 @@ class Fold{
 		
 		/** Derive the fold's opened state from the DOM if it's not been determined yet */
 		if(undefined === this._open){
-			let classes = this.el.classList;
-			let open    = classes.contains(this.openClass);
-			classes.toggle(this.closeClass, !open);
-			return (this._open = open);
+			const classes = this.el.classList;
+			this._open    = classes.contains(this.openClass);
+			setToken(classes, this.closeClass, !this._open);
 		}
 		
 		return this._open;
@@ -294,8 +293,8 @@ class Fold{
 			if("function" === typeof this.onToggle && false === this.onToggle.call(null, this, input))
 				return;
 			
-			this.el.classList.toggle(this.openClass,   input);
-			this.el.classList.toggle(this.closeClass, !input);
+			setToken(this.el.classList, this.openClass,   input);
+			setToken(this.el.classList, this.closeClass, !input);
 			this._open = input;
 			
 			/** Update ARIA attributes */

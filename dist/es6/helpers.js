@@ -14,6 +14,19 @@ const transitionEnd = (function(){
 
 
 /**
+ * Conditionally add or remove a token from a token-list.
+ *
+ * @param {DOMTokenList} list
+ * @param {String} token
+ * @param {Boolean} enabled
+ */
+function setToken(list, token, enabled){
+	enabled ? list.add(token) : list.remove(token);
+}
+
+
+
+/**
  * Stop a function from firing too quickly.
  *
  * Returns a copy of the original function that runs only after the designated
@@ -142,6 +155,7 @@ export {
 	touchEnabled,
 	pressEvent,
 	transitionEnd,
+	setToken,
 	debounce,
 	uniqueID,
 	cssTransform,

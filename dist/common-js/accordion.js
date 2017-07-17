@@ -15,6 +15,19 @@ var transitionEnd = (function(){
 
 
 /**
+ * Conditionally add or remove a token from a token-list.
+ *
+ * @param {DOMTokenList} list
+ * @param {String} token
+ * @param {Boolean} enabled
+ */
+function setToken(list, token, enabled){
+	enabled ? list.add(token) : list.remove(token);
+}
+
+
+
+/**
  * Stop a function from firing too quickly.
  *
  * Returns a copy of the original function that runs only after the designated
@@ -219,9 +232,8 @@ var Fold = function(accordion, el){
 				
 				/** Derive the fold's opened state from the DOM if it's not been determined yet */
 				if(undefined === _open){
-					var isOpened = elClasses.contains(openClass);
-					elClasses.toggle(closeClass, !isOpened);
-					return (_open = isOpened);
+					_open = elClasses.contains(openClass);
+					setToken(elClasses, closeClass, !_open);
 				}
 				
 				return _open;
@@ -235,8 +247,8 @@ var Fold = function(accordion, el){
 					if("function" === typeof onToggle && false === onToggle.call(null, THIS, input))
 						return;
 					
-					elClasses.toggle(openClass,   input);
-					elClasses.toggle(closeClass, !input);
+					setToken(elClasses, openClass,   input);
+					setToken(elClasses, closeClass, !input);
 					_open = input;
 					
 					/** Update ARIA attributes */
@@ -647,8 +659,8 @@ var Accordion = function(el, options){
 					var style   = el.style;
 					var folds   = THIS.folds;
 					
-					enabledClass  && elClasses.toggle(enabledClass,  !input);
-					disabledClass && elClasses.toggle(disabledClass,  input);
+					enabledClass  && setToken(elClasses, enabledClass,  !input);
+					disabledClass && setToken(elClasses, disabledClass,  input);
 					
 					
 					/** Deactivating */

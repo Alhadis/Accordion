@@ -12,6 +12,19 @@ define([], function(){
 			if("on"+names[i].toLowerCase() in window) return names[i];
 		return names[0];
 	}());
+	
+	
+	
+	/**
+	 * Conditionally add or remove a token from a token-list.
+	 *
+	 * @param {DOMTokenList} list
+	 * @param {String} token
+	 * @param {Boolean} enabled
+	 */
+	function setToken(list, token, enabled){
+		enabled ? list.add(token) : list.remove(token);
+	}
 
 
 
@@ -220,9 +233,8 @@ define([], function(){
 					
 					/** Derive the fold's opened state from the DOM if it's not been determined yet */
 					if(undefined === _open){
-						var isOpened = elClasses.contains(openClass);
-						elClasses.toggle(closeClass, !isOpened);
-						return (_open = isOpened);
+						_open = elClasses.contains(openClass);
+						setToken(elClasses, closeClass, !_open);
 					}
 					
 					return _open;
@@ -236,8 +248,8 @@ define([], function(){
 						if("function" === typeof onToggle && false === onToggle.call(null, THIS, input))
 							return;
 						
-						elClasses.toggle(openClass,   input);
-						elClasses.toggle(closeClass, !input);
+						setToken(elClasses, openClass,   input);
+						setToken(elClasses, closeClass, !input);
 						_open = input;
 						
 						/** Update ARIA attributes */
@@ -648,8 +660,8 @@ define([], function(){
 						var style   = el.style;
 						var folds   = THIS.folds;
 						
-						enabledClass  && elClasses.toggle(enabledClass,  !input);
-						disabledClass && elClasses.toggle(disabledClass,  input);
+						enabledClass  && setToken(elClasses, enabledClass,  !input);
+						disabledClass && setToken(elClasses, disabledClass,  input);
 						
 						
 						/** Deactivating */

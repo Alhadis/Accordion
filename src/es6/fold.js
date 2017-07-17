@@ -1,7 +1,7 @@
 "use strict";
 
 /*~~
-import {touchEnabled, pressEvent, setToken, uniqueID, cssTransform, css3DSupported} from "./helpers";
+import {touchEnabled, pressEvent, setToken, uniqueID, cssTransform, css3DSupported} from "./helpers.js";
 ~~*/
 
 const folds = [];

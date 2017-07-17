@@ -1,6 +1,6 @@
 "use strict";
 
-import {transitionEnd, debounce} from "./helpers";
+import {transitionEnd, setToken, debounce} from "./helpers.js";
 
 const accordions     = [];
 let activeAccordions = 0;
@@ -166,8 +166,8 @@ class Accordion{
 			const style   = el.style;
 			const classes = el.classList;
 			
-			this.enabledClass  && classes.toggle(this.enabledClass,  !input);
-			this.disabledClass && classes.toggle(this.disabledClass,  input);
+			this.enabledClass  && setToken(classes, this.enabledClass,  !input);
+			this.disabledClass && setToken(classes, this.disabledClass,  input);
 			
 			
 			/** Deactivating */

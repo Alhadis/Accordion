@@ -1,7 +1,7 @@
 "use strict";
 
 /*~~
-import {transitionEnd, setToken, debounce} from "./helpers";
+import {transitionEnd, setToken, debounce} from "./helpers.js";
 ~~*/
 
 const accordions     = [];
