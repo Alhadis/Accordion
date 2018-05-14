@@ -78,7 +78,7 @@ Different distribution flavours are available in the `dist` directory:
 
 * **amd:** For [RequireJS](http://requirejs.org/)
 * **common-js:** For [NodeJS](https://nodejs.org/)-like ecosystems
-* **es6:** For [Babel](http://babeljs.io/), or whenever ES6 becomes universally supported by browsers.
+* **es6:** For modern browsers which support ECMAScript modules, or transpilers like [Babel](http://babeljs.io/)
 * **raw:** Compressed and uncompressed ES5 versions, the latter of which is also available in `src`.
 
 The base stylesheet is located at `src/accordion.css`.

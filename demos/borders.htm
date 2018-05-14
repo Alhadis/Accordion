@@ -554,16 +554,15 @@
 	</ul>
 
 
-	<script src="../src/accordion.js"></script>
-	<!--
-	<script src="../src/es6/helpers.js"></script>
-	<script src="../src/es6/fold.js"></script>
-	<script src="../src/es6/accordion.js"></script>
-	-->
+	<!-- ES5/Legacy -->
+	<script nomodule src="../src/accordion.js"></script>
+	<script nomodule src="assets/shared.js"></script>
 	
-	<script src="assets/shared.js"></script>
-	<script>
-		runDemo();
+	<!-- ES6+ -->
+	<script type="module">
+		import Accordion from "../src/accordion.mjs";
+		for(const el of document.querySelectorAll(".accordion"))
+			new Accordion(el);
 	</script>
 
 </body>

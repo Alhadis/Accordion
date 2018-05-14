@@ -1,13 +1,18 @@
 "use strict";
 
-const touchEnabled = "ontouchstart" in document.documentElement;
-const pressEvent   = touchEnabled ? "touchend" : "click";
+export const touchEnabled = "ontouchstart" in document.documentElement;
+export const pressEvent   = touchEnabled ? "touchend" : "click";
 
 
-/** Name of the onTransitionEnd event supported by this browser. */
-const transitionEnd = (function(){
-	for(var names = "transitionend webkitTransitionEnd oTransitionEnd otransitionend".split(" "), i = 0; i < 4; ++i)
-		if("on"+names[i].toLowerCase() in window) return names[i];
+/**
+ * Name of the onTransitionEnd event supported by this browser.
+ * @const {String} transitionEnd
+ */
+export const transitionEnd = (function(){
+	const names = "transitionend webkitTransitionEnd oTransitionEnd otransitionend".split(" ");
+	for(let i = 0; i < 4; ++i)
+		if("on" + names[i].toLowerCase() in window)
+			return names[i];
 	return names[0];
 }());
 
@@ -20,7 +25,7 @@ const transitionEnd = (function(){
  * @param {String} token
  * @param {Boolean} enabled
  */
-function setToken(list, token, enabled){
+export function setToken(list, token, enabled){
 	enabled ? list.add(token) : list.remove(token);
 }
 
@@ -32,48 +37,41 @@ function setToken(list, token, enabled){
  * Returns a copy of the original function that runs only after the designated
  * number of milliseconds have elapsed. Useful for throttling onResize handlers.
  *
- * @param {Number} limit - Threshold to stall execution by, in milliseconds.
- * @param {Boolean} soon - If TRUE, will call the function *before* the threshold's elapsed, rather than after.
+ * @param {Function} fn - Function to debounce
+ * @param {Number} [limit=0] - Threshold to stall execution by, in milliseconds.
+ * @param {Boolean} [asap=false] - Call function *before* threshold elapses, not after.
  * @return {Function}
  */
-function debounce(fn, limit, soon){
-	var limit = limit < 0 ? 0 : limit,
-		started, context, args, timer,
-
-		delayed = function(){
-
-			/** Get the time between now and when the function was first fired. */
-			var timeSince = Date.now() - started;
-
-			if(timeSince >= limit){
-				if(!soon) fn.apply(context, args);
-				if(timer) clearTimeout(timer);
-				timer = context = args = null;
-			}
-
-			else timer = setTimeout(delayed, limit - timeSince);
-		};
-
-
-	/** Debounced copy of the original function. */
+export function debounce(fn, limit = 0, asap = false){
+	let started, context, args, timing;
+	
+	const delayed = function(){
+		const timeSince = Date.now() - started;
+		if(timeSince >= limit){
+			if(!asap) fn.apply(context, args);
+			if(timing) clearTimeout(timing);
+			timing = context = args = null;
+		}
+		else timing = setTimeout(delayed, limit - timeSince);
+	};
+	
+	// Debounced copy of original function
 	return function(){
 		context = this,
 		args    = arguments;
-
 		if(!limit)
 			return fn.apply(context, args);
-
 		started = Date.now();
-		if(!timer){
-			if(soon) fn.apply(context, args);
-			timer = setTimeout(delayed, limit);
+		if(!timing){
+			if(asap) fn.apply(context, args);
+			timing = setTimeout(delayed, limit);
 		}
 	};
-};
+}
 
 
 
-const uniqueID = (function(){
+export const uniqueID = (function(){
 	var IDs     = {};
 	var indexes = {};
 	
@@ -131,7 +129,7 @@ const uniqueID = (function(){
 
 
 /** Name of the CSSOM property used by this browser for CSS transforms */
-const cssTransform = (function(n){
+export const cssTransform = (function(n){
 	s = document.documentElement.style;
 	if((prop = n.toLowerCase()) in s) return prop;
 	for(var prop, s, p = "Webkit Moz Ms O Khtml", p = (p.toLowerCase() + p).split(" "), i = 0; i < 10; ++i)
@@ -141,25 +139,9 @@ const cssTransform = (function(n){
 
 
 /** Whether 3D transforms are supported by this browser */
-const css3DSupported = (function(propName){
+export const css3DSupported = (function(propName){
 	const e = document.createElement("div"), s = e.style,
 	v = [["translateY(", ")"], ["translate3d(0,", ",0)"]]
 	try{ s[propName] = v[1].join("1px"); } catch(e){}
 	return v[+!!s[propName]] === v[1];
 }(cssTransform));
-
-
-
-
-/*~~
-export {
-	touchEnabled,
-	pressEvent,
-	transitionEnd,
-	setToken,
-	debounce,
-	uniqueID,
-	cssTransform,
-	css3DSupported
-};
-~~*/

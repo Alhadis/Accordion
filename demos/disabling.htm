@@ -131,23 +131,27 @@
 		</li>
 	</ul>
 
+	<label id="toggle-accordion">
+		<input type="checkbox" id="accordion-active" /> Disable Accordion
+	</label>
 
-	<script src="../src/accordion.js"></script>
-	<!--
-	<script src="../src/es6/helpers.js"></script>
-	<script src="../src/es6/fold.js"></script>
-	<script src="../src/es6/accordion.js"></script>
-	-->
-	
-	<script src="assets/shared.js"></script>
-	
-	<label id="toggle-accordion"><input type="checkbox" id="accordion-active" /> Disable Accordion</label>
-	<script>
+	<!-- ES5/Legacy -->
+	<script nomodule src="../src/accordion.js"></script>
+	<script nomodule src="assets/shared.js"></script>
+	<script nomodule>
 		"use strict";
-		
 		var fruits     = new Accordion(document.getElementById("fruits"));
 		var appleTypes = new Accordion(document.getElementById("apple-types"));
-		
+		document.getElementById("accordion-active").addEventListener("change", function(e){
+			fruits.disabled = e.target.checked;
+		});
+	</script>
+	
+	<!-- ES6+ -->
+	<script type="module">
+		import Accordion from "../src/accordion.mjs";
+		const fruits     = new Accordion(document.getElementById("fruits"));
+		const appleTypes = new Accordion(document.getElementById("apple-types"));
 		document.getElementById("accordion-active").addEventListener("change", e => {
 			fruits.disabled = e.target.checked;
 		});

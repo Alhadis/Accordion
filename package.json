@@ -6,5 +6,5 @@
 	"repository": "https://github.com/Alhadis/Accordion",
 	"license": "ISC",
 	"dependencies": {},
-	"main": "src/accordion.js"
+	"main": "src/accordion"
 }

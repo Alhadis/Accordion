@@ -1,6 +1,7 @@
 "use strict";
 
-import {transitionEnd, setToken, debounce} from "./helpers.js";
+import {transitionEnd, setToken, debounce} from "./helpers.mjs";
+import {default as Fold, folds} from "./fold.mjs";
 
 const accordions     = [];
 let activeAccordions = 0;
@@ -9,8 +10,9 @@ let lastResizeRate;
 
 /**
  * Represents a column of collapsible content regions.
+ * @class
  */
-class Accordion{
+export default class Accordion {
 
 	/**
 	 * Instantiate a new Accordion instance.
@@ -412,6 +414,3 @@ class Accordion{
 
 
 Accordion.setResizeRate(25);
-
-
-export default Accordion;

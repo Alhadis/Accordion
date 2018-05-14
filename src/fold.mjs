@@ -1,10 +1,15 @@
 "use strict";
 
-/*~~
-import {touchEnabled, pressEvent, setToken, uniqueID, cssTransform, css3DSupported} from "./helpers.js";
-~~*/
+import {
+	touchEnabled,
+	pressEvent,
+	setToken,
+	uniqueID,
+	cssTransform,
+	css3DSupported,
+} from "./helpers.mjs";
 
-const folds = [];
+export const folds = [];
 
 
 /**
@@ -12,7 +17,7 @@ const folds = [];
  *
  * @class
  */
-class Fold{
+export default class Fold{
 	
 	/**
 	 * Instantiate a new Fold instance.
@@ -485,8 +490,3 @@ class Fold{
 		return this.headingHeight + this.content.scrollHeight !== this.el.scrollHeight;
 	}
 }
-
-
-/*~~
-export { Fold, folds };
-~~*/
