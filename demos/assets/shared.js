@@ -1,6 +1,6 @@
 var acc = [];
-document.onload = function(config){
+window.onload = function(event){
 	[].forEach.call(document.querySelectorAll(".accordion"), function(el){
-		acc.push(new Accordion(el, config));
+		acc.push(new Accordion(el, window.demoConfig));
 	});
 };

@@ -1015,6 +1015,13 @@
 	Accordion.setResizeRate(25);
 	
 	
-	/** Export */
+	// Browser export
 	window.Accordion = Accordion;
+	
+	// CommonJS/Node.js
+	if("object" === typeof module && "object" === typeof module.exports)
+		module.exports.Accordion = Accordion;
+	
+	// AMD/UMD-like systems
+	return Accordion;
 }());

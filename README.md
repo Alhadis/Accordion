@@ -1,25 +1,29 @@
+<!---*-tab-width:4;indent-tabs-mode:t;-*- vim:set ts=4 noet:--->
+
 Accordion
-==============
+================================================================
 
 Silky-smooth accordion widgets with no external dependencies.
 
-```bash
+~~~shell
 npm install accordion --save
 bower install silk-accordion --save
-```
+~~~
+
+
 
 Usage
------
+----------------------------------------------------------------
 
 Include the following two files in your project:
 
-    src/accordion.css
-    src/accordion.js
+	src/accordion.css
+	src/accordion.js
 
 
 Layout your markup like this:
 
-```html
+~~~html
 <div class="accordion">
 
 	<div>
@@ -33,27 +37,91 @@ Layout your markup like this:
 	</div>
 	
 </div>
-```
+~~~
 
 
 Then create an `Accordion` instance with a reference to a DOM element:
-```js
+
+~~~js
 var el = document.querySelector(".accordion");
 new Accordion(el);
-```
+~~~
+
 
 [Options](docs/options.adoc) can be passed in a second argument:
-```js
+
+~~~js
 new Accordion(el, {
-    onToggle: function(fold, isOpen){
-        console.log(fold);   // -> Reference to a `Fold` instance
-        console.log(isOpen); // -> true / false
-    }
+	onToggle: function(fold, isOpen){
+		console.log(fold);   // -> Reference to a `Fold` instance
+		console.log(isOpen); // -> true / false
+	}
 });
-```
+~~~
+
+### Styling
+The base stylesheet is located at `src/accordion.css`.
+Embed it into your application's existing styling, tweaking it if desired.
+
+**Note:** This stylesheet only includes properties necessary for the Accordion to function.
+Making it look appealing with colours and fonts is left as an exercise to the developer.
+Check the source of the [bundled demos](`demos/anim-switch.htm`) for some ideas.
+
+
+
+### Using ES6 modules
+If your project uses native JavaScript modules, consider loading `src/accordion.mjs` instead:
+
+~~~html
+<!-- ES6+ -->
+<script type="module">
+	import Accordion from "./src/accordion.mjs";
+	for(const el of document.querySelectorAll(".accordion"))
+		new Accordion(el);
+</script>
+~~~
+
+The old `accordion.js` file contains only ES5, and can be used as a fallback for older platforms which lack ES module support:
+
+~~~html
+<!-- Fallback to ES5 for legacy browsers -->
+<script nomodule src="src/accordion.js"></script>
+<script nomodule>
+	"use strict";
+	var accordions = document.querySelectorAll(".accordion");
+	for(var i = 0, l = accordions.length; i < l; ++i)
+		new Accordion(accordions[i]);
+</script>
+~~~
+
+
+### IE8 support
+For IE8-9 compatibility, install [`fix-ie`](https://www.npmjs.com/package/fix-ie):
+
+~~~shell
+npm install fix-ie --save
+bower install fix-ie --save
+~~~
+
+
+Then link to it using a conditional comment, *before any other script on the page!*
+
+~~~html
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	<!--[if lte IE 9]>
+		<script src="node_modules/fix-ie/dist/ie.lteIE9.js"></script>
+	<![endif]-->
+	<meta charset="utf-8" />
+~~~
+
+This [fixes](https://www.npmjs.com/package/fix-ie#ie8pp) IE's buggy handling of `Object.defineProperty`, which the Accordion makes extensive use of. `fix-ie` also provides oodles of helpful polyfills to fix IE8's shoddy DOM support.
+
+
 
 Options
--------
+----------------------------------------------------------------
 
 | Name                                             | Type     | Default          | Description                                                     |
 |--------------------------------------------------|----------|------------------|-----------------------------------------------------------------|
@@ -70,16 +138,3 @@ Options
 | [openClass](docs/options.adoc#openclass)         | String   | `"open"`         | CSS class controlling each fold's "open" state                  |
 | [snapClass](docs/options.adoc#snapclass)         | String   | `"snap"`         | CSS class for disabling transitions between window resizes      |
 | [useBorders](docs/options.adoc#useborders)       | Boolean  | `"auto"`         | Consider borders when calculating fold heights                  |
-
-
-Modular use
------------
-Different distribution flavours are available in the `dist` directory:
-
-* **amd:** For [RequireJS](http://requirejs.org/)
-* **common-js:** For [NodeJS](https://nodejs.org/)-like ecosystems
-* **es6:** For modern browsers which support ECMAScript modules, or transpilers like [Babel](http://babeljs.io/)
-* **raw:** Compressed and uncompressed ES5 versions, the latter of which is also available in `src`.
-
-The base stylesheet is located at `src/accordion.css`.
-Feel free to embed it into your application's existing styling, tweaking it if desired.
