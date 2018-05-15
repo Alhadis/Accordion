@@ -54,18 +54,22 @@ export default class Fold{
 				let fold;
 				
 				switch(key){
+
+					// Spacebar: Toggle
+					case 32:
+						e.preventDefault(); // Fall-through
+					
 					
 					// Enter: Toggle
-					case 13: {
+					case 13:
 						this.open = !this.open;
 						break;
-					}
+					
 					
 					// Escape: Clear focus
-					case 27:{
+					case 27:
 						e.target.blur();
 						break;
-					}
 					
 					
 					// Up arrow: Previous section
