@@ -37,7 +37,7 @@ export default class Accordion {
 	constructor(el, options){
 		this.index = accordions.push(this) - 1;
 		
-		/** Parse options */
+		// Parse options
 		options            = options || {};
 		this.openClass     = options.openClass  || "open";
 		this.closeClass    = options.closeClass || "closed";
@@ -53,13 +53,13 @@ export default class Accordion {
 		this.onToggle      = options.onToggle;
 		
 		
-		/** Create a fold for each immediate descendant of the Accordion's container */
+		// Create a fold for each immediate descendant of the Accordion's container
 		let folds = [];
 		for(let i of Array.from(el.children)){
 			let fold = new Fold(this, i);
 			folds.push(fold);
 			
-			/** Connect the fold to its previous sibling, if it's not the first to be added */
+			// Connect the fold to its previous sibling, if it's not the first to be added
 			let prev = folds[folds.length - 2];
 			if(prev){
 				prev.nextFold     = fold;
@@ -73,14 +73,14 @@ export default class Accordion {
 		this.el         = el;
 		this.folds      = folds;
 
-		/** Add .enabledClass early - it might affect the heights of each fold */
+		// Add .enabledClass early - it might affect the heights of each fold
 		if(!options.disabled && this.enabledClass)
 			el.classList.add(this.enabledClass);
 		
 		this.update();
 		
 		
-		/** Find out if this accordion's nested inside another */
+		// Find out if this accordion's nested inside another
 		let next = el;
 		while((next = next.parentNode) && 1 === next.nodeType){
 			let fold = Accordion.getFold(next);
@@ -92,7 +92,7 @@ export default class Accordion {
 				(accordion.childAccordions = accordion.childAccordions || []).push(this);
 				(fold.childAccordions      = fold.childAccordions      || []).push(this);
 
-				/** Adjust the height of the containing fold's element */
+				// Adjust the height of the containing fold's element
 				if(fold.open){
 					let scrollHeight = fold.el.scrollHeight;
 					let distance     = (fold.headingHeight + fold.content.scrollHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
@@ -123,7 +123,7 @@ export default class Accordion {
 		let result = this._parent;
 		if(!result) return null;
 		
-		/** Search for the first ancestor that *isn't* disabled */
+		// Search for the first ancestor that *isn't* disabled
 		while(result){
 			if(!result.disabled) return result;
 			result = result.parent;
@@ -145,7 +145,7 @@ export default class Accordion {
 		
 		let accordion = fold.accordion;
 		
-		/** Search for the first ancestor that *isn't* disabled */
+		// Search for the first ancestor that *isn't* disabled
 		while(fold && accordion){
 			if(!accordion.disabled) return fold;
 			if(accordion = accordion.parent)
@@ -172,7 +172,7 @@ export default class Accordion {
 			this.disabledClass && setToken(classes, this.disabledClass,  input);
 			
 			
-			/** Deactivating */
+			// Deactivating
 			if(this._disabled = input){
 				style.height = null;
 				this.snapClass && classes.remove(this.snapClass);
@@ -189,7 +189,7 @@ export default class Accordion {
 			}
 			
 			
-			/** Reactivating */
+			// Reactivating
 			else{
 				for(let i of this.folds)
 					i.disabled = false;
@@ -201,13 +201,13 @@ export default class Accordion {
 			
 
 			
-			/** If there're no more active accordions, disable the onResize handler */
+			// If there're no more active accordions, disable the onResize handler
 			if(activeAccordions <= 0){
 				activeAccordions = 0;
 				Accordion.setResizeRate(false);
 			}
 			
-			/** Otherwise, reactivate the onResize handler, assuming it was previously active */
+			// Otherwise, reactivate the onResize handler, assuming it was previously active
 			else if(lastResizeRate)
 				Accordion.setResizeRate(lastResizeRate);
 		}
@@ -244,11 +244,11 @@ export default class Accordion {
 			let windowEdge  = window.innerHeight;
 			let classes     = this.el.classList;
 			
-			/** If the bottom-edge is visible (or about to be), enable height animation */
+			// If the bottom-edge is visible (or about to be), enable height animation
 			if(box.bottom + (offset || 0) < windowEdge)
 				classes.add(edgeClass)
 			
-			/** If the bottom-edge isn't visible anyway, disable height animation immediately */
+			// If the bottom-edge isn't visible anyway, disable height animation immediately
 			else if(box.bottom > windowEdge)
 				classes.remove(edgeClass);
 		}
@@ -314,7 +314,9 @@ export default class Accordion {
 		
 		this.update();
 		if(this.childAccordions)
-			this.childAccordions.forEach(a => a.parentFold.open ? a.refresh(allowSnap) : (a.parentFold.needsRefresh = true))
+			this.childAccordions.forEach(a => a.parentFold.open
+				? a.refresh(allowSnap)
+				: (a.parentFold.needsRefresh = true));
 		
 		snap && setTimeout(e => this.el.classList.remove(snap), 20);
 	}
@@ -368,7 +370,7 @@ export default class Accordion {
 		
 		window.removeEventListener("resize", this.onResize);
 		
-		/** Make sure we weren't passed an explicit value of FALSE, or a negative value */
+		// Make sure we weren't passed an explicit value of FALSE, or a negative value
 		if(false !== delay && (delay = +delay || 0) >= 0){
 			this.onResize = delay ? debounce(fn, delay) : fn;
 			window.addEventListener("resize", this.onResize);

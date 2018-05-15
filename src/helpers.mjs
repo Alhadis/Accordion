@@ -72,8 +72,8 @@ export function debounce(fn, limit = 0, asap = false){
 
 
 export const uniqueID = (function(){
-	var IDs     = {};
-	var indexes = {};
+	const IDs     = {};
+	const indexes = {};
 	
 	
 	/**
@@ -94,27 +94,24 @@ export const uniqueID = (function(){
 	 */
 	function uniqueID(prefix, complex, length){
 		length     = +(length || 6);
-		var result =  (prefix = prefix || "_");
+		let result =  (prefix = prefix || "_");
 		
-		/** Simple IDs */
+		// Simple IDs
 		if(!complex){
 			
-			/** Set this prefix's starting index if it's not been used yet */
+			// Set this prefix's starting index if it's not been used yet
 			if(!indexes[prefix])
 				indexes[prefix] = 0;
 			
 			result += ++indexes[prefix];
 		}
 		
-		/** Uglier/safer IDs */
+		// Uglier, more collision-proof IDs
 		else{
-			var chars   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-			chars      += chars.toLowerCase();
-			result     += chars[ Math.round(Math.random() * (chars.length - 1)) ];
-			chars      += "0123456789";
-			
+			const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+			result += chars[ Math.round(Math.random() * 51) ];
 			while(result.length < length)
-				result += chars[ Math.round(Math.random() * (chars.length - 1))];
+				result += chars[ Math.round(Math.random() * 61)];
 		}
 		
 		return IDs[result] || document.getElementById(result)
@@ -128,7 +125,7 @@ export const uniqueID = (function(){
 
 
 
-/** Name of the CSSOM property used by this browser for CSS transforms */
+// Name of the CSSOM property used by this browser for CSS transforms
 export const cssTransform = (function(n){
 	s = document.documentElement.style;
 	if((prop = n.toLowerCase()) in s) return prop;
@@ -138,7 +135,7 @@ export const cssTransform = (function(n){
 }("Transform"));
 
 
-/** Whether 3D transforms are supported by this browser */
+// Whether 3D transforms are supported by this browser
 export const css3DSupported = (function(propName){
 	const e = document.createElement("div"), s = e.style,
 	v = [["translateY(", ")"], ["translate3d(0,", ",0)"]]

@@ -6,7 +6,7 @@
 	var each         = [].forEach;
 
 
-	/** Name of the onTransitionEnd event supported by this browser. */
+	// Name of the onTransitionEnd event supported by this browser
 	var transitionEnd = (function(){
 		for(var names = "transitionend webkitTransitionEnd oTransitionEnd otransitionend".split(" "), i = 0; i < 4; ++i)
 			if("on"+names[i].toLowerCase() in window) return names[i];
@@ -44,7 +44,7 @@
 
 			delayed = function(){
 
-				/** Get the time between now and when the function was first fired. */
+				// Get the time between now and when the function was first fired
 				var timeSince = Date.now() - started;
 
 				if(timeSince >= limit){
@@ -57,7 +57,7 @@
 			};
 
 
-		/** Debounced copy of the original function. */
+		// Debounced copy of the original function
 		return function(){
 			context = this,
 			args    = arguments;
@@ -100,17 +100,17 @@
 			length     = +(length || 6);
 			var result =  (prefix = prefix || "_");
 			
-			/** Simple IDs */
+			// Simple IDs
 			if(!complex){
 				
-				/** Set this prefix's starting index if it's not been used yet */
+				// Set this prefix's starting index if it's not been used yet
 				if(!indexes[prefix])
 					indexes[prefix] = 0;
 				
 				result += ++indexes[prefix];
 			}
 			
-			/** Uglier/safer IDs */
+			// Uglier/safer IDs
 			else{
 				var chars   = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 				chars      += chars.toLowerCase();
@@ -131,7 +131,7 @@
 	}());
 
 
-	/** Name of the CSSOM property used by this browser for CSS transforms */
+	// Name of the CSSOM property used by this browser for CSS transforms
 	var cssTransform = (function(n){
 		s = document.documentElement.style;
 		if((prop = n.toLowerCase()) in s) return prop;
@@ -141,7 +141,7 @@
 	}("Transform"));
 
 
-	/** Whether 3D transforms are supported by this browser */
+	// Whether 3D transforms are supported by this browser
 	var css3DSupported = (function(propName){
 		var e = document.createElement("div"), s = e.style,
 		v = [["translateY(", ")"], ["translate3d(0,", ",0)"]]
@@ -190,26 +190,26 @@
 			fit: {value: fit},
 			
 			
-			/** Add or remove relevant ARIA attributes from the fold's elements */
+			// Add or remove relevant ARIA attributes from the fold's elements
 			ariaEnabled: {
 				get: function(){ return _ariaEnabled; },
 				set: function(input){
 					if((input = !!input) !== !!_ariaEnabled){
 						_ariaEnabled = input;
 						
-						/** Enable ARIA-attribute management */
+						// Enable ARIA-attribute management
 						if(input){
 							heading.setAttribute("role", "tab");
 							content.setAttribute("role", "tabpanel");
 							checkIDs();
 							
-							/** Update the attributes that're controlled by .open's setter */
+							// Update the attributes that're controlled by .open's setter
 							heading.setAttribute("aria-selected", !!_open);
 							heading.setAttribute("aria-expanded", !!_open);
 							content.setAttribute("aria-hidden",   !_open);
 						}
 						
-						/** Disabling; remove all relevant attributes */
+						// Disabling; remove all relevant attributes
 						else{
 							heading.removeAttribute("role");
 							heading.removeAttribute("aria-controls");
@@ -226,12 +226,12 @@
 
 			
 			
-			/** Whether or not the fold's currently opened */
+			// Whether or not the fold's currently opened
 			open: {
 				
 				get: function(){
 					
-					/** Derive the fold's opened state from the DOM if it's not been determined yet */
+					// Derive the fold's opened state from the DOM if it's not been determined yet
 					if(undefined === _open){
 						_open = elClasses.contains(openClass);
 						setToken(elClasses, closeClass, !_open);
@@ -244,7 +244,7 @@
 				set: function(input){
 					if((input = !!input) !== _open){
 						
-						/** If an onToggle callback was specified, run it. Avoid doing anything if it returns false. */
+						// If an onToggle callback was specified, run it. Avoid doing anything if it returns false.
 						if("function" === typeof onToggle && false === onToggle.call(null, THIS, input))
 							return;
 						
@@ -252,14 +252,14 @@
 						setToken(elClasses, closeClass, !input);
 						_open = input;
 						
-						/** Update ARIA attributes */
+						// Update ARIA attributes
 						if(_ariaEnabled){
 							heading.setAttribute("aria-selected",  input);
 							heading.setAttribute("aria-expanded",  input);
 							content.setAttribute("aria-hidden",   !input);
 						}
 						
-						/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
+						// If this fold was closed when the screen resized, run a full update in case its contents were juggled around
 						if(THIS.needsRefresh){
 							delete THIS.needsRefresh;
 							accordion.refresh();
@@ -270,14 +270,14 @@
 			},
 			
 			
-			/** Whether the fold's been deactivated */
+			// Whether the fold's been deactivated
 			disabled: {
 				get: function(){ return _disabled },
 				set: function(input){
 					if((input = !!input) !== _disabled){
 						var style = el.style;
 						
-						/** Deactivated */
+						// Deactivated
 						if(_disabled = input){
 							style.height = null;
 							useTransforms
@@ -298,7 +298,7 @@
 							}
 						}
 						
-						/** Reactivated */
+						// Reactivated
 						else{
 							style.height = _height + "px";
 							useTransforms
@@ -321,7 +321,7 @@
 			},
 			
 			
-			/** Vertical position of the fold within an accordion's container */
+			// Vertical position of the fold within an accordion's container
 			y: {
 				get: function(){
 					if(undefined === _y)
@@ -343,7 +343,7 @@
 			},
 			
 			
-			/** Height of the fold's outermost container */
+			// Height of the fold's outermost container
 			height: {
 				
 				get: function(){
@@ -363,7 +363,7 @@
 			},
 			
 
-			/** Current height of the fold's heading */
+			// Current height of the fold's heading
 			headingHeight: {
 				get: function(){
 					return heading.scrollHeight
@@ -372,7 +372,7 @@
 				}
 			},
 			
-			/** Total height consumed by the heading element's CSS borders, if any */
+			// Total height consumed by the heading element's CSS borders, if any
 			headingBorder: {
 				get: function(){
 					return (heading.offsetHeight || 0) - (heading.clientHeight || 0);
@@ -381,14 +381,14 @@
 			
 			
 			
-			/** Total height of the fold's container element */
+			// Total height of the fold's container element
 			elHeight: {
 				get: function(){
 					return el.scrollHeight + (useBorders ? THIS.elBorder : 0);
 				}
 			},
 			
-			/** Total height consumed by container element's CSS borders, if any */
+			// Total height consumed by container element's CSS borders, if any
 			elBorder: {
 				get: function(){
 					return (el.offsetHeight || 0) - (el.clientHeight || 0);
@@ -396,7 +396,7 @@
 			},
 			
 			
-			/** Whether the fold's container has been resized incorrectly */
+			// Whether the fold's container has been resized incorrectly
 			wrongSize: {
 				get: function(){
 					return THIS.headingHeight + content.scrollHeight !== el.scrollHeight;
@@ -424,18 +424,18 @@
 			var elID            = el.id;
 			var id;
 			
-			/** Neither of the fold's elements have an ID attribute */
+			// Neither of the fold's elements have an ID attribute
 			if(!heading.id && !content.id){
 				id             = elID || uniqueID("a");
 				heading.id     = id + headingSuffix;
 				content.id     = id + contentSuffix;
 			}
 			
-			/** Either the heading or element lack an ID */
+			// Either the heading or element lack an ID
 			else if(!content.id) content.id   = (elID || heading.id) + contentSuffix;
 			else if(!heading.id) heading.id   = (elID || content.id) + headingSuffix;
 			
-			/** Finally, double-check each element's ID is really unique */
+			// Finally, double-check each element's ID is really unique
 			var $ = function(s){return document.querySelectorAll("#"+s)};
 			while($(content.id).length > 1 || $(heading.id).length > 1){
 				id         = uniqueID("a");
@@ -443,14 +443,14 @@
 				heading.id = id + headingSuffix;
 			}
 			
-			/** Update ARIA attributes */
+			// Update ARIA attributes
 			heading.setAttribute("aria-controls",    content.id);
 			content.setAttribute("aria-labelledby",  heading.id);
 		}
 		
 		
 		
-		/** Keyboard navigation */
+		// Keyboard navigation
 		if(keysEnabled){
 			heading.tabIndex = 0;
 			heading.addEventListener("keydown", onKeyDown = function(e){
@@ -459,32 +459,32 @@
 				
 				switch(key){
 					
-					/** Enter: Toggle */
+					// Enter: Toggle
 					case 13: {
 						THIS.open = !THIS.open;
 						break;
 					}
 					
-					/** Escape: Clear focus */
+					// Escape: Clear focus
 					case 27:{
 						e.target.blur();
 						break;
 					}
 					
 					
-					/** Up arrow: Previous section */
+					// Up arrow: Previous section
 					case 38:{
 						
-						/** Is there a previous sibling to navigate up to? */
+						// Is there a previous sibling to navigate up to?
 						if(fold = THIS.previousFold){
 							var children = fold.childAccordions;
 							
-							/** Is it open, and does it have nested accordions? */
+							// Is it open, and does it have nested accordions?
 							if(fold.open && children){
 								var lastAcc;
 								var lastFold;
 								
-								/** Locate the deepest/nearest accordion that's currently exposed */
+								// Locate the deepest/nearest accordion that's currently exposed
 								while(children){
 									lastAcc  = children[children.length - 1];
 									lastFold = lastAcc.folds[lastAcc.folds.length - 1];
@@ -495,15 +495,15 @@
 								lastFold.heading.focus();
 							}
 							
-							/** Nope */
+							// Nope
 							else fold.heading.focus();
 						}
 						
-						/** Is there a higher level we can jump back up to? */
+						// Is there a higher level we can jump back up to?
 						else if(accordion.parent)
 							accordion.parentFold.heading.focus();
 						
-						/** There's nothing to move back to, so just let the browser run its usual behaviour */
+						// There's nothing to move back to, so just let the browser run its usual behaviour
 						else return true;
 						
 						e.preventDefault();
@@ -512,19 +512,19 @@
 					
 					
 					
-					/** Down arrow: Next section */
+					// Down arrow: Next section
 					case 40:{
 						var children = THIS.childAccordions;
 						
-						/** Is there a nested accordion to jump into? */
+						// Is there a nested accordion to jump into?
 						if(THIS.open && children)
 							children[0].folds[0].heading.focus();
 						
-						/** No, there isn't. Is there another sibling to move down to? */
+						// No, there isn't. Is there another sibling to move down to?
 						else if(fold = THIS.nextFold)
 							fold.heading.focus();
 						
-						/** Is there a containing accordion we can navigate back up to? */
+						// Is there a containing accordion we can navigate back up to?
 						else if(THIS.accordion.parent){
 							var parent = THIS;
 							while(parent = parent.accordion.parentFold)
@@ -533,11 +533,11 @@
 									break;
 								}
 							
-							/** Nowhere left to go... */
+							// Nowhere left to go...
 							if(!parent) return true;
 						}
 						
-						/** Nah. Just scroll the window normally, as per browser default */
+						// Nah. Just scroll the window normally, as per browser default
 						else return true;
 						
 						e.preventDefault();
@@ -545,27 +545,27 @@
 					}
 					
 					
-					/** Left arrow */
+					// Left arrow
 					case 37:{
 						
-						/** Close an opened section */
+						// Close an opened section
 						if(THIS.open) THIS.open = false;
 						
-						/** Switch focus back to parent */
+						// Switch focus back to parent
 						else if(accordion.parent)
 							accordion.parentFold.heading.focus();
 						
 						break;
 					}
 					
-					/** Right arrow */
+					// Right arrow
 					case 39:{
 						var children = THIS.childAccordions;
 						
-						/** Open a closed section */
+						// Open a closed section
 						if(!THIS.open) THIS.open = true;
 						
-						/** Switch focus to a nested accordion */
+						// Switch focus to a nested accordion
 						else if(children)
 							children[0].folds[0].heading.focus();
 						
@@ -576,7 +576,7 @@
 		}
 		
 		
-		/** Listener to record the viewport's scroll offsets at the beginning of a touch */
+		// Listener to record the viewport's scroll offsets at the beginning of a touch
 		touchEnabled && heading.addEventListener("touchstart", onTouchStart = function(e){
 			scrollX = window.pageXOffset;
 			scrollY = window.pageYOffset;
@@ -652,7 +652,7 @@
 			updateFold: {value: updateFold},
 			refresh:    {value: refresh},
 			
-			/** Whether the accordion's been deactivated */
+			// Whether the accordion's been deactivated
 			disabled: {
 				get: function(){ return _disabled; },
 				set: function(input){
@@ -664,7 +664,7 @@
 						disabledClass && setToken(elClasses, disabledClass,  input);
 						
 						
-						/** Deactivating */
+						// Deactivating
 						if(_disabled = input){
 							style.height = null;
 							snapClass && elClasses.remove(snapClass);
@@ -681,7 +681,7 @@
 						}
 						
 						
-						/** Reactivating */
+						// Reactivating
 						else{
 							for(var i = 0, l = folds.length; i < l; ++i)
 								folds[i].disabled = false;
@@ -693,27 +693,27 @@
 						
 
 						
-						/** If there're no more active accordions, disable the onResize handler */
+						// If there're no more active accordions, disable the onResize handler
 						if(activeAccordions <= 0){
 							activeAccordions = 0;
 							Accordion.setResizeRate(false);
 						}
 						
-						/** Otherwise, reactivate the onResize handler, assuming it was previously active */
+						// Otherwise, reactivate the onResize handler, assuming it was previously active
 						else if(lastResizeRate)
 							Accordion.setResizeRate(lastResizeRate);
 					}
 				}
 			},
 			
-			/** Get or set the accordion enclosing this one */
+			// Get or set the accordion enclosing this one
 			parent: {
 				set: function(input){ _parent = input; },
 				get: function(){
 					var result = _parent;
 					if(!result) return null;
 					
-					/** Search for the first ancestor that *isn't* disabled */
+					// Search for the first ancestor that *isn't* disabled
 					while(result){
 						if(!result.disabled) return result;
 						result = result.parent;
@@ -722,7 +722,7 @@
 				}
 			},
 			
-			/** Get or set the fold of the accordion enclosing this one */
+			// Get or set the fold of the accordion enclosing this one
 			parentFold: {
 				set: function(input){ _parentFold = input; },
 				get: function(){
@@ -731,7 +731,7 @@
 					
 					var accordion = fold.accordion;
 					
-					/** Search for the first ancestor that *isn't* disabled */
+					// Search for the first ancestor that *isn't* disabled
 					while(fold && accordion){
 						if(!accordion.disabled) return fold;
 						if(accordion = accordion.parent)
@@ -741,7 +741,7 @@
 				}
 			},
 			
-			/** Height of the accordion's container element */
+			// Height of the accordion's container element
 			height: {
 				get: function(){ return _height; },
 				set: function(input){
@@ -752,7 +752,7 @@
 				}
 			},
 			
-			/** Whether one of the Accordion's folds has been resized incorrectly */
+			// Whether one of the Accordion's folds has been resized incorrectly
 			wrongSize: {
 				get: function(){
 					var a = this.folds;
@@ -765,7 +765,7 @@
 				}
 			},
 			
-			/** Top-level ancestor this accordion's nested inside */
+			// Top-level ancestor this accordion's nested inside
 			root: {
 				get: function(){
 					var result = this;
@@ -778,7 +778,7 @@
 		});
 
 		
-		/** Assign options as properties */
+		// Assign options as properties
 		THIS.openClass    = options.openClass  || "open";
 		THIS.closeClass   = options.closeClass || "closed";
 		THIS.noAria       = !!options.noAria;
@@ -790,13 +790,13 @@
 		THIS.onToggle     = options.onToggle;
 		
 		
-		/** Create a fold for each immediate descendant of the Accordion's container */
+		// Create a fold for each immediate descendant of the Accordion's container
 		var folds = [];
 		each.call(el.children, function(i){
 			var fold = new Fold(THIS, i);
 			folds.push(fold);
 			
-			/** Connect the fold to its previous sibling, if it's not the first to be added */
+			// Connect the fold to its previous sibling, if it's not the first to be added
 			var prev = folds[folds.length - 2];
 			if(prev){
 				prev.nextFold     = fold;
@@ -810,14 +810,14 @@
 		THIS.el         = el;
 		THIS.folds      = folds;
 		
-		/** Add .enabledClass early - it might affect the heights of each fold */
+		// Add .enabledClass early - it might affect the heights of each fold
 		if(!options.disabled && enabledClass)
 			elClasses.add(enabledClass);
 		
 		update();
 		
 		
-		/** Find out if this accordion's nested inside another */
+		// Find out if this accordion's nested inside another
 		var next = el;
 		while((next = next.parentNode) && 1 === next.nodeType){
 			var fold = Accordion.getFold(next);
@@ -829,7 +829,7 @@
 				(accordion.childAccordions = accordion.childAccordions || []).push(THIS);
 				(fold.childAccordions      = fold.childAccordions      || []).push(THIS);
 
-				/** Adjust the height of the containing fold's element */
+				// Adjust the height of the containing fold's element
 				if(fold.open){
 					var scrollHeight = fold.el.scrollHeight;
 					var distance     = (fold.headingHeight + fold.content.scrollHeight) - scrollHeight || (scrollHeight - fold.el.clientHeight);
@@ -860,11 +860,11 @@
 				var box         = el.getBoundingClientRect();
 				var windowEdge  = window.innerHeight;
 				
-				/** If the bottom-edge is visible (or about to be), enable height animation */
+				// If the bottom-edge is visible (or about to be), enable height animation
 				if(box.bottom + (offset || 0) < windowEdge)
 					elClasses.add(edgeClass)
 				
-				/** If the bottom-edge isn't visible anyway, disable height animation immediately */
+				// If the bottom-edge isn't visible anyway, disable height animation immediately
 				else if(box.bottom > windowEdge)
 					elClasses.remove(edgeClass);
 			}
@@ -944,7 +944,7 @@
 		}
 	}
 
-	/** If IE8PP exists, it means the author wants/needs IE8 support. See also: tinyurl.com/fixIE8-9 */
+	// If IE8PP exists, it means the author wants/needs IE8 support. See also: tinyurl.com/fixIE8-9
 	if("function" === typeof IE8PP)
 		Accordion = IE8PP(Accordion),
 		Fold      = IE8PP(Fold);
@@ -967,7 +967,7 @@
 		var THIS = Accordion;
 		THIS.onResize && window.removeEventListener("resize", THIS.onResize);
 		
-		/** Make sure we weren't passed an explicit value of FALSE, or a negative value */
+		// Make sure we weren't passed an explicit value of FALSE, or a negative value
 		if(false !== delay && (delay = +delay || 0) >= 0){
 			THIS.onResize = delay ? debounce(fn, delay) : fn;
 			window.addEventListener("resize", THIS.onResize);

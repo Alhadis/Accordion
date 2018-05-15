@@ -46,7 +46,7 @@ export default class Fold{
 		el.accordionFold     = this.index;
 		
 		
-		/** Keyboard navigation */
+		// Keyboard navigation
 		if(!accordion.noKeys){
 			heading.tabIndex = 0;
 			heading.addEventListener("keydown", this.onKeyDown = e => {
@@ -55,32 +55,32 @@ export default class Fold{
 				
 				switch(key){
 					
-					/** Enter: Toggle */
+					// Enter: Toggle
 					case 13: {
 						this.open = !this.open;
 						break;
 					}
 					
-					/** Escape: Clear focus */
+					// Escape: Clear focus
 					case 27:{
 						e.target.blur();
 						break;
 					}
 					
 					
-					/** Up arrow: Previous section */
+					// Up arrow: Previous section
 					case 38:{
 						
-						/** Is there a previous sibling to navigate up to? */
+						// Is there a previous sibling to navigate up to?
 						if(fold = this.previousFold){
 							let children = fold.childAccordions;
 							
-							/** Is it open, and does it have nested accordions? */
+							// Is it open, and does it have nested accordions?
 							if(fold.open && children){
 								let lastAcc;
 								let lastFold;
 								
-								/** Locate the deepest/nearest accordion that's currently exposed */
+								// Locate the deepest/nearest accordion that's currently exposed
 								while(children){
 									lastAcc  = children[children.length - 1];
 									lastFold = lastAcc.folds[lastAcc.folds.length - 1];
@@ -91,15 +91,15 @@ export default class Fold{
 								lastFold.heading.focus();
 							}
 							
-							/** Nope */
+							// Nope
 							else fold.heading.focus();
 						}
 						
-						/** Is there a higher level we can jump back up to? */
+						// Is there a higher level we can jump back up to?
 						else if(this.accordion.parent)
 							this.accordion.parentFold.heading.focus();
 						
-						/** There's nothing to move back to, so just let the browser run its usual behaviour */
+						// There's nothing to move back to, so just let the browser run its usual behaviour
 						else return true;
 						
 						e.preventDefault();
@@ -109,19 +109,19 @@ export default class Fold{
 					
 					
 					
-					/** Down arrow: Next section */
+					// Down arrow: Next section
 					case 40:{
 						const children = this.childAccordions;
 						
-						/** Is there a nested accordion to jump into? */
+						// Is there a nested accordion to jump into?
 						if(this.open && children)
 							children[0].folds[0].heading.focus();
 						
-						/** No, there isn't. Is there another sibling to move down to? */
+						// No, there isn't. Is there another sibling to move down to?
 						else if(fold = this.nextFold)
 							fold.heading.focus();
 						
-						/** Is there a containing accordion we can navigate back up to? */
+						// Is there a containing accordion we can navigate back up to?
 						else if(this.accordion.parent){
 							let parent = this;
 							while(parent = parent.accordion.parentFold)
@@ -130,11 +130,11 @@ export default class Fold{
 									break;
 								}
 							
-							/** Nowhere left to go... */
+							// Nowhere left to go...
 							if(!parent) return true;
 						}
 						
-						/** Nah. Just scroll the window normally, as per browser default */
+						// Nah. Just scroll the window normally, as per browser default
 						else return true;
 						
 						e.preventDefault();
@@ -143,26 +143,26 @@ export default class Fold{
 					}
 					
 					
-					/** Left arrow */
+					// Left arrow
 					case 37:{
 						
-						/** Close an opened section */
+						// Close an opened section
 						if(this.open) this.open = false;
 						
-						/** Switch focus back to parent */
+						// Switch focus back to parent
 						else if(this.accordion.parent)
 							this.accordion.parentFold.heading.focus();
 						
 						break;
 					}
 					
-					/** Right arrow */
+					// Right arrow
 					case 39:{
 						
-						/** Open a closed section */
+						// Open a closed section
 						if(!this.open) this.open = true;
 						
-						/** Switch focus to a nested accordion */
+						// Switch focus to a nested accordion
 						else if(this.childAccordions)
 							this.childAccordions[0].folds[0].heading.focus();
 						
@@ -173,7 +173,7 @@ export default class Fold{
 		}
 		
 		
-		/** Listener to record the viewport's scroll offsets at the beginning of a touch */
+		// Listener to record the viewport's scroll offsets at the beginning of a touch
 		let scrollX, scrollY;
 		touchEnabled && heading.addEventListener("touchstart", this.onTouchStart = e => {
 			scrollX = window.pageXOffset;
@@ -217,30 +217,30 @@ export default class Fold{
 			const content = this.content;
 			this._ariaEnabled = input;
 			
-			/** Enable ARIA-attribute management */
+			// Enable ARIA-attribute management
 			if(input){
 				heading.setAttribute("role", "tab");
 				content.setAttribute("role", "tabpanel");
 				
 				
-				/** Ensure the fold's elements have unique ID attributes. */
+				// Ensure the fold's elements have unique ID attributes.
 				const headingSuffix = "-heading";
 				const contentSuffix = "-content";
 				let elID            = this.el.id;
 				let id;
 				
-				/** Neither of the fold's elements have an ID attribute */
+				// Neither of the fold's elements have an ID attribute
 				if(!heading.id && !content.id){
 					id             = elID || uniqueID("a");
 					heading.id     = id + headingSuffix;
 					content.id     = id + contentSuffix;
 				}
 				
-				/** Either the heading or element lack an ID */
+				// Either the heading or element lack an ID
 				else if(!content.id) content.id   = (elID || heading.id) + contentSuffix;
 				else if(!heading.id) heading.id   = (elID || content.id) + headingSuffix;
 				
-				/** Finally, double-check each element's ID is really unique */
+				// Finally, double-check each element's ID is really unique
 				const $ = s => document.querySelectorAll("#"+s);
 				while($(content.id).length > 1 || $(heading.id).length > 1){
 					id         = uniqueID("a");
@@ -248,18 +248,18 @@ export default class Fold{
 					heading.id = id + headingSuffix;
 				}
 				
-				/** Update ARIA attributes */
+				// Update ARIA attributes
 				heading.setAttribute("aria-controls",    content.id);
 				content.setAttribute("aria-labelledby",  heading.id);
 				
 				
-				/** Update the attributes that're controlled by .open's setter */
+				// Update the attributes that're controlled by .open's setter
 				heading.setAttribute("aria-selected",  !!this._open);
 				heading.setAttribute("aria-expanded",  !!this._open);
 				content.setAttribute("aria-hidden",     !this._open);
 			}
 			
-			/** Disabling; remove all relevant attributes */
+			// Disabling; remove all relevant attributes
 			else{
 				heading.removeAttribute("role");
 				heading.removeAttribute("aria-controls");
@@ -283,7 +283,7 @@ export default class Fold{
 	 */
 	get open(){
 		
-		/** Derive the fold's opened state from the DOM if it's not been determined yet */
+		// Derive the fold's opened state from the DOM if it's not been determined yet
 		if(undefined === this._open){
 			const classes = this.el.classList;
 			this._open    = classes.contains(this.openClass);
@@ -296,7 +296,7 @@ export default class Fold{
 	set open(input){
 		if((input = !!input) !== this._open){
 			
-			/** If an onToggle callback was specified, run it. Avoid doing anything if it returns false. */
+			// If an onToggle callback was specified, run it. Avoid doing anything if it returns false.
 			if("function" === typeof this.onToggle && false === this.onToggle.call(null, this, input))
 				return;
 			
@@ -304,7 +304,7 @@ export default class Fold{
 			setToken(this.el.classList, this.closeClass, !input);
 			this._open = input;
 			
-			/** Update ARIA attributes */
+			// Update ARIA attributes
 			if(this.ariaEnabled){
 				const heading = this.heading;
 				heading.setAttribute("aria-selected",      input);
@@ -313,7 +313,7 @@ export default class Fold{
 			}
 			
 			
-			/** If this fold was closed when the screen resized, run a full update in case its contents were juggled around */
+			// If this fold was closed when the screen resized, run a full update in case its contents were juggled around
 			if(this.needsRefresh){
 				delete this.needsRefresh;
 				this.accordion.refresh();
@@ -339,7 +339,7 @@ export default class Fold{
 			let style   = this.el.style;
 			let classes = this.el.classList;
 			
-			/** Deactivated */
+			// Deactivated
 			if(this._disabled = input){
 				style.height = null;
 				this.useTransforms
@@ -360,7 +360,7 @@ export default class Fold{
 				}
 			}
 			
-			/** Reactivated */
+			// Reactivated
 			else{
 				style.height = this._height + "px";
 				this.useTransforms
