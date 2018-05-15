@@ -1,28 +1,18 @@
-## Mac OS/X
-.apdisk
-.AppleDB
-.AppleDesktop
-.AppleDouble
 .DS_Store
-.LSOverride
-._*
-
-
-## IDE-specific
-sftp-config.json
-.project
-
-
-## Windows
-Desktop.ini
 Thumbs.db
-ehthumbs.db
-$RECYCLE.BIN/
-*.lnk
-
-
-## Other
-error_log
-node_modules
+Desktop.ini
+bower_components
 components
-npm-debug.log
+node_modules
+package-lock.json
+._*
+.\#*
+\#*\#
+*~
+*.log
+*.lock
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-v][a-z]
+[._]sw[a-p]
+!urls.log
