@@ -104,7 +104,6 @@ export default class Fold{
 						
 						e.preventDefault();
 						return false;
-						break;
 					}
 					
 					
@@ -139,7 +138,6 @@ export default class Fold{
 						
 						e.preventDefault();
 						return false;
-						break;
 					}
 					
 					
@@ -175,7 +173,7 @@ export default class Fold{
 		
 		// Listener to record the viewport's scroll offsets at the beginning of a touch
 		let scrollX, scrollY;
-		touchEnabled && heading.addEventListener("touchstart", this.onTouchStart = e => {
+		touchEnabled && heading.addEventListener("touchstart", this.onTouchStart = () => {
 			scrollX = window.pageXOffset;
 			scrollY = window.pageYOffset;
 		});
@@ -332,7 +330,7 @@ export default class Fold{
 	 * @property
 	 * @type {Boolean}
 	 */
-	get disabled(){ return this._disabled }
+	get disabled(){ return this._disabled; }
 	set disabled(input){
 		if((input = !!input) !== !!this._disabled){
 			let heading = this.heading;
@@ -426,7 +424,7 @@ export default class Fold{
 	
 	set height(input){
 		if(input && (input = +input) !== this._height){
-			this.el.style.height = input + "px"
+			this.el.style.height = input + "px";
 			this._height         = input;
 		}
 	}

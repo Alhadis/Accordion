@@ -246,7 +246,7 @@ export default class Accordion {
 			
 			// If the bottom-edge is visible (or about to be), enable height animation
 			if(box.bottom + (offset || 0) < windowEdge)
-				classes.add(edgeClass)
+				classes.add(edgeClass);
 			
 			// If the bottom-edge isn't visible anyway, disable height animation immediately
 			else if(box.bottom > windowEdge)
@@ -318,7 +318,7 @@ export default class Accordion {
 				? a.refresh(allowSnap)
 				: (a.parentFold.needsRefresh = true));
 		
-		snap && setTimeout(e => this.el.classList.remove(snap), 20);
+		snap && setTimeout(() => this.el.classList.remove(snap), 20);
 	}
 	
 	
@@ -363,7 +363,7 @@ export default class Accordion {
 	 * @param {Number} delay - Rate expressed in milliseconds
 	 */
 	static setResizeRate(delay){
-		let fn = function(e){
+		let fn = function(){
 			for(let i of accordions)
 				i.parent || i.disabled || i.refresh(true);
 		};

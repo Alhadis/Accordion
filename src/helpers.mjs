@@ -137,8 +137,8 @@ export const cssTransform = (function(n){
 
 // Whether 3D transforms are supported by this browser
 export const css3DSupported = (function(propName){
-	const e = document.createElement("div"), s = e.style,
-	v = [["translateY(", ")"], ["translate3d(0,", ",0)"]]
+	const e = document.createElement("div"), s = e.style;
+	const v = [["translateY(", ")"], ["translate3d(0,", ",0)"]];
 	try{ s[propName] = v[1].join("1px"); } catch(e){}
 	return v[+!!s[propName]] === v[1];
 }(cssTransform));

@@ -1,0 +1,51 @@
+{
+	"extends": "eslint:recommended",
+	"env": {
+		"browser": true,
+		"es6": true,
+		"mocha": true
+	},
+	"globals": {
+		"IE8PP": true
+	},
+	"parserOptions": {
+		"ecmaVersion": 2017,
+		"sourceType": "module"
+	},
+	"rules": {
+		"indent": [
+			"error",
+			"tab",
+			{
+				"ignoreComments": true,
+				"SwitchCase": 1
+			}
+		],
+		"linebreak-style": [
+			"error",
+			"unix"
+		],
+		"no-cond-assign": 0,
+		"no-console": 0,
+		"no-empty": 0,
+		"no-redeclare": 0,
+		"quotes": [
+			"error",
+			"double",
+			{"avoidEscape": true}
+		],
+		"semi": [
+			"error",
+			"always"
+		],
+		"spaced-comment": [
+			"error",
+			"always"
+		],
+		"yoda": [
+			"error",
+			"always",
+			{"onlyEquality": true}
+		]
+	}
+}
