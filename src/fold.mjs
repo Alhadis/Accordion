@@ -186,6 +186,15 @@ export default class Fold{
 		
 		
 		heading.addEventListener(pressEvent, this.onPress = e => {
+			
+			// Pressed on something inside the header
+			if(e.target !== heading && heading.contains(e.target)){
+				
+				// Cancel fold-toggle if user clicked on an anchor-link
+				if("A" === e.target.tagName && e.target.href)
+					return true;
+			}
+			
 			if(e.type !== "touchend" || (e.cancelable && window.pageXOffset === scrollX && window.pageYOffset === scrollY)){
 				this.open = !this.open;
 				e.preventDefault();

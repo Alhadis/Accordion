@@ -590,6 +590,15 @@
 		
 		
 		heading.addEventListener(pressEvent, onPress = function(e){
+			
+			// Pressed on something inside the header
+			if(e.target !== heading && heading.contains(e.target)){
+				
+				// Cancel fold-toggle if user clicked on an anchor-link
+				if("A" === e.target.tagName && e.target.href)
+					return true;
+			}
+			
 			if(e.type !== "touchend" || (e.cancelable && window.pageXOffset === scrollX && window.pageYOffset === scrollY)){
 				THIS.open = !THIS.open;
 				e.preventDefault();
