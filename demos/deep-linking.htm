@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<!--[if lte IE 9]><script src="assets/ie.lteIE9.js"></script><![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="initial-scale=1, minimum-scale=1" />
+<title>Deep-linking</title>
+
+<link rel="stylesheet" type="text/css" href="assets/reset.css" />
+<link rel="stylesheet" type="text/css" href="../src/accordion.css" />
+<style>
+
+/** Demo styling, not necessary for the accordion's final effect. */
+.accordion{
+	padding: 0;
+	margin-bottom: 1rem;
+	position: relative;
+	list-style: none;
+	background: #efefef;
+}
+	.accordion > *{
+		overflow: hidden;
+		padding: 0;
+		margin: 0;
+		-webkit-transition: .3s ease all;
+		transition: .3s ease all;
+	}
+	.accordion > li{
+		width: 100%;
+		position: absolute;
+	}
+		.accordion > li > a,
+		.accordion > li > h2{
+			cursor: pointer;
+			position: relative;
+			display: block;
+			font-size: 1em;
+			color: #00e;
+			padding: 1.25rem 1rem;
+			border: 1px solid #d5d5d5;
+			border-bottom: 0;
+			line-height: 1;
+			text-decoration: none;
+			font-weight: bold;
+			
+			-webkit-user-select: none;
+			-moz-user-select:    none;
+			-ms-user-select:     none;
+			user-select:         none;
+		}
+
+		.accordion > li > :first-child:hover,
+		.accordion > li > :first-child:focus{
+			background-color: #e6e6e6;
+		}
+	
+	/** Random unrelated hyperlink in heading */
+	.accordion > li > h2 > a[target="_blank"]{
+		position: absolute;
+		left: 50%;
+		transform: translate(-1em, -.5em) rotate(-8deg);
+		width: 5em;
+		word-break: break-all;
+		text-align: center;
+		font-size: .8em;
+		outline: 1px dotted #f00;
+		background: #fff;
+		padding: .25em;
+	}
+
+	/* Generated disclosure icon */
+	.accordion > li > :first-child::before{
+		position: absolute;
+		top: 50%;
+		right: 1rem;
+		margin-top: -.5rem;
+		content: "+";
+	}
+		.accordion > li.open > :first-child::before{
+			content: "\2013";
+		}
+	
+	/* Content fold */
+	.accordion > li > .fold{
+		padding: 1em;
+		border: 1px solid #d5d5d5;
+		border-top: none;
+		background: #fff;
+		color: foreground(#efefef, #0c5449);
+	}
+</style>
+</head>
+
+
+<body>
+
+	<ul class="accordion">
+		<li>
+			<a href="#panel1a">Accordion 1</a>
+			<div id="panel1a" class="fold">
+				<p>Panel 1. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</div>
+		</li>
+		<li>
+			<a href="#panel2a">Accordion 2</a>
+			<div id="panel2a" class="fold">
+				<p>Panel 2. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</div>
+		</li>
+		<li>
+			<h2>Accordion 2.5 <a target="_blank" href="https://www.roughguides.com/destinations/africa/">Random link</a></h2>
+			<div id="panel2b" class="fold">
+				<p>Panel 3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</div>
+		</li>
+		<li>
+			<a href="#panel3a">Accordion 3</a>
+			<div id="panel3a" class="fold">
+				<p>Panel 3. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			</div>
+		</li>
+	</ul>
+
+
+	<script>
+	document.querySelectorAll("ul.accordion > li").forEach(function(item){
+		// Make the items absolute positioning now that we know javascript is enabled
+		item.classList.add("absolute")
+
+		// Apply the content fold
+		item.querySelector("div").classList.add("fold");
+	});
+	</script>
+
+	<!-- ES5/Legacy -->
+	<script nomodule src="../src/accordion.js"></script>
+	<script nomodule src="assets/shared.js"></script>
+	
+	<!-- ES6+ -->
+	<script type="module">
+		import Accordion from "../src/accordion.mjs";
+		for(const el of document.querySelectorAll(".accordion"))
+			new Accordion(el);
+	</script>
+
+</body>
+</html>

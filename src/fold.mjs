@@ -63,6 +63,8 @@ export default class Fold{
 					// Enter: Toggle
 					case 13:
 						this.open = !this.open;
+						if("A" === e.target.tagName)
+							e.preventDefault();
 						break;
 					
 					

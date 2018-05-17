@@ -467,6 +467,8 @@
 					// Enter: Toggle
 					case 13:
 						THIS.open = !THIS.open;
+						if("A" === e.target.tagName)
+							e.preventDefault();
 						break;
 					
 					
