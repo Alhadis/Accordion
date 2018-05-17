@@ -586,7 +586,7 @@
 		touchEnabled && heading.addEventListener("touchstart", onTouchStart = function(e){
 			scrollX = window.pageXOffset;
 			scrollY = window.pageYOffset;
-		});
+		}, {passive: true});
 		
 		
 		heading.addEventListener(pressEvent, onPress = function(e){

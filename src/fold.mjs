@@ -182,7 +182,7 @@ export default class Fold{
 		touchEnabled && heading.addEventListener("touchstart", this.onTouchStart = () => {
 			scrollX = window.pageXOffset;
 			scrollY = window.pageYOffset;
-		});
+		}, {passive: true});
 		
 		
 		heading.addEventListener(pressEvent, this.onPress = e => {
