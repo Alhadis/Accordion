@@ -416,3 +416,4 @@ export default class Accordion {
 
 
 Accordion.setResizeRate(25);
+window.Accordion = Accordion;
