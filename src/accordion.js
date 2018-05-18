@@ -265,6 +265,14 @@
 							accordion.refresh();
 						}
 						else accordion.update();
+						
+						// Close other folds if accordion is modal
+						if(accordion.modal && _open){
+							for(var fold, i = 0, l = accordion.folds.length; i < l; ++i){
+								if(THIS !== (fold = accordion.folds[i]))
+									fold.open = false;
+							}
+						}
 					}
 				}
 			},
@@ -643,6 +651,7 @@
 	 * @param {String}      options.enabledClass  - CSS class marking an accordion as enabled
 	 * @param {String}      options.disabledClass - CSS class marking an accordion as disabled
 	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
+	 * @param {Boolean}     options.modal         - Whether to close the current fold when opening another
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
 	 * @param {Boolean}     options.noTransforms  - Disable CSS transforms; positioning will be used instead
@@ -659,7 +668,7 @@
 		var snapClass     = (undefined === options.snapClass    ? "snap"         : options.snapClass);
 		var enabledClass  = (undefined === options.enabledClass ? "accordion"    : options.enabledClass);
 		var disabledClass = options.disabledClass;
-		var _height, _disabled, _parent, _parentFold;
+		var _height, _disabled, _parent, _parentFold, _modal;
 
 
 		Object.defineProperties(THIS, {
@@ -796,6 +805,7 @@
 		// Assign options as properties
 		THIS.openClass    = options.openClass  || "open";
 		THIS.closeClass   = options.closeClass || "closed";
+		THIS.modal        = !!options.modal;
 		THIS.noAria       = !!options.noAria;
 		THIS.noKeys       = !!options.noKeys;
 		THIS.noTransforms = !!options.noTransforms;

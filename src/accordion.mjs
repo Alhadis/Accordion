@@ -26,6 +26,7 @@ export default class Accordion {
 	 * @param {String}      options.enabledClass  - CSS class marking an accordion as enabled
 	 * @param {String}      options.disabledClass - CSS class marking an accordion as disabled
 	 * @param {Boolean}     options.disabled      - Whether to disable the accordion on creation
+	 * @param {Boolean}     options.modal         - Whether to close the current fold when opening another
 	 * @param {Boolean}     options.noAria        - Disable the addition and management of ARIA attributes
 	 * @param {Boolean}     options.noKeys        - Disable keyboard navigation
 	 * @param {Boolean}     options.noTransforms  - Disable CSS transforms; positioning will be used instead
@@ -45,6 +46,7 @@ export default class Accordion {
 		this.snapClass     = (undefined === options.snapClass    ? "snap"         : options.snapClass);
 		this.enabledClass  = (undefined === options.enabledClass ? "accordion"    : options.enabledClass);
 		this.disabledClass = options.disabledClass;
+		this.modal         = !!options.modal;
 		this.noAria        = !!options.noAria;
 		this.noKeys        = !!options.noKeys;
 		this.noTransforms  = !!options.noTransforms;

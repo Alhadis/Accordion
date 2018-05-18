@@ -325,13 +325,18 @@ export default class Fold{
 				this.content.setAttribute("aria-hidden",  !input);
 			}
 			
-			
 			// If this fold was closed when the screen resized, run a full update in case its contents were juggled around
 			if(this.needsRefresh){
 				delete this.needsRefresh;
 				this.accordion.refresh();
 			}
 			else this.accordion.update();
+			
+			// Close other folds if accordion is modal
+			if(this.accordion.modal && input){
+				for(const fold of this.accordion.folds)
+					if(this !== fold) fold.open = false;
+			}
 		}
 	}
 	

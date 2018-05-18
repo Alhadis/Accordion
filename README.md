@@ -131,6 +131,7 @@ Options
 | [edgeClass](docs/options.adoc#edgeclass)         | String   | `"edge-visible"` | CSS class toggled based on whether the bottom-edge is visible   |
 | [enabledClass](docs/options.adoc#enabledclass)   | String   | `"accordion"`    | CSS class marking an accordion as enabled                       |
 | [heightOffset](docs/options.adoc#heightoffset)   | Number   | `0`              | Distance to offset each fold by                                 |
+| [modal](docs/options.adoc#modal)                 | Boolean  | `false`          | Whether to close the current fold when opening another          |
 | [noAria](docs/options.adoc#noaria)               | Boolean  | `false`          | Disable the addition and management of ARIA attributes          |
 | [noKeys](docs/options.adoc#nokeys)               | Boolean  | `false`          | Disable keyboard navigation                                     |
 | [noTransforms](docs/options.adoc#notransforms)   | Boolean  | `false`          | Disable CSS transforms; positioning will be used instead        |

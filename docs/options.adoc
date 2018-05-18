@@ -97,6 +97,18 @@ Negative values have the effect of pulling folds up over the top of each other.
 
 
 
+modal
+-----
+Default::
+	+false+
+Type::
+	Boolean
+
+Limit the accordion to having only one fold open at a time.
+
+
+
+
 noAria
 ------
 Default::
