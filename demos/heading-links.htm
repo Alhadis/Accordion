@@ -4,7 +4,7 @@
 <!--[if lte IE 9]><script src="assets/ie.lteIE9.js"></script><![endif]-->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="initial-scale=1, minimum-scale=1" />
-<title>Deep-linking</title>
+<title>Heading Links</title>
 
 <link rel="stylesheet" type="text/css" href="assets/reset.css" />
 <link rel="stylesheet" type="text/css" href="../src/accordion.css" />
@@ -123,13 +123,14 @@
 
 
 	<script>
-	document.querySelectorAll("ul.accordion > li").forEach(function(item){
-		// Make the items absolute positioning now that we know javascript is enabled
-		item.classList.add("absolute")
+		"use strict";
+		document.querySelectorAll("ul.accordion > li").forEach(function(item){
+			// Make the items absolutely-positioned now that we know JavaScript is enabled
+			item.classList.add("absolute");
 
-		// Apply the content fold
-		item.querySelector("div").classList.add("fold");
-	});
+			// Apply the content fold
+			item.querySelector("div").classList.add("fold");
+		});
 	</script>
 
 	<!-- ES5/Legacy -->
