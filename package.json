@@ -1,6 +1,6 @@
 {
 	"name": "accordion",
-	"version": "v2.1.1",
+	"version": "v3.0.0",
 	"description": "Silky-smooth accordion widgets with no external dependencies.",
 	"keywords": ["accordion", "widget", "component", "folding", "foldable", "fold", "ui"],
 	"repository": "https://github.com/Alhadis/Accordion",

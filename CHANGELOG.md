@@ -3,11 +3,13 @@ Change Log
 
 This project honours [Semantic Versioning](http://semver.org).
 
-[Staged]: https://github.com/Alhadis/Accordion/compare/v2.1.1...HEAD
+[Staged]: https://github.com/Alhadis/Accordion/compare/v3.0.0...HEAD
 
 
-[Staged]
+[v3.0.0]
 ------------------------------------------------------------------------
+**May 18th, 2018**  
+
 **Breaking change:**  
 Removed `dist` directory. Source code now exclusively located in `src`.
 Rationale for removal is explained in the commit notes of [`e74cd3f`][].
@@ -19,6 +21,7 @@ Rationale for removal is explained in the commit notes of [`e74cd3f`][].
 * `Accordion` class not globalised in module's ES6 version
 
 [`e74cd3f`]: https://github.com/Alhadis/Accordion/commit/e74cd3f89aac2
+[v3.0.0]: https://github.com/Alhadis/Accordion/releases/tag/v3.0.0
 
 
 
