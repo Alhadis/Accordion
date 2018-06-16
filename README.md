@@ -65,7 +65,7 @@ Embed it into your application's existing styling, tweaking it if desired.
 
 **Note:** This stylesheet only includes properties necessary for the Accordion to function.
 Making it look appealing with colours and fonts is left as an exercise to the developer.
-Check the source of the [bundled demos](`demos/anim-switch.htm`) for some ideas.
+Check the source of the [bundled demos](demos/anim-switch.htm) for some ideas.
 
 
 
