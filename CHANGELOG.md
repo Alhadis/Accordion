@@ -6,6 +6,16 @@ This project honours [Semantic Versioning](http://semver.org).
 [Staged]: https://github.com/Alhadis/Accordion/compare/v3.0.0...HEAD
 
 
+[v3.0.1]
+------------------------------------------------------------------------
+**June 16th, 2018**  
+Fixed a broken link in package's readme file (reported in [`#12`][]).
+
+[`#12`]: https://github.com/Alhadis/Accordion/issues/12
+[v3.0.1]: https://github.com/Alhadis/Accordion/releases/tag/v3.0.1
+
+
+
 [v3.0.0]
 ------------------------------------------------------------------------
 **May 18th, 2018**  
