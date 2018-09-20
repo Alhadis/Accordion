@@ -3,7 +3,17 @@ Change Log
 
 This project honours [Semantic Versioning](http://semver.org).
 
-[Staged]: https://github.com/Alhadis/Accordion/compare/v3.0.0...HEAD
+[Staged]: https://github.com/Alhadis/Accordion/compare/v3.0.2...HEAD
+
+
+[v3.0.2]
+------------------------------------------------------------------------
+**September 20th, 2018**  
+Added links to interactive demos, as suggested in [`#13`][].
+
+[`#13`]: https://github.com/Alhadis/Accordion/issues/13
+[v3.0.2]: https://github.com/Alhadis/Accordion/releases/tag/v3.0.2
+
 
 
 [v3.0.1]

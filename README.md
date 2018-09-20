@@ -10,6 +10,8 @@ npm install accordion --save
 bower install silk-accordion --save
 ~~~
 
+An simple interactive demo can be [found here](https://cdn.rawgit.com/Alhadis/Accordion/v3.0.1/demos/basic-large.htm).
+More complicated and extreme demos can be found in the [`demos`](./demos/README.md) directory.
 
 
 Usage
