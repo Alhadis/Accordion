@@ -1,4 +1,4 @@
-<!---*-tab-width:4;indent-tabs-mode:t;-*- vim:set ts=4 noet:--->
+<!---*-tab-width:4;indent-tabs-mode:t;truncate-lines:t;-*- vim:set ts=4 noet nowrap:--->
 
 Accordion
 ================================================================
