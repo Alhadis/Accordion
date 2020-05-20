@@ -11,6 +11,7 @@
 		padding: 0;
 		margin:  0;
 	}
+		.accordion,
 		.accordion > *,
 		.accordion.edge-visible,
 		.accordion .accordion{
